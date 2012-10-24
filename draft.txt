@@ -1,0 +1,448 @@
+
+
+
+Network Working Group                                           E. Kline
+Internet-Draft                                                 K. Duleba
+Intended status: Experimental                           October 24, 2012
+Expires: April 27, 2013
+
+
+                               An Example
+                    draft-self-published-geo-00.txt
+
+Abstract
+
+   An example.
+
+Status of this Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on April 27, 2013.
+
+Copyright Notice
+
+   Copyright (c) 2012 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
+
+
+
+
+
+
+Kline & Duleba           Expires April 27, 2013                 [Page 1]
+
+Internet-Draft                 An Example                   October 2012
+
+
+Table of Contents
+
+   1.  Requirements notation . . . . . . . . . . . . . . . . . . . . . 3
+   2.  Specification . . . . . . . . . . . . . . . . . . . . . . . . . 4
+   3.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+   4.  Security Considerations . . . . . . . . . . . . . . . . . . . . 6
+   5.  Normative References  . . . . . . . . . . . . . . . . . . . . . 7
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . . 8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kline & Duleba           Expires April 27, 2013                 [Page 2]
+
+Internet-Draft                 An Example                   October 2012
+
+
+1.  Requirements notation
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in [RFC2119].
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kline & Duleba           Expires April 27, 2013                 [Page 3]
+
+Internet-Draft                 An Example                   October 2012
+
+
+2.  Specification
+
+   Every feed should contain all IP addresses the provider wants to give
+   us (instead of just a diff against previous feed, ie. containing only
+   IP addresses whose location changed) Feeds MUST be in comma separated
+   values format as described in RFC 4180.  Feeds MUST use UTF-8
+   character encoding.  Each feed entry is of the form: IP address/
+   range,country,region,city,postal code IP address fields are
+   mandatory, the rest is optional (can be empty).  Unparsable entries,
+   in part or in full, SHOULD be discarded.  IP address field MUST be
+   either: IP/CIDR e.g. 1.2.3.0/24 single IP address e.g. 1.2.3.4
+   Country field SHOULD be a 2 letter ISO country code
+   (http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), case-insensitive.
+   Empty country fields or "ZZ" indicate unassigned reserved IPs.
+   Region field should be a ISO region code
+   (http://en.wikipedia.org/wiki/ISO_3166-2) City field should be free
+   text (excluding ",").  Postal code field should be free text
+   (excluding ",").
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kline & Duleba           Expires April 27, 2013                 [Page 4]
+
+Internet-Draft                 An Example                   October 2012
+
+
+3.  Examples
+
+   Example entries using different IP address formats and describing
+   locations at country, region, city and postal code granularity level,
+   respectively: 192.0.2.0/25,US,US-AL,, 192.0.2.5,US,US-AL,Alabaster,
+   192.0.2.128/25,PL,PL-MZ,,02-784 2001:db8:beef::/48,PL,PL-MZ,,02-784
+   http://meetings.ripe.net/geo/google.csv
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kline & Duleba           Expires April 27, 2013                 [Page 5]
+
+Internet-Draft                 An Example                   October 2012
+
+
+4.  Security Considerations
+
+   None.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kline & Duleba           Expires April 27, 2013                 [Page 6]
+
+Internet-Draft                 An Example                   October 2012
+
+
+5.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kline & Duleba           Expires April 27, 2013                 [Page 7]
+
+Internet-Draft                 An Example                   October 2012
+
+
+Authors' Addresses
+
+   Erik Kline
+
+
+   Krzysztof Duleba
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kline & Duleba           Expires April 27, 2013                 [Page 8]
+
