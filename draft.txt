@@ -59,15 +59,15 @@ Internet-Draft                 An Example                   October 2012
 
 Table of Contents
 
-   1.  Requirements notation . . . . . . . . . . . . . . . . . . . . . 3
-   2.  Specification . . . . . . . . . . . . . . . . . . . . . . . . . 4
-   3.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
-   4.  Security Considerations . . . . . . . . . . . . . . . . . . . . 6
-   5.  Normative References  . . . . . . . . . . . . . . . . . . . . . 7
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . . 8
-
-
-
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . . . 3
+   2.  Requirements notation . . . . . . . . . . . . . . . . . . . . . 3
+   3.  Geolocation Information Feeds . . . . . . . . . . . . . . . . . 3
+     3.1.  Specification . . . . . . . . . . . . . . . . . . . . . . . 3
+     3.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . 3
+   4.  Acceptable Use Policies . . . . . . . . . . . . . . . . . . . . 3
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . . . 4
+   6.  Normative References  . . . . . . . . . . . . . . . . . . . . . 4
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . . 4
 
 
 
@@ -113,74 +113,35 @@ Kline & Duleba           Expires April 27, 2013                 [Page 2]
 Internet-Draft                 An Example                   October 2012
 
 
-1.  Requirements notation
+1.  Introduction
+
+
+2.  Requirements notation
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
    document are to be interpreted as described in [RFC2119].
 
 
+3.  Geolocation Information Feeds
 
+3.1.  Specification
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Kline & Duleba           Expires April 27, 2013                 [Page 3]
-
-Internet-Draft                 An Example                   October 2012
-
-
-2.  Specification
-
-   Every feed should contain all IP addresses the provider wants to give
-   us (instead of just a diff against previous feed, ie. containing only
-   IP addresses whose location changed) Feeds MUST be in comma separated
-   values format as described in RFC 4180.  Feeds MUST use UTF-8
-   character encoding.  Each feed entry is of the form: IP address/
-   range,country,region,city,postal code IP address fields are
-   mandatory, the rest is optional (can be empty).  Unparsable entries,
-   in part or in full, SHOULD be discarded.  IP address field MUST be
-   either: IP/CIDR e.g. 1.2.3.0/24 single IP address e.g. 1.2.3.4
-   Country field SHOULD be a 2 letter ISO country code
+   Every feed should contain all IP addresses the provider wants to
+   publish (instead of just a diff against some previous feed, e.g.
+   containing only IP addresses whose location has changed).  Feeds MUST
+   be in comma separated values format as described in [RFC4180].  Feeds
+   MUST use UTF-8 [RFC3629] character encoding.  Text after a '#'
+   character is treated as a comment only and ignored.  Blank lines are
+   similarly ignored.  Each feed entry is of the form:
+   IP_address_or_range,country,region,city,postal_code IP address fields
+   are mandatory, the rest is optional (can be empty), though the
+   requisite number of commas SHOULD be present.  Unparsable entries, in
+   part or in full, SHOULD be discarded.  IP address field MUST be
+   either: IP/CIDR e.g. 1.2.3.0/24 single IP address e.g. 1.2.3.4 CIDR
+   IPv4 http://tools.ietf.org/html/rfc4632#section-3.1 IPv6
+   http://tools.ietf.org/html/rfc4291#section-2.3 Country field SHOULD
+   be a 2 letter ISO country code
    (http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), case-insensitive.
    Empty country fields or "ZZ" indicate unassigned reserved IPs.
    Region field should be a ISO region code
@@ -188,44 +149,7 @@ Internet-Draft                 An Example                   October 2012
    text (excluding ",").  Postal code field should be free text
    (excluding ",").
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Kline & Duleba           Expires April 27, 2013                 [Page 4]
-
-Internet-Draft                 An Example                   October 2012
-
-
-3.  Examples
+3.2.  Examples
 
    Example entries using different IP address formats and describing
    locations at country, region, city and postal code granularity level,
@@ -234,163 +158,40 @@ Internet-Draft                 An Example                   October 2012
    http://meetings.ripe.net/geo/google.csv
 
 
+4.  Acceptable Use Policies
+
+   This incorporates no mechanism to communicate acceptable use policies
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Kline & Duleba           Expires April 27, 2013                 [Page 5]
+Kline & Duleba           Expires April 27, 2013                 [Page 3]
 
 Internet-Draft                 An Example                   October 2012
 
 
-4.  Security Considerations
-
-   None.
-
-
+   for self-published data.  Publication itself is inferred as a desire
+   by the publisher for the data to be freely consumed, similar to the
+   publication of hostnames in the DNS.
 
 
+5.  Security Considerations
+
+   There is no true security in the obscurity of the location of any
+   given IP address.  Publication of this data increases the ease with
+   which such location data may be exploited, but fundamentally opens no
+   new attack vectors.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Kline & Duleba           Expires April 27, 2013                 [Page 6]
-
-Internet-Draft                 An Example                   October 2012
-
-
-5.  Normative References
+6.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
 
+   [RFC3629]  Yergeau, F., "UTF-8, a transformation format of ISO
+              10646", STD 63, RFC 3629, November 2003.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Kline & Duleba           Expires April 27, 2013                 [Page 7]
-
-Internet-Draft                 An Example                   October 2012
+   [RFC4180]  Shafranovich, Y., "Common Format and MIME Type for Comma-
+              Separated Values (CSV) Files", RFC 4180, October 2005.
 
 
 Authors' Addresses
@@ -419,30 +220,5 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Kline & Duleba           Expires April 27, 2013                 [Page 8]
+Kline & Duleba           Expires April 27, 2013                 [Page 4]
 

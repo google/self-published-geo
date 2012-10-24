@@ -2,6 +2,10 @@
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
     <!ENTITY rfc2119 PUBLIC '' 
       'http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml'>
+    <!ENTITY rfc3629 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.3629.xml'>
+    <!ENTITY rfc4180 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.4180.xml'>
 ]>
 
 <rfc category="exp"
@@ -15,6 +19,8 @@
 <?rfc sortrefs="yes"?>
 <?rfc iprnotified="no" ?>
 <?rfc strict="yes" ?>
+<?rfc compact="yes" ?>
+<?rfc subcompact="no" ?>
 
   <front>
     <title>An Example</title>
@@ -29,6 +35,11 @@
   </front>
 
   <middle>
+    <section title="Introduction">
+      <t>
+      </t>
+    </section>
+
     <section title="Requirements notation">
       <t>
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
@@ -37,24 +48,34 @@ interpreted as described in <xref target="RFC2119"/>.
       </t>
     </section>
 
-    <section title="Specification">
-      <t>
-Every feed should contain all IP addresses the provider wants to give us
-(instead of just a diff against previous feed, ie. containing only IP
-addresses whose location changed)
+    <section title="Geolocation Information Feeds">
+      <section title="Specification">
+        <t>
+Every feed should contain all IP addresses the provider wants to publish
+(instead of just a diff against some previous feed, e.g. containing only IP
+addresses whose location has changed).
 
-Feeds MUST be in comma separated values format as described in RFC 4180.
-Feeds MUST use UTF-8 character encoding.
+Feeds MUST be in comma separated values format as described in
+<xref target="RFC4180"/>.
+Feeds MUST use UTF-8 <xref target="RFC3629"/> character encoding.
+Text after a '#' character is treated as a comment only and ignored.
+Blank lines are similarly ignored.
 
 Each feed entry is of the form:
-    IP address/range,country,region,city,postal code
+    IP_address_or_range,country,region,city,postal_code
 
-IP address fields are mandatory, the rest is optional (can be empty).
+IP address fields are mandatory, the rest is optional (can be empty), though
+the requisite number of commas SHOULD be present.
+
 Unparsable entries, in part or in full, SHOULD be discarded.
 
 IP address field MUST be either:
     IP/CIDR e.g. 1.2.3.0/24
     single IP address e.g. 1.2.3.4
+
+CIDR
+    IPv4 http://tools.ietf.org/html/rfc4632#section-3.1
+    IPv6 http://tools.ietf.org/html/rfc4291#section-2.3
 
 Country field SHOULD be a 2 letter ISO country code
 (http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), case-insensitive.  Empty
@@ -66,11 +87,11 @@ Region field should be a ISO region code
 City field should be free text (excluding ",").
 
 Postal code field should be free text (excluding ",").
-      </t>
-    </section>
+        </t>
+      </section>
 
-    <section title="Examples">
-      <t>
+      <section title="Examples">
+        <t>
 Example entries using different IP address formats and describing locations
 at country, region, city and postal code granularity level, respectively:
 192.0.2.0/25,US,US-AL,,
@@ -79,16 +100,37 @@ at country, region, city and postal code granularity level, respectively:
 2001:db8:beef::/48,PL,PL-MZ,,02-784
 
 http://meetings.ripe.net/geo/google.csv
+        </t>
+      </section>
+    </section>
+
+    <section title="Acceptable Use Policies">
+      <t>
+This incorporates no mechanism to communicate acceptable use policies for
+self-published data.  Publication itself is inferred as a desire by the
+publisher for the data to be freely consumed, similar to the publication of
+hostnames in the DNS.
       </t>
     </section>
 
     <section title="Security Considerations">
-      <t>None.</t>
+      <t>
+There is no true security in the obscurity of the location of any given IP
+address.  Publication of this data increases the ease with which such
+location data may be exploited, but fundamentally opens no new attack
+vectors.
+      </t>
     </section>
   </middle>
 
   <back>
-      <references title='Normative References'>&rfc2119;</references>
+      <references title='Normative References'>
+&rfc2119;
+
+&rfc3629;
+
+&rfc4180;
+      </references>
   </back>
 
 </rfc>
