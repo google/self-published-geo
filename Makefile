@@ -4,10 +4,14 @@
 
 SRC := "draft"
 SRCXML := $(SRC).xml
-DSTTXT := $(SRC).txt
 
-text:	
-	xml2rfc $(SRCXML) $(DSTTXT)
+all:	text
+
+text:	$(SRCXML)
+	xml2rfc $(SRCXML) $(SRC).txt
+
+html:	$(SRCXML)
+	xml2rfc $(SRCXML) $(SRC).html
 
 # Pull and update this repository.
 update:
@@ -15,3 +19,5 @@ update:
 
 push:
 	git push -v
+
+.PHONY:	$(SRCXML)

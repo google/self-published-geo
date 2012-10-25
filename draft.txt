@@ -7,12 +7,13 @@ Intended status: Experimental                               Google, Inc.
 Expires: April 28, 2013                                 October 25, 2012
 
 
-                               An Example
+                   Self-published IP Geolocation Data
                     draft-self-published-geo-00.txt
 
 Abstract
 
-   An example.
+   Self-published IP Geolocation Data: everybody wants something like
+   this, really.
 
 Status of this Memo
 
@@ -51,10 +52,9 @@ Copyright Notice
 
 
 
-
 Kline & Duleba           Expires April 28, 2013                 [Page 1]
 
-Internet-Draft                 An Example                   October 2012
+Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
 Table of Contents
@@ -63,20 +63,20 @@ Table of Contents
    2.  Requirements notation . . . . . . . . . . . . . . . . . . . . . 3
    3.  Geolocation Information Feeds . . . . . . . . . . . . . . . . . 3
      3.1.  Specification . . . . . . . . . . . . . . . . . . . . . . . 3
-     3.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . 3
-   4.  Finding Self-published IP Geolocation Feeds . . . . . . . . . . 3
+       3.1.1.  IP address field  . . . . . . . . . . . . . . . . . . . 3
+       3.1.2.  Country field . . . . . . . . . . . . . . . . . . . . . 3
+       3.1.3.  Region field  . . . . . . . . . . . . . . . . . . . . . 4
+       3.1.4.  City field  . . . . . . . . . . . . . . . . . . . . . . 4
+       3.1.5.  Postal code field . . . . . . . . . . . . . . . . . . . 4
+     3.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . 4
+   4.  Finding Self-published IP Geolocation Feeds . . . . . . . . . . 4
      4.1.  Ad hoc 'well known' URIs  . . . . . . . . . . . . . . . . . 4
      4.2.  Using 'reverse' DNS . . . . . . . . . . . . . . . . . . . . 4
-   5.  Acceptable Use Policies . . . . . . . . . . . . . . . . . . . . 4
-   6.  Security Considerations . . . . . . . . . . . . . . . . . . . . 4
-   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . 4
-   8.  Normative References  . . . . . . . . . . . . . . . . . . . . . 4
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . . 4
-
-
-
-
-
+   5.  Use Policies  . . . . . . . . . . . . . . . . . . . . . . . . . 4
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . . . 5
+   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . 5
+   8.  Normative References  . . . . . . . . . . . . . . . . . . . . . 5
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . . 5
 
 
 
@@ -110,7 +110,7 @@ Table of Contents
 
 Kline & Duleba           Expires April 28, 2013                 [Page 2]
 
-Internet-Draft                 An Example                   October 2012
+Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
 1.  Introduction
@@ -127,59 +127,111 @@ Internet-Draft                 An Example                   October 2012
 
 3.1.  Specification
 
-   Every feed should contain all IP addresses the provider wants to
-   publish (instead of just a diff against some previous feed, e.g.
-   containing only IP addresses whose location has changed).  Feeds MUST
-   be in comma separated values format as described in [RFC4180].  Feeds
-   MUST use UTF-8 [RFC3629] character encoding.  Text after a '#'
+   For operational simplicity, every feed should contain data about all
+   IP addresses the provider wants to publish.  Alternatives, like
+   publishing only entries for IP addresses whose geolocation data has
+   changed or differ from current observed geolocation behavior "at
+   large", are likely to be too operationally complex.
+
+   Feeds MUST use UTF-8 [RFC3629] character encoding.  Text after a '#'
    character is treated as a comment only and ignored.  Blank lines are
-   similarly ignored.  Each feed entry is of the form:
-   IP_address_or_range,country,region,city,postal_code IP address fields
-   are mandatory, the rest is optional (can be empty), though the
-   requisite number of commas SHOULD be present.  Unparsable entries, in
-   part or in full, SHOULD be discarded.  IP address field MUST be
-   either: IP/CIDR e.g. 1.2.3.0/24 single IP address e.g. 1.2.3.4 CIDR
-   IPv4 http://tools.ietf.org/html/rfc4632#section-3.1 IPv6
-   http://tools.ietf.org/html/rfc4291#section-2.3 Country field SHOULD
-   be a 2 letter ISO country code
+   similarly ignored.
+
+   Feeds MUST be in comma separated values format as described in
+   [RFC4180].  Each feed entry is a text line of the form:
+
+      IP_address_or_cidr,country,region,city,postal_code
+
+   IP address fields are mandatory, the rest is optional (can be empty),
+   though the requisite minimum number of commas SHOULD be present.
+
+   Unparsable entries, in part or in full, SHOULD be discarded.
+
+3.1.1.  IP address field
+
+   Each IP address field MUST be either a single IP address or an IP
+   prefix in CIDR notation in conformance with section 3.1 of [RFC4632]
+   for IPv4 or section 2.3 of [RFC4291] for IPv6.
+
+   Examples include "192.0.2.1" and "192.0.2.0/24" for IPv4 and "2001:
+   db8::1" and "2001:db8::/32" for IPv6.
+
+3.1.2.  Country field
+
+   The country field SHOULD be a 2 letter ISO country code
    (http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), case-insensitive.
-   Empty country fields or "ZZ" indicate unassigned reserved IPs.
+   Empty country fields or "ZZ" indicate unassigned reserved IPs for
+
+
+
+Kline & Duleba           Expires April 28, 2013                 [Page 3]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
+   which existing geolocation information can, from the perspective of
+   the publisher, safely be discarded.
+
+   Examples include "US" for the United States, "JP" for Japan, and "PL"
+   for Poland.
+
+3.1.3.  Region field
+
    Region field should be a ISO region code
-   (http://en.wikipedia.org/wiki/ISO_3166-2) City field should be free
-   text, excluding comma (',').  Postal code field should be free text,
-   excluding comma (',').
+   (http://en.wikipedia.org/wiki/ISO_3166-2), case-insensitive.
+
+   Examples include "IE-D" for Dublin, Ireland.
+
+3.1.4.  City field
+
+   City field should be free text, excluding comma (',').
+
+   Examples include "Dublin", "New York", and "Sao Paulo".
+
+3.1.5.  Postal code field
+
+   Postal code field should be free text, excluding comma (',').
+
+   Examples include "106-6126" (in Minato ward, Tokyo, Japan).
 
 3.2.  Examples
 
    Example entries using different IP address formats and describing
    locations at country, region, city and postal code granularity level,
    respectively: 192.0.2.0/25,US,US-AL,, 192.0.2.5,US,US-AL,Alabaster,
-   192.0.2.128/25,PL,PL-MZ,,02-784 2001:db8:beef::/48,PL,PL-MZ,,02-784
+   192.0.2.128/25,PL,PL-MZ,,02-784 2001:db8:cafe::/48,PL,PL-MZ,,02-784
    http://meetings.ripe.net/geo/google.csv
 
 
 4.  Finding Self-published IP Geolocation Feeds
 
-
-
-
-
-Kline & Duleba           Expires April 28, 2013                 [Page 3]
-
-Internet-Draft                 An Example                   October 2012
-
-
 4.1.  Ad hoc 'well known' URIs
 
 4.2.  Using 'reverse' DNS
 
+   TODO(ek): document crazy _geo.4.3.2.1.in-addr.arpa TXT record format
+   that basically returns "v=1 https://example.net/ipgeo/v1.csv".  Also:
+   can ask the root of the zone in the SOA.
 
-5.  Acceptable Use Policies
+
+5.  Use Policies
 
    This incorporates no mechanism to communicate acceptable use policies
+
+
+
+Kline & Duleba           Expires April 28, 2013                 [Page 4]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
    for self-published data.  Publication itself is inferred as a desire
    by the publisher for the data to be freely consumed, similar to the
    publication of hostnames in the DNS.
+
+   TODO(ek): That having been said, there are implications of trusting
+   geolocation for IP addresses for which the publishing authority is
+   not authoritative.  Comment about "caveat emptor".
 
 
 6.  Security Considerations
@@ -204,11 +256,29 @@ Internet-Draft                 An Example                   October 2012
    [RFC4180]  Shafranovich, Y., "Common Format and MIME Type for Comma-
               Separated Values (CSV) Files", RFC 4180, October 2005.
 
+   [RFC4291]  Hinden, R. and S. Deering, "IP Version 6 Addressing
+              Architecture", RFC 4291, February 2006.
+
+   [RFC4632]  Fuller, V. and T. Li, "Classless Inter-domain Routing
+              (CIDR): The Internet Address Assignment and Aggregation
+              Plan", BCP 122, RFC 4632, August 2006.
+
 
 Authors' Addresses
 
    Erik Kline
    Google, Inc.
+
+
+
+
+
+
+
+
+Kline & Duleba           Expires April 28, 2013                 [Page 5]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
    Krzysztof Duleba
@@ -220,5 +290,47 @@ Authors' Addresses
 
 
 
-Kline & Duleba           Expires April 28, 2013                 [Page 4]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kline & Duleba           Expires April 28, 2013                 [Page 6]
 
