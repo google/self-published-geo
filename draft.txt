@@ -70,15 +70,15 @@ Table of Contents
        3.1.5.  Postal code field . . . . . . . . . . . . . . . . . . . 4
      3.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . 4
    4.  Finding Self-published IP Geolocation Feeds . . . . . . . . . . 4
-     4.1.  Ad hoc 'well known' URIs  . . . . . . . . . . . . . . . . . 4
-     4.2.  Using 'reverse' DNS . . . . . . . . . . . . . . . . . . . . 4
-   5.  Use Policies  . . . . . . . . . . . . . . . . . . . . . . . . . 4
+     4.1.  Ad hoc 'well known' URIs  . . . . . . . . . . . . . . . . . 5
+     4.2.  Using 'reverse' DNS . . . . . . . . . . . . . . . . . . . . 5
+   5.  Use Policies  . . . . . . . . . . . . . . . . . . . . . . . . . 5
    6.  Security Considerations . . . . . . . . . . . . . . . . . . . . 5
    7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . 5
-   8.  Normative References  . . . . . . . . . . . . . . . . . . . . . 5
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . . 5
-
-
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+     8.1.  Normative References  . . . . . . . . . . . . . . . . . . . 5
+     8.2.  Informative References  . . . . . . . . . . . . . . . . . . 6
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . . 6
 
 
 
@@ -198,12 +198,32 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
    Example entries using different IP address formats and describing
    locations at country, region, city and postal code granularity level,
-   respectively: 192.0.2.0/25,US,US-AL,, 192.0.2.5,US,US-AL,Alabaster,
-   192.0.2.128/25,PL,PL-MZ,,02-784 2001:db8:cafe::/48,PL,PL-MZ,,02-784
-   http://meetings.ripe.net/geo/google.csv
+   respectively:
+
+       192.0.2.0/25,US,US-AL,,
+       192.0.2.5,US,US-AL,Alabaster,
+       192.0.2.128/25,PL,PL-MZ,,02-784
+       2001:db8:cafe::/48,PL,PL-MZ,,02-784
+
+   Speculatively, RIPE has published geolocation information for their
+   meeting network prefixes, which change location in accordance with
+   each new meeting.  [RIPE_NCC_GEO] at the time of writing contains:
+
+       193.0.24.0/21,IE,IE-D,Dublin,
+       2001:67c:64::/48,IE,IE-D,Dublin,
 
 
 4.  Finding Self-published IP Geolocation Feeds
+
+
+
+
+
+
+Kline & Duleba           Expires April 28, 2013                 [Page 4]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
 
 4.1.  Ad hoc 'well known' URIs
 
@@ -217,14 +237,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 5.  Use Policies
 
    This incorporates no mechanism to communicate acceptable use policies
-
-
-
-Kline & Duleba           Expires April 28, 2013                 [Page 4]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
-
    for self-published data.  Publication itself is inferred as a desire
    by the publisher for the data to be freely consumed, similar to the
    publication of hostnames in the DNS.
@@ -244,8 +256,12 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 7.  Acknowledgements
 
+   Menno Schepers and Marco Hogewoning of the RIPE NCC.
 
-8.  Normative References
+
+8.  References
+
+8.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
@@ -257,22 +273,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
               Separated Values (CSV) Files", RFC 4180, October 2005.
 
    [RFC4291]  Hinden, R. and S. Deering, "IP Version 6 Addressing
-              Architecture", RFC 4291, February 2006.
-
-   [RFC4632]  Fuller, V. and T. Li, "Classless Inter-domain Routing
-              (CIDR): The Internet Address Assignment and Aggregation
-              Plan", BCP 122, RFC 4632, August 2006.
-
-
-Authors' Addresses
-
-   Erik Kline
-   Google, Inc.
-
-
-
-
-
 
 
 
@@ -281,27 +281,27 @@ Kline & Duleba           Expires April 28, 2013                 [Page 5]
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
-   Krzysztof Duleba
+              Architecture", RFC 4291, February 2006.
+
+   [RFC4632]  Fuller, V. and T. Li, "Classless Inter-domain Routing
+              (CIDR): The Internet Address Assignment and Aggregation
+              Plan", BCP 122, RFC 4632, August 2006.
+
+8.2.  Informative References
+
+   [RIPE_NCC_GEO]
+              Schepers, M., "RIPE Meeting Geolocation Data",
+              <http://meetings.ripe.net/geo/google.csv>.
+
+
+Authors' Addresses
+
+   Erik Kline
    Google, Inc.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+   Krzysztof Duleba
+   Google, Inc.
 
 
 
