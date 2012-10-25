@@ -3,7 +3,7 @@
 
 Network Working Group                                           E. Kline
 Internet-Draft                                                 K. Duleba
-Intended status: Experimental                               Google, Inc.
+Intended status: Experimental                                Google Inc.
 Expires: April 28, 2013                                 October 25, 2012
 
 
@@ -69,7 +69,7 @@ Table of Contents
        3.1.4.  City field  . . . . . . . . . . . . . . . . . . . . . . 4
        3.1.5.  Postal code field . . . . . . . . . . . . . . . . . . . 4
      3.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . 4
-   4.  Finding Self-published IP Geolocation Feeds . . . . . . . . . . 4
+   4.  Finding Self-published IP Geolocation Feeds . . . . . . . . . . 5
      4.1.  Ad hoc 'well known' URIs  . . . . . . . . . . . . . . . . . 5
      4.2.  Using 'reverse' DNS . . . . . . . . . . . . . . . . . . . . 5
    5.  Use Policies  . . . . . . . . . . . . . . . . . . . . . . . . . 5
@@ -158,9 +158,9 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 3.1.2.  Country field
 
-   The country field SHOULD be a 2 letter ISO country code
-   (http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), case-insensitive.
-   Empty country fields or "ZZ" indicate unassigned reserved IPs for
+   The country field SHOULD be a 2 letter ISO country code conforming to
+   ISO 3166-1 alpha 2 ([ISO_3166_1]).  Parsers should treat this field
+   case-insensitively.  Empty country fields or a country identifier of
 
 
 
@@ -169,18 +169,20 @@ Kline & Duleba           Expires April 28, 2013                 [Page 3]
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
-   which existing geolocation information can, from the perspective of
-   the publisher, safely be discarded.
+   "ZZ" indicate unassigned reserved IPs for which other existing
+   geolocation information can, from the perspective of the publisher,
+   safely be discarded.
 
    Examples include "US" for the United States, "JP" for Japan, and "PL"
    for Poland.
 
 3.1.3.  Region field
 
-   Region field should be a ISO region code
-   (http://en.wikipedia.org/wiki/ISO_3166-2), case-insensitive.
+   Region field should be a ISO region code conforming to ISO 3166-2
+   ([ISO_3166_2]).  Parsers should treat this field case-insensitively.
 
-   Examples include "IE-D" for Dublin, Ireland.
+   Examples include "ID-RI" for the Riau province of Indonesia and
+   "NG-RI" for the Rivers province in Nigeria.
 
 3.1.4.  City field
 
@@ -213,8 +215,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
        2001:67c:64::/48,IE,IE-D,Dublin,
 
 
-4.  Finding Self-published IP Geolocation Feeds
-
 
 
 
@@ -224,6 +224,8 @@ Kline & Duleba           Expires April 28, 2013                 [Page 4]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
+
+4.  Finding Self-published IP Geolocation Feeds
 
 4.1.  Ad hoc 'well known' URIs
 
@@ -263,6 +265,24 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 8.1.  Normative References
 
+   [ISO_3166_1]
+              International Organization for Standardization, "ISO
+              3166-1 decoding table", <http://www.iso.org/iso/home/
+              standards/country_codes/iso-3166-1_decoding_table.htm>.
+
+   [ISO_3166_2]
+              International Organization for Standardization, "ISO 3166-
+              2:2007", <http://www.iso.org/iso/home/standards/
+
+
+
+Kline & Duleba           Expires April 28, 2013                 [Page 5]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
+              country_codes.htm#2012_iso3166-2>.
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
 
@@ -273,14 +293,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
               Separated Values (CSV) Files", RFC 4180, October 2005.
 
    [RFC4291]  Hinden, R. and S. Deering, "IP Version 6 Addressing
-
-
-
-Kline & Duleba           Expires April 28, 2013                 [Page 5]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
-
               Architecture", RFC 4291, February 2006.
 
    [RFC4632]  Fuller, V. and T. Li, "Classless Inter-domain Routing
@@ -297,29 +309,17 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 Authors' Addresses
 
    Erik Kline
-   Google, Inc.
+   Google Inc.
+   Roppongi 6-10-1, 26th Floor
+   Minato, Tokyo  106-6126
+   JP
+
+   Phone: +81 03 6384 9000
+   Email: ek@google.com
 
 
    Krzysztof Duleba
-   Google, Inc.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+   Google Inc.
 
 
 

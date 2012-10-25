@@ -28,13 +28,30 @@
 
   <front>
     <title>Self-published IP Geolocation Data</title>
+
     <author initials="E." surname="Kline" fullname="Erik Kline">
-      <organization>Google, Inc.</organization>
+      <organization>Google Inc.</organization>
+      <address>
+        <postal>
+          <street>Roppongi 6-10-1, 26th Floor</street>
+          <city>Minato</city>
+          <region>Tokyo</region>
+          <code>106-6126</code>
+          <country>JP</country>
+        </postal>
+
+        <phone>+81 03 6384 9000</phone>
+
+        <email>ek@google.com</email>
+      </address>
     </author>
+
     <author initials="K." surname="Duleba" fullname="Krzysztof Duleba">
-      <organization>Google, Inc.</organization>
+      <organization>Google Inc.</organization>
     </author>
+
     <date/>
+
     <abstract>
       <t>
 Self-published IP Geolocation Data: everybody wants something like this,
@@ -107,11 +124,11 @@ and "2001:db8::/32" for IPv6.
 
         <section title="Country field">
           <t>
-The country field SHOULD be a 2 letter ISO country code
-(http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), case-insensitive.  Empty
-country fields or "ZZ" indicate unassigned reserved IPs for which existing
-geolocation information can, from the perspective of the publisher, safely be
-discarded.
+The country field SHOULD be a 2 letter ISO country code conforming to ISO
+3166-1 alpha 2 (<xref target="ISO_3166_1"/>).  Parsers should treat this field
+case-insensitively.  Empty country fields or a country identifier of "ZZ"
+indicate unassigned reserved IPs for which other existing geolocation
+information can, from the perspective of the publisher, safely be discarded.
           </t>
           <t>
 Examples include "US" for the United States, "JP" for Japan, and "PL" for
@@ -121,11 +138,13 @@ Poland.
 
         <section title="Region field">
           <t>
-Region field should be a ISO region code
-(http://en.wikipedia.org/wiki/ISO_3166-2), case-insensitive.
+Region field should be a ISO region code conforming to ISO 3166-2
+(<xref target="ISO_3166_2"/>).  Parsers should treat this field
+case-insensitively.
           </t>
           <t>
-Examples include "IE-D" for Dublin, Ireland.
+Examples include "ID-RI" for the Riau province of Indonesia and "NG-RI" for
+the Rivers province in Nigeria.
           </t>
         </section>
 
@@ -232,6 +251,33 @@ Menno Schepers and Marco Hogewoning of the RIPE NCC.
 &rfc4291;
 
 &rfc4632;
+
+<reference
+ anchor="ISO_3166_1"
+ target="http://www.iso.org/iso/home/standards/country_codes/iso-3166-1_decoding_table.htm">
+  <front>
+    <title>ISO 3166-1 decoding table</title>
+    <author fullname="ISO 3166 Maintenance agency">
+      <organization abbrev="ISO">
+International Organization for Standardization
+      </organization>
+    </author>
+  </front>
+</reference>
+
+<reference
+ anchor="ISO_3166_2"
+ target="http://www.iso.org/iso/home/standards/country_codes.htm#2012_iso3166-2"
+ >
+  <front>
+    <title>ISO 3166-2:2007</title>
+    <author fullname="ISO 3166 Maintenance agency">
+      <organization abbrev="ISO">
+International Organization for Standardization
+      </organization>
+    </author>
+  </front>
+</reference>
       </references>
 
       <references title="Informative References">
