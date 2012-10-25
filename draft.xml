@@ -107,6 +107,18 @@ the requisite minimum number of commas SHOULD be present.
 Unparsable entries, in part or in full, SHOULD be discarded.
         </t>
 
+        <t>
+TODO(ek): longest matching prefix; also MUST use IP address matching, not string
+matching.
+        </t>
+
+        <t>
+TODO(ek): exact duplicate entries are erroneous, and consumer implementations MAY
+discard or overwrite prior duplicate entries with subsequent data.  Publisher
+MUST NOT rely upon any implementation-dependent behavior and instead SHOULD
+take measures to ensure one and only one entry per prefix.
+        </t>
+
         <section title="IP address field">
           <t>
 Each IP address field MUST be either a single IP address or an IP prefix in
@@ -197,6 +209,11 @@ network prefixes, which change location in accordance with each new meeting.
 
     <section title="Finding Self-published IP Geolocation Feeds">
       <section title="Ad hoc 'well known' URIs">
+        <t>
+        </t>
+      </section>
+
+      <section title="Publishing URIs in whois">
         <t>
         </t>
       </section>

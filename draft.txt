@@ -64,22 +64,22 @@ Table of Contents
    3.  Geolocation Information Feeds . . . . . . . . . . . . . . . . . 3
      3.1.  Specification . . . . . . . . . . . . . . . . . . . . . . . 3
        3.1.1.  IP address field  . . . . . . . . . . . . . . . . . . . 3
-       3.1.2.  Country field . . . . . . . . . . . . . . . . . . . . . 3
+       3.1.2.  Country field . . . . . . . . . . . . . . . . . . . . . 4
        3.1.3.  Region field  . . . . . . . . . . . . . . . . . . . . . 4
        3.1.4.  City field  . . . . . . . . . . . . . . . . . . . . . . 4
        3.1.5.  Postal code field . . . . . . . . . . . . . . . . . . . 4
      3.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . 4
    4.  Finding Self-published IP Geolocation Feeds . . . . . . . . . . 5
      4.1.  Ad hoc 'well known' URIs  . . . . . . . . . . . . . . . . . 5
-     4.2.  Using 'reverse' DNS . . . . . . . . . . . . . . . . . . . . 5
+     4.2.  Publishing URIs in whois  . . . . . . . . . . . . . . . . . 5
+     4.3.  Using 'reverse' DNS . . . . . . . . . . . . . . . . . . . . 5
    5.  Use Policies  . . . . . . . . . . . . . . . . . . . . . . . . . 5
    6.  Security Considerations . . . . . . . . . . . . . . . . . . . . 5
    7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . 5
-   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . . . 5
-     8.1.  Normative References  . . . . . . . . . . . . . . . . . . . 5
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+     8.1.  Normative References  . . . . . . . . . . . . . . . . . . . 6
      8.2.  Informative References  . . . . . . . . . . . . . . . . . . 6
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . . 6
-
 
 
 
@@ -147,11 +147,27 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
    Unparsable entries, in part or in full, SHOULD be discarded.
 
+   TODO(ek): longest matching prefix; also MUST use IP address matching,
+   not string matching.
+
+   TODO(ek): exact duplicate entries are erroneous, and consumer
+   implementations MAY discard or overwrite prior duplicate entries with
+   subsequent data.  Publisher MUST NOT rely upon any implementation-
+   dependent behavior and instead SHOULD take measures to ensure one and
+   only one entry per prefix.
+
 3.1.1.  IP address field
 
    Each IP address field MUST be either a single IP address or an IP
    prefix in CIDR notation in conformance with section 3.1 of [RFC4632]
    for IPv4 or section 2.3 of [RFC4291] for IPv6.
+
+
+
+Kline & Duleba           Expires April 28, 2013                 [Page 3]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
 
    Examples include "192.0.2.1" and "192.0.2.0/24" for IPv4 and "2001:
    db8::1" and "2001:db8::/32" for IPv6.
@@ -161,14 +177,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    The country field SHOULD be a 2 letter ISO country code conforming to
    ISO 3166-1 alpha 2 ([ISO_3166_1]).  Parsers should treat this field
    case-insensitively.  Empty country fields or a country identifier of
-
-
-
-Kline & Duleba           Expires April 28, 2013                 [Page 3]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
-
    "ZZ" indicate unassigned reserved IPs for which other existing
    geolocation information can, from the perspective of the publisher,
    safely be discarded.
@@ -209,14 +217,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
    Speculatively, RIPE has published geolocation information for their
    meeting network prefixes, which change location in accordance with
-   each new meeting.  [RIPE_NCC_GEO] at the time of writing contains:
-
-       193.0.24.0/21,IE,IE-D,Dublin,
-       2001:67c:64::/48,IE,IE-D,Dublin,
-
-
-
-
 
 
 
@@ -225,11 +225,19 @@ Kline & Duleba           Expires April 28, 2013                 [Page 4]
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
+   each new meeting.  [RIPE_NCC_GEO] at the time of writing contains:
+
+       193.0.24.0/21,IE,IE-D,Dublin,
+       2001:67c:64::/48,IE,IE-D,Dublin,
+
+
 4.  Finding Self-published IP Geolocation Feeds
 
 4.1.  Ad hoc 'well known' URIs
 
-4.2.  Using 'reverse' DNS
+4.2.  Publishing URIs in whois
+
+4.3.  Using 'reverse' DNS
 
    TODO(ek): document crazy _geo.4.3.2.1.in-addr.arpa TXT record format
    that basically returns "v=1 https://example.net/ipgeo/v1.csv".  Also:
@@ -263,6 +271,16 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 8.  References
 
+
+
+
+
+
+Kline & Duleba           Expires April 28, 2013                 [Page 5]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
 8.1.  Normative References
 
    [ISO_3166_1]
@@ -273,14 +291,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    [ISO_3166_2]
               International Organization for Standardization, "ISO 3166-
               2:2007", <http://www.iso.org/iso/home/standards/
-
-
-
-Kline & Duleba           Expires April 28, 2013                 [Page 5]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
-
               country_codes.htm#2012_iso3166-2>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
@@ -318,6 +328,15 @@ Authors' Addresses
    Email: ek@google.com
 
 
+
+
+
+
+Kline & Duleba           Expires April 28, 2013                 [Page 6]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
    Krzysztof Duleba
    Google Inc.
 
@@ -332,5 +351,42 @@ Authors' Addresses
 
 
 
-Kline & Duleba           Expires April 28, 2013                 [Page 6]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kline & Duleba           Expires April 28, 2013                 [Page 7]
 
