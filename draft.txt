@@ -60,29 +60,29 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . . . 3
-   2.  Requirements notation . . . . . . . . . . . . . . . . . . . . . 3
-   3.  Geolocation Information Feeds . . . . . . . . . . . . . . . . . 3
-     3.1.  Specification . . . . . . . . . . . . . . . . . . . . . . . 3
-       3.1.1.  IP address field  . . . . . . . . . . . . . . . . . . . 3
-       3.1.2.  Country field . . . . . . . . . . . . . . . . . . . . . 4
-       3.1.3.  Region field  . . . . . . . . . . . . . . . . . . . . . 4
-       3.1.4.  City field  . . . . . . . . . . . . . . . . . . . . . . 4
-       3.1.5.  Postal code field . . . . . . . . . . . . . . . . . . . 4
-     3.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . 4
-   4.  Finding Self-published IP Geolocation Feeds . . . . . . . . . . 5
-     4.1.  Ad hoc 'well known' URIs  . . . . . . . . . . . . . . . . . 5
-     4.2.  Publishing URIs in whois  . . . . . . . . . . . . . . . . . 5
-     4.3.  Using 'reverse' DNS . . . . . . . . . . . . . . . . . . . . 5
-   5.  Use Policies  . . . . . . . . . . . . . . . . . . . . . . . . . 5
-   6.  Security Considerations . . . . . . . . . . . . . . . . . . . . 5
-   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . 5
-   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . . . 6
-     8.1.  Normative References  . . . . . . . . . . . . . . . . . . . 6
-     8.2.  Informative References  . . . . . . . . . . . . . . . . . . 6
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . . 6
-
-
-
+     1.1.  Motivation  . . . . . . . . . . . . . . . . . . . . . . . . 3
+     1.2.  Requirements notation . . . . . . . . . . . . . . . . . . . 3
+   2.  Self-published IP geolocation feeds . . . . . . . . . . . . . . 3
+     2.1.  Specification . . . . . . . . . . . . . . . . . . . . . . . 3
+       2.1.1.  IP address field  . . . . . . . . . . . . . . . . . . . 4
+       2.1.2.  Country field . . . . . . . . . . . . . . . . . . . . . 4
+       2.1.3.  Region field  . . . . . . . . . . . . . . . . . . . . . 4
+       2.1.4.  City field  . . . . . . . . . . . . . . . . . . . . . . 4
+       2.1.5.  Postal code field . . . . . . . . . . . . . . . . . . . 4
+     2.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . 4
+   3.  Finding self-published IP geolocation feeds . . . . . . . . . . 5
+     3.1.  Ad hoc 'well known' URIs  . . . . . . . . . . . . . . . . . 5
+     3.2.  Publishing URIs in whois  . . . . . . . . . . . . . . . . . 5
+     3.3.  Using 'reverse' DNS . . . . . . . . . . . . . . . . . . . . 5
+   4.  Consuming self-published IP geolocation feeds . . . . . . . . . 5
+     4.1.  Acceptable use implied  . . . . . . . . . . . . . . . . . . 5
+     4.2.  Trust and verification  . . . . . . . . . . . . . . . . . . 5
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . . . 6
+   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . 6
+   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+     7.1.  Normative References  . . . . . . . . . . . . . . . . . . . 6
+     7.2.  Informative References  . . . . . . . . . . . . . . . . . . 6
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . . 7
 
 
 
@@ -115,17 +115,18 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 1.  Introduction
 
+1.1.  Motivation
 
-2.  Requirements notation
+1.2.  Requirements notation
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
    document are to be interpreted as described in [RFC2119].
 
 
-3.  Geolocation Information Feeds
+2.  Self-published IP geolocation feeds
 
-3.1.  Specification
+2.1.  Specification
 
    For operational simplicity, every feed should contain data about all
    IP addresses the provider wants to publish.  Alternatives, like
@@ -145,7 +146,8 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    IP address fields are mandatory, the rest is optional (can be empty),
    though the requisite minimum number of commas SHOULD be present.
 
-   Unparsable entries, in part or in full, SHOULD be discarded.
+   Entries which fail to parse, either in part or in full, SHOULD be
+   discarded.
 
    TODO(ek): longest matching prefix; also MUST use IP address matching,
    not string matching.
@@ -156,11 +158,9 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    dependent behavior and instead SHOULD take measures to ensure one and
    only one entry per prefix.
 
-3.1.1.  IP address field
 
-   Each IP address field MUST be either a single IP address or an IP
-   prefix in CIDR notation in conformance with section 3.1 of [RFC4632]
-   for IPv4 or section 2.3 of [RFC4291] for IPv6.
+
+
 
 
 
@@ -169,10 +169,16 @@ Kline & Duleba           Expires April 28, 2013                 [Page 3]
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
+2.1.1.  IP address field
+
+   Each IP address field MUST be either a single IP address or an IP
+   prefix in CIDR notation in conformance with section 3.1 of [RFC4632]
+   for IPv4 or section 2.3 of [RFC4291] for IPv6.
+
    Examples include "192.0.2.1" and "192.0.2.0/24" for IPv4 and "2001:
    db8::1" and "2001:db8::/32" for IPv6.
 
-3.1.2.  Country field
+2.1.2.  Country field
 
    The country field SHOULD be a 2 letter ISO country code conforming to
    ISO 3166-1 alpha 2 ([ISO_3166_1]).  Parsers should treat this field
@@ -184,7 +190,7 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    Examples include "US" for the United States, "JP" for Japan, and "PL"
    for Poland.
 
-3.1.3.  Region field
+2.1.3.  Region field
 
    Region field should be a ISO region code conforming to ISO 3166-2
    ([ISO_3166_2]).  Parsers should treat this field case-insensitively.
@@ -192,31 +198,25 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    Examples include "ID-RI" for the Riau province of Indonesia and
    "NG-RI" for the Rivers province in Nigeria.
 
-3.1.4.  City field
+2.1.4.  City field
 
    City field should be free text, excluding comma (',').
 
-   Examples include "Dublin", "New York", and "Sao Paulo".
+   Examples include "Dublin", "New York", and "Sao Paulo" (i.e.  "S"
+   followed by 0xc3, 0xa3, and "a Paulo").
 
-3.1.5.  Postal code field
+2.1.5.  Postal code field
 
    Postal code field should be free text, excluding comma (',').
 
    Examples include "106-6126" (in Minato ward, Tokyo, Japan).
 
-3.2.  Examples
+2.2.  Examples
 
    Example entries using different IP address formats and describing
    locations at country, region, city and postal code granularity level,
    respectively:
 
-       192.0.2.0/25,US,US-AL,,
-       192.0.2.5,US,US-AL,Alabaster,
-       192.0.2.128/25,PL,PL-MZ,,02-784
-       2001:db8:cafe::/48,PL,PL-MZ,,02-784
-
-   Speculatively, RIPE has published geolocation information for their
-   meeting network prefixes, which change location in accordance with
 
 
 
@@ -225,51 +225,51 @@ Kline & Duleba           Expires April 28, 2013                 [Page 4]
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
+       192.0.2.0/25,US,US-AL,,
+       192.0.2.5,US,US-AL,Alabaster,
+       192.0.2.128/25,PL,PL-MZ,,02-784
+       2001:db8:cafe::/48,PL,PL-MZ,,02-784
+
+   Speculatively, RIPE has published geolocation information for their
+   meeting network prefixes, which change location in accordance with
    each new meeting.  [RIPE_NCC_GEO] at the time of writing contains:
 
        193.0.24.0/21,IE,IE-D,Dublin,
        2001:67c:64::/48,IE,IE-D,Dublin,
 
 
-4.  Finding Self-published IP Geolocation Feeds
+3.  Finding self-published IP geolocation feeds
 
-4.1.  Ad hoc 'well known' URIs
+3.1.  Ad hoc 'well known' URIs
 
-4.2.  Publishing URIs in whois
+3.2.  Publishing URIs in whois
 
-4.3.  Using 'reverse' DNS
+3.3.  Using 'reverse' DNS
 
    TODO(ek): document crazy _geo.4.3.2.1.in-addr.arpa TXT record format
    that basically returns "v=1 https://example.net/ipgeo/v1.csv".  Also:
    can ask the root of the zone in the SOA.
 
 
-5.  Use Policies
+4.  Consuming self-published IP geolocation feeds
 
-   This incorporates no mechanism to communicate acceptable use policies
-   for self-published data.  Publication itself is inferred as a desire
-   by the publisher for the data to be freely consumed, similar to the
-   publication of hostnames in the DNS.
+4.1.  Acceptable use implied
 
-   TODO(ek): That having been said, there are implications of trusting
-   geolocation for IP addresses for which the publishing authority is
-   not authoritative.  Comment about "caveat emptor".
+   This proposal does not incorporate a mechanism to communicate
+   acceptable use policies for self-published data.  Publication itself
+   is inferred as a desire by the publisher for the data to be usefully
+   consumed, similar to the publication of hostnames in the DNS.
 
+4.2.  Trust and verification
 
-6.  Security Considerations
+   Consumers of self-published IP geolocation feeds SHOULD perform some
+   form of verification that the publisher is in fact authoritative for
+   the addresses in the feed.  The actual means of verification is
+   dependent upon the way in which the feed is discovered.  Ad hoc
+   shared URIs, for example, will likely require and ad hoc verification
+   process.  Automated means of feed discovery SHOULD have an
+   accompanying automated means of verification.
 
-   There is no true security in the obscurity of the location of any
-   given IP address.  Publication of this data increases the ease with
-   which such location data may be exploited, but fundamentally opens no
-   new attack vectors.
-
-
-7.  Acknowledgements
-
-   Menno Schepers and Marco Hogewoning of the RIPE NCC.
-
-
-8.  References
 
 
 
@@ -281,7 +281,22 @@ Kline & Duleba           Expires April 28, 2013                 [Page 5]
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
-8.1.  Normative References
+5.  Security Considerations
+
+   There is no true security in the obscurity of the location of any
+   given IP address.  Publication of this data increases the ease with
+   which such location data may be exploited, but fundamentally opens no
+   new attack vectors.
+
+
+6.  Acknowledgements
+
+   Menno Schepers and Marco Hogewoning of the RIPE NCC.
+
+
+7.  References
+
+7.1.  Normative References
 
    [ISO_3166_1]
               International Organization for Standardization, "ISO
@@ -309,11 +324,17 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
               (CIDR): The Internet Address Assignment and Aggregation
               Plan", BCP 122, RFC 4632, August 2006.
 
-8.2.  Informative References
+7.2.  Informative References
 
    [RIPE_NCC_GEO]
-              Schepers, M., "RIPE Meeting Geolocation Data",
+              Schepers, M., "RIPE NCC Meeting Geolocation Data",
               <http://meetings.ripe.net/geo/google.csv>.
+
+
+
+Kline & Duleba           Expires April 28, 2013                 [Page 6]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
 Authors' Addresses
@@ -328,29 +349,8 @@ Authors' Addresses
    Email: ek@google.com
 
 
-
-
-
-
-Kline & Duleba           Expires April 28, 2013                 [Page 6]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
-
    Krzysztof Duleba
    Google Inc.
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

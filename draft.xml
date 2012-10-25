@@ -62,19 +62,21 @@ really.
 
   <middle>
     <section title="Introduction">
-      <t>
-      </t>
-    </section>
+      <section title="Motivation">
+        <t>
+        </t>
+      </section>
 
-    <section title="Requirements notation">
-      <t>
+      <section title="Requirements notation">
+        <t>
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
 interpreted as described in <xref target="RFC2119"/>.
-      </t>
+        </t>
+      </section>
     </section>
 
-    <section title="Geolocation Information Feeds">
+    <section title="Self-published IP geolocation feeds">
       <section title="Specification">
         <t>
 For operational simplicity, every feed should contain data about all IP
@@ -104,7 +106,7 @@ the requisite minimum number of commas SHOULD be present.
         </t>
 
         <t>
-Unparsable entries, in part or in full, SHOULD be discarded.
+Entries which fail to parse, either in part or in full, SHOULD be discarded.
         </t>
 
         <t>
@@ -165,7 +167,8 @@ the Rivers province in Nigeria.
 City field should be free text, excluding comma (',').
           </t>
           <t>
-Examples include "Dublin", "New York", and "São Paulo".
+Examples include "Dublin", "New York", and "São Paulo" (i.e. "S" followed by
+0xc3, 0xa3, and "a Paulo").
           </t>
         </section>
 
@@ -207,7 +210,7 @@ network prefixes, which change location in accordance with each new meeting.
       </section>
     </section>
 
-    <section title="Finding Self-published IP Geolocation Feeds">
+    <section title="Finding self-published IP geolocation feeds">
       <section title="Ad hoc 'well known' URIs">
         <t>
         </t>
@@ -227,18 +230,26 @@ root of the zone in the SOA.
       </section>
     </section>
 
-    <section title="Use Policies">
-      <t>
-This incorporates no mechanism to communicate acceptable use policies for
-self-published data.  Publication itself is inferred as a desire by the
-publisher for the data to be freely consumed, similar to the publication of
-hostnames in the DNS.
-      </t>
-      <t>
-TODO(ek): That having been said, there are implications of trusting geolocation
-for IP addresses for which the publishing authority is not authoritative.
-Comment about "caveat emptor".
-      </t>
+    <section title="Consuming self-published IP geolocation feeds">
+      <section title="Acceptable use implied">
+        <t>
+This proposal does not incorporate a mechanism to communicate acceptable
+use policies for self-published data.  Publication itself is inferred as
+a desire by the publisher for the data to be usefully consumed, similar
+to the publication of hostnames in the DNS.
+        </t>
+      </section>
+
+      <section title="Trust and verification">
+        <t>
+Consumers of self-published IP geolocation feeds SHOULD perform some form
+of verification that the publisher is in fact authoritative for the
+addresses in the feed.  The actual means of verification is dependent
+upon the way in which the feed is discovered.  Ad hoc shared URIs, for example,
+will likely require and ad hoc verification process.  Automated means of feed
+discovery SHOULD have an accompanying automated means of verification.
+        </t>
+      </section>
     </section>
 
     <section title="Security Considerations">
@@ -300,14 +311,14 @@ International Organization for Standardization
       <references title="Informative References">
 <reference target="http://meetings.ripe.net/geo/google.csv"
            anchor="RIPE_NCC_GEO">
-<front>
-  <title>RIPE Meeting Geolocation Data</title>
-  <author fullname="Menno Schepers" initials="M." surname="Schepers">
-    <organization abbrev="RIPE NCC">
+  <front>
+    <title>RIPE NCC Meeting Geolocation Data</title>
+    <author fullname="Menno Schepers" initials="M." surname="Schepers">
+      <organization abbrev="RIPE NCC">
 Réseaux IP Européens Network Coordination Centre
-    </organization>
-  </author>
-</front>
+      </organization>
+    </author>
+  </front>
 </reference>
       </references>
   </back>
