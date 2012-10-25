@@ -3,8 +3,8 @@
 
 Network Working Group                                           E. Kline
 Internet-Draft                                                 K. Duleba
-Intended status: Experimental                           October 24, 2012
-Expires: April 27, 2013
+Intended status: Experimental                               Google, Inc.
+Expires: April 28, 2013                                 October 25, 2012
 
 
                                An Example
@@ -29,7 +29,7 @@ Status of this Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on April 27, 2013.
+   This Internet-Draft will expire on April 28, 2013.
 
 Copyright Notice
 
@@ -52,7 +52,7 @@ Copyright Notice
 
 
 
-Kline & Duleba           Expires April 27, 2013                 [Page 1]
+Kline & Duleba           Expires April 28, 2013                 [Page 1]
 
 Internet-Draft                 An Example                   October 2012
 
@@ -64,9 +64,13 @@ Table of Contents
    3.  Geolocation Information Feeds . . . . . . . . . . . . . . . . . 3
      3.1.  Specification . . . . . . . . . . . . . . . . . . . . . . . 3
      3.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . 3
-   4.  Acceptable Use Policies . . . . . . . . . . . . . . . . . . . . 3
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . . . 4
-   6.  Normative References  . . . . . . . . . . . . . . . . . . . . . 4
+   4.  Finding Self-published IP Geolocation Feeds . . . . . . . . . . 3
+     4.1.  Ad hoc 'well known' URIs  . . . . . . . . . . . . . . . . . 4
+     4.2.  Using 'reverse' DNS . . . . . . . . . . . . . . . . . . . . 4
+   5.  Acceptable Use Policies . . . . . . . . . . . . . . . . . . . . 4
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . . . 4
+   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . 4
+   8.  Normative References  . . . . . . . . . . . . . . . . . . . . . 4
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . . 4
 
 
@@ -104,11 +108,7 @@ Table of Contents
 
 
 
-
-
-
-
-Kline & Duleba           Expires April 27, 2013                 [Page 2]
+Kline & Duleba           Expires April 28, 2013                 [Page 2]
 
 Internet-Draft                 An Example                   October 2012
 
@@ -146,8 +146,8 @@ Internet-Draft                 An Example                   October 2012
    Empty country fields or "ZZ" indicate unassigned reserved IPs.
    Region field should be a ISO region code
    (http://en.wikipedia.org/wiki/ISO_3166-2) City field should be free
-   text (excluding ",").  Postal code field should be free text
-   (excluding ",").
+   text, excluding comma (',').  Postal code field should be free text,
+   excluding comma (',').
 
 3.2.  Examples
 
@@ -158,23 +158,31 @@ Internet-Draft                 An Example                   October 2012
    http://meetings.ripe.net/geo/google.csv
 
 
-4.  Acceptable Use Policies
-
-   This incorporates no mechanism to communicate acceptable use policies
+4.  Finding Self-published IP Geolocation Feeds
 
 
 
-Kline & Duleba           Expires April 27, 2013                 [Page 3]
+
+
+Kline & Duleba           Expires April 28, 2013                 [Page 3]
 
 Internet-Draft                 An Example                   October 2012
 
 
+4.1.  Ad hoc 'well known' URIs
+
+4.2.  Using 'reverse' DNS
+
+
+5.  Acceptable Use Policies
+
+   This incorporates no mechanism to communicate acceptable use policies
    for self-published data.  Publication itself is inferred as a desire
    by the publisher for the data to be freely consumed, similar to the
    publication of hostnames in the DNS.
 
 
-5.  Security Considerations
+6.  Security Considerations
 
    There is no true security in the obscurity of the location of any
    given IP address.  Publication of this data increases the ease with
@@ -182,7 +190,10 @@ Internet-Draft                 An Example                   October 2012
    new attack vectors.
 
 
-6.  Normative References
+7.  Acknowledgements
+
+
+8.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
@@ -197,9 +208,11 @@ Internet-Draft                 An Example                   October 2012
 Authors' Addresses
 
    Erik Kline
+   Google, Inc.
 
 
    Krzysztof Duleba
+   Google, Inc.
 
 
 
@@ -207,18 +220,5 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-Kline & Duleba           Expires April 27, 2013                 [Page 4]
+Kline & Duleba           Expires April 28, 2013                 [Page 4]
 
