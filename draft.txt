@@ -4,7 +4,7 @@
 Network Working Group                                           E. Kline
 Internet-Draft                                                 K. Duleba
 Intended status: Experimental                                Google Inc.
-Expires: April 28, 2013                                 October 25, 2012
+Expires: April 29, 2013                                 October 26, 2012
 
 
                    Self-published IP Geolocation Data
@@ -30,7 +30,7 @@ Status of this Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on April 28, 2013.
+   This Internet-Draft will expire on April 29, 2013.
 
 Copyright Notice
 
@@ -52,7 +52,7 @@ Copyright Notice
 
 
 
-Kline & Duleba           Expires April 28, 2013                 [Page 1]
+Kline & Duleba           Expires April 29, 2013                 [Page 1]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
@@ -81,7 +81,7 @@ Table of Contents
    6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . 6
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . . . 6
      7.1.  Normative References  . . . . . . . . . . . . . . . . . . . 6
-     7.2.  Informative References  . . . . . . . . . . . . . . . . . . 6
+     7.2.  Informative References  . . . . . . . . . . . . . . . . . . 7
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . . 7
 
 
@@ -108,7 +108,7 @@ Table of Contents
 
 
 
-Kline & Duleba           Expires April 28, 2013                 [Page 2]
+Kline & Duleba           Expires April 29, 2013                 [Page 2]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
@@ -164,7 +164,7 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
 
-Kline & Duleba           Expires April 28, 2013                 [Page 3]
+Kline & Duleba           Expires April 29, 2013                 [Page 3]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
@@ -220,7 +220,7 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
 
-Kline & Duleba           Expires April 28, 2013                 [Page 4]
+Kline & Duleba           Expires April 29, 2013                 [Page 4]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
@@ -236,6 +236,13 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
        193.0.24.0/21,IE,IE-D,Dublin,
        2001:67c:64::/48,IE,IE-D,Dublin,
+
+   Similarly, ICANN has published geolocation information for their
+   portable meeting network prefixes.  [ICANN_GEO] at the time of
+   writing contains:
+
+       199.91.192.0/21,US,US-CA,Los Angeles,
+       2620:f:8000::/48,US,US-CA,Los Angeles,
 
 
 3.  Finding self-published IP geolocation feeds
@@ -266,19 +273,17 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    form of verification that the publisher is in fact authoritative for
    the addresses in the feed.  The actual means of verification is
    dependent upon the way in which the feed is discovered.  Ad hoc
+
+
+
+Kline & Duleba           Expires April 29, 2013                 [Page 5]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
    shared URIs, for example, will likely require and ad hoc verification
    process.  Automated means of feed discovery SHOULD have an
    accompanying automated means of verification.
-
-
-
-
-
-
-
-Kline & Duleba           Expires April 28, 2013                 [Page 5]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
 5.  Security Considerations
@@ -324,17 +329,24 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
               (CIDR): The Internet Address Assignment and Aggregation
               Plan", BCP 122, RFC 4632, August 2006.
 
+
+
+
+Kline & Duleba           Expires April 29, 2013                 [Page 6]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
 7.2.  Informative References
+
+   [ICANN_GEO]
+              Internet Corporation For Assigned Names and Numbers,
+              "ICANN Meeting Geolocation Data",
+              <https://registration.icann.org/geo/google.csv>.
 
    [RIPE_NCC_GEO]
               Schepers, M., "RIPE NCC Meeting Geolocation Data",
               <http://meetings.ripe.net/geo/google.csv>.
-
-
-
-Kline & Duleba           Expires April 28, 2013                 [Page 6]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
 Authors' Addresses
@@ -376,17 +388,5 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-Kline & Duleba           Expires April 28, 2013                 [Page 7]
+Kline & Duleba           Expires April 29, 2013                 [Page 7]
 
