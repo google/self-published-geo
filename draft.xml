@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+    <!ENTITY rfc1035 PUBLIC ""
+      "http://xml.resource.org/public/rfc/bibxml/reference.RFC.1035.xml">
     <!ENTITY rfc2119 PUBLIC ""
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
+    <!ENTITY rfc2616 PUBLIC ""
+      "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2616.xml">
+    <!ENTITY rfc2818 PUBLIC ""
+      "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2818.xml">
     <!ENTITY rfc3629 PUBLIC ""
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3629.xml">
     <!ENTITY rfc4180 PUBLIC ""
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4180.xml">
     <!ENTITY rfc4291 PUBLIC ""
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4291.xml">
+    <!ENTITY rfc4408 PUBLIC ""
+      "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4408.xml">
     <!ENTITY rfc4632 PUBLIC ""
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4632.xml">
 ]>
@@ -54,8 +62,17 @@
 
     <abstract>
       <t>
-Self-published IP Geolocation Data: everybody wants something like this,
-really.
+This document records a format whereby a network operator can publish a
+mapping of IP address ranges to simplified geolocation information,
+colloquially termed a geolocation "feed".  Consumers can poll and parse
+these feeds to update or merge with other geolocation data sources and
+procedures.
+      </t>
+      <t>
+Some technical organizations operating networks that move from one meeting
+location to the next have already experimentally published small geolocation
+feeds.  At least one consumer (Google) has incorporated these ad hoc feeds
+into a geolocation data pipeline.
       </t>
     </abstract>
   </front>
@@ -64,6 +81,7 @@ really.
     <section title="Introduction">
       <section title="Motivation">
         <t>
+TODO(ek).
         </t>
       </section>
 
@@ -77,6 +95,10 @@ interpreted as described in <xref target="RFC2119"/>.
     </section>
 
     <section title="Self-published IP geolocation feeds">
+      <t>
+TODO(ek).
+      </t>
+
       <section title="Specification">
         <t>
 For operational simplicity, every feed should contain data about all IP
@@ -95,9 +117,11 @@ Blank lines are similarly ignored.
         <t>
 Feeds MUST be in comma separated values format as described in
 <xref target="RFC4180"/>.  Each feed entry is a text line of the form:
-          <list style="empty">
-<t>IP_address_or_cidr,country,region,city,postal_code</t>
-          </list>
+          <figure>
+            <artwork>
+        IP_address_or_cidr,country,region,city,postal_code
+            </artwork>
+          </figure>
         </t>
 
         <t>
@@ -139,7 +163,7 @@ and "2001:db8::/32" for IPv6.
         <section title="Country field">
           <t>
 The country field SHOULD be a 2 letter ISO country code conforming to ISO
-3166-1 alpha 2 (<xref target="ISO_3166_1"/>).  Parsers should treat this field
+3166-1 alpha 2 <xref target="ISO.3166.1"/>.  Parsers should treat this field
 case-insensitively.  Empty country fields or a country identifier of "ZZ"
 indicate unassigned reserved IPs for which other existing geolocation
 information can, from the perspective of the publisher, safely be discarded.
@@ -152,8 +176,8 @@ Poland.
 
         <section title="Region field">
           <t>
-Region field should be a ISO region code conforming to ISO 3166-2
-(<xref target="ISO_3166_2"/>).  Parsers should treat this field
+The region field should be a ISO region code conforming to ISO 3166-2
+<xref target="ISO.3166.2"/>.  Parsers should treat this field
 case-insensitively.
           </t>
           <t>
@@ -164,17 +188,17 @@ the Rivers province in Nigeria.
 
         <section title="City field">
           <t>
-City field should be free text, excluding comma (',').
+The city field should be free text, excluding comma (',').
           </t>
           <t>
-Examples include "Dublin", "New York", and "São Paulo" (i.e. "S" followed by
-0xc3, 0xa3, and "a Paulo").
+Examples include "Dublin", "New York", and "São Paulo", specifically
+"S" followed by 0xc3, 0xa3, and "a Paulo".
           </t>
         </section>
 
         <section title="Postal code field">
           <t>
-Postal code field should be free text, excluding comma (',').
+The postal code field should be free text, excluding comma (',').
           </t>
           <t>
 Examples include "106-6126" (in Minato ward, Tokyo, Japan).
@@ -197,7 +221,7 @@ at country, region, city and postal code granularity level, respectively:
         </t>
 
         <t>
-Speculatively, RIPE has published geolocation information for their meeting
+Experimentally, RIPE has published geolocation information for their meeting
 network prefixes, which change location in accordance with each new meeting.
 <xref target="RIPE_NCC_GEO"/> at the time of writing contains:
           <figure>
@@ -223,13 +247,24 @@ contains:
     </section>
 
     <section title="Finding self-published IP geolocation feeds">
+      <t>
+TODO(ek).
+      </t>
+      <t>
+The integrity of published information SHOULD be protected by securing the
+means of publication, for example by using HTTP over TLS
+<xref target="RFC2818"/>.  Whenever possible, consumers SHOULD prefer
+retrieving geolocation feeds in a manner that guarantees integrity of the feed.
+      </t>
       <section title="Ad hoc 'well known' URIs">
         <t>
+TODO(ek).
         </t>
       </section>
 
       <section title="Publishing URIs in whois">
         <t>
+TODO(ek).
         </t>
       </section>
 
@@ -248,7 +283,8 @@ root of the zone in the SOA.
 This proposal does not incorporate a mechanism to communicate acceptable
 use policies for self-published data.  Publication itself is inferred as
 a desire by the publisher for the data to be usefully consumed, similar
-to the publication of hostnames in the DNS.
+to the publication of information like hostnames, cryptographic keys, and
+SPF records <xref target="RFC4408"/> in the DNS.
         </t>
       </section>
 
@@ -258,24 +294,59 @@ Consumers of self-published IP geolocation feeds SHOULD perform some form
 of verification that the publisher is in fact authoritative for the
 addresses in the feed.  The actual means of verification is dependent
 upon the way in which the feed is discovered.  Ad hoc shared URIs, for example,
-will likely require and ad hoc verification process.  Automated means of feed
+will likely require an ad hoc verification process.  Automated means of feed
 discovery SHOULD have an accompanying automated means of verification.
+        </t>
+        <t>
+A consumer MUST only trust geolocation information for IP addresses or ranges
+for which the publisher has been verified as administratively authoritative.
+All other geolocation feed entries MUST be ignored and SHOULD be logged for
+further administrative review.
+        </t>
+      </section>
+
+      <section title="Refreshing feed information">
+        <t>
+As a publisher can change geolocation data at any time and without
+notification consumers SHOULD implement mechanisms to periodically refresh
+local copies of feed data.  If the feed discovery mechanism offers hints
+about data validity time (e.g. the TTL field of the DNS Resource Record which
+identified a feed (section 3.2.1 of <xref target="RFC1035"/>)), then the given
+feed SHOULD be refreshed before the expiration of this validity timer.
+        </t>
+        <t>
+For feeds available via HTTPS (or HTTP), the publisher MAY communicate
+refresh timing information by means of the standard HTTP expiration model
+(<eref target="http://tools.ietf.org/html/rfc2616#section-13.2">section
+13.2</eref> of <xref target="RFC2616"/>).  Specifically, publishers can
+include either an
+<eref target="http://tools.ietf.org/html/rfc2616#section-14.21">Expires
+header</eref> or a
+<eref target="http://tools.ietf.org/html/rfc2616#section-14.9">Cache-Control
+header</eref> specifying the max-age.  Where practical, consumers SHOULD
+refresh feed information before the expiry time is reached.
+        </t>
+        <t>
+In the absence of any other refresh timing information it is recommended that
+consumers SHOULD refresh feeds no less often than weekly.
         </t>
       </section>
     </section>
 
     <section title="Security Considerations">
       <t>
-There is no true security in the obscurity of the location of any given IP
-address.  Publication of this data increases the ease with which such
-location data may be exploited, but fundamentally opens no new attack
-vectors.
+As there is no true security in the obscurity of the location of any given
+IP address, self-publication of this data fundamentally opens no new attack
+vectors.  Self-published data merely increases the ease with which such
+location data might be exploited.
       </t>
     </section>
 
     <section title="Acknowledgements">
       <t>
-Menno Schepers and Marco Hogewoning of the RIPE NCC.
+The authors would like to express their gratitude to reviewers and early
+implementers, including but not limited to Richard L. Barnes,
+Marco Hogewoning, Menno Schepers, and Bjoern A. Zeeb.
       </t>
     </section>
   </middle>
@@ -283,6 +354,8 @@ Menno Schepers and Marco Hogewoning of the RIPE NCC.
   <back>
       <references title="Normative References">
 &rfc2119;
+
+&rfc2616;
 
 &rfc3629;
 
@@ -293,7 +366,7 @@ Menno Schepers and Marco Hogewoning of the RIPE NCC.
 &rfc4632;
 
 <reference
- anchor="ISO_3166_1"
+ anchor="ISO.3166.1"
  target="http://www.iso.org/iso/home/standards/country_codes/iso-3166-1_decoding_table.htm">
   <front>
     <title>ISO 3166-1 decoding table</title>
@@ -306,7 +379,7 @@ International Organization for Standardization
 </reference>
 
 <reference
- anchor="ISO_3166_2"
+ anchor="ISO.3166.2"
  target="http://www.iso.org/iso/home/standards/country_codes.htm#2012_iso3166-2"
  >
   <front>
@@ -321,7 +394,13 @@ International Organization for Standardization
       </references>
 
       <references title="Informative References">
-<reference target="http://meetings.ripe.net/geo/google.csv"
+&rfc1035;
+
+&rfc2818;
+
+&rfc4408;
+
+<reference target="https://meetings.ripe.net/geo/google.csv"
            anchor="RIPE_NCC_GEO">
   <front>
     <title>RIPE NCC Meeting Geolocation Data</title>
@@ -346,5 +425,4 @@ Internet Corporation For Assigned Names and Numbers
 </reference>
       </references>
   </back>
-
 </rfc>
