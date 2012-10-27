@@ -4,7 +4,7 @@
 Network Working Group                                           E. Kline
 Internet-Draft                                                 K. Duleba
 Intended status: Experimental                                Google Inc.
-Expires: April 29, 2013                                 October 26, 2012
+Expires: April 30, 2013                                 October 27, 2012
 
 
                    Self-published IP Geolocation Data
@@ -38,7 +38,7 @@ Status of this Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on April 29, 2013.
+   This Internet-Draft will expire on April 30, 2013.
 
 Copyright Notice
 
@@ -52,7 +52,7 @@ Copyright Notice
 
 
 
-Kline & Duleba           Expires April 29, 2013                 [Page 1]
+Kline & Duleba           Expires April 30, 2013                 [Page 1]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
@@ -71,17 +71,14 @@ Table of Contents
      1.2.  Requirements notation . . . . . . . . . . . . . . . . . . . 3
    2.  Self-published IP geolocation feeds . . . . . . . . . . . . . . 3
      2.1.  Specification . . . . . . . . . . . . . . . . . . . . . . . 3
-       2.1.1.  IP address field  . . . . . . . . . . . . . . . . . . . 4
-       2.1.2.  Country field . . . . . . . . . . . . . . . . . . . . . 4
-       2.1.3.  Region field  . . . . . . . . . . . . . . . . . . . . . 4
-       2.1.4.  City field  . . . . . . . . . . . . . . . . . . . . . . 4
-       2.1.5.  Postal code field . . . . . . . . . . . . . . . . . . . 4
-     2.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . 4
+       2.1.1.  Geolocation feed individual entry fields  . . . . . . . 3
+       2.1.2.  Parsing and matching  . . . . . . . . . . . . . . . . . 4
+     2.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . 5
    3.  Finding self-published IP geolocation feeds . . . . . . . . . . 5
      3.1.  Ad hoc 'well known' URIs  . . . . . . . . . . . . . . . . . 5
      3.2.  Publishing URIs in whois  . . . . . . . . . . . . . . . . . 5
-     3.3.  Using 'reverse' DNS . . . . . . . . . . . . . . . . . . . . 5
-   4.  Consuming self-published IP geolocation feeds . . . . . . . . . 5
+     3.3.  Using 'reverse' DNS . . . . . . . . . . . . . . . . . . . . 6
+   4.  Consuming self-published IP geolocation feeds . . . . . . . . . 6
      4.1.  Acceptable use implied  . . . . . . . . . . . . . . . . . . 6
      4.2.  Trust and verification  . . . . . . . . . . . . . . . . . . 6
      4.3.  Refreshing feed information . . . . . . . . . . . . . . . . 6
@@ -108,7 +105,10 @@ Table of Contents
 
 
 
-Kline & Duleba           Expires April 29, 2013                 [Page 2]
+
+
+
+Kline & Duleba           Expires April 30, 2013                 [Page 2]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
@@ -147,83 +147,91 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
            IP_address_or_cidr,country,region,city,postal_code
 
-   IP address fields are mandatory, the rest is optional (can be empty),
-   though the requisite minimum number of commas SHOULD be present.
+   IP address fields are mandatory, all others are optional (can be
+   empty), though the requisite minimum number of commas SHOULD be
+   present.
+
+2.1.1.  Geolocation feed individual entry fields
+
+2.1.1.1.  IP address
+
+   Mandatory.  Each IP address field MUST be either a single IP address
+   or an IP prefix in CIDR notation in conformance with section 3.1 of
+   [RFC4632] for IPv4 or section 2.3 of [RFC4291] for IPv6.
+
+   Examples include "192.0.2.1" and "192.0.2.0/24" for IPv4 and "2001:
+   db8::1" and "2001:db8::/32" for IPv6.
+
+
+
+Kline & Duleba           Expires April 30, 2013                 [Page 3]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
+2.1.1.2.  Country
+
+   Optional.  The country field SHOULD be a 2 letter ISO country code
+   conforming to ISO 3166-1 alpha 2 [ISO.3166.1].  Parsers should treat
+   this field case-insensitively.  Empty country fields or a country
+   identifier of "ZZ" indicate unassigned reserved IPs for which other
+   existing geolocation information can, from the perspective of the
+   publisher, safely be discarded.
+
+   Examples include "US" for the United States, "JP" for Japan, and "PL"
+   for Poland.
+
+2.1.1.3.  Region
+
+   Optional.  The region field should be a ISO region code conforming to
+   ISO 3166-2 [ISO.3166.2].  Parsers should treat this field case-
+   insensitively.
+
+   Examples include "ID-RI" for the Riau province of Indonesia and
+   "NG-RI" for the Rivers province in Nigeria.
+
+2.1.1.4.  City
+
+   Optional.  The city field should be free text, excluding comma (',').
+
+   Examples include "Dublin", "New York", and "Sao Paulo", specifically
+   "S" followed by 0xc3, 0xa3, and "a Paulo".
+
+2.1.1.5.  Postal code
+
+   Optional.  The postal code field should be free text, excluding comma
+   (',').
+
+   Examples include "106-6126" (in Minato ward, Tokyo, Japan).
+
+2.1.2.  Parsing and matching
 
    Entries which fail to parse, either in part or in full, SHOULD be
-   discarded.
+   discarded.  It is RECOMMENDED that they also be logged for further
+   administrative review.
 
    TODO(ek): longest matching prefix; also MUST use IP address matching,
    not string matching.
 
    TODO(ek): exact duplicate entries are erroneous, and consumer
    implementations MAY discard or overwrite prior duplicate entries with
-   subsequent data.  Publisher MUST NOT rely upon any implementation-
+   subsequent data.  Publishers MUST NOT rely upon any implementation-
    dependent behavior and instead SHOULD take measures to ensure one and
-   only one entry per prefix.
 
 
 
-Kline & Duleba           Expires April 29, 2013                 [Page 3]
+Kline & Duleba           Expires April 30, 2013                 [Page 4]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
-2.1.1.  IP address field
-
-   Each IP address field MUST be either a single IP address or an IP
-   prefix in CIDR notation in conformance with section 3.1 of [RFC4632]
-   for IPv4 or section 2.3 of [RFC4291] for IPv6.
-
-   Examples include "192.0.2.1" and "192.0.2.0/24" for IPv4 and "2001:
-   db8::1" and "2001:db8::/32" for IPv6.
-
-2.1.2.  Country field
-
-   The country field SHOULD be a 2 letter ISO country code conforming to
-   ISO 3166-1 alpha 2 [ISO.3166.1].  Parsers should treat this field
-   case-insensitively.  Empty country fields or a country identifier of
-   "ZZ" indicate unassigned reserved IPs for which other existing
-   geolocation information can, from the perspective of the publisher,
-   safely be discarded.
-
-   Examples include "US" for the United States, "JP" for Japan, and "PL"
-   for Poland.
-
-2.1.3.  Region field
-
-   The region field should be a ISO region code conforming to ISO 3166-2
-   [ISO.3166.2].  Parsers should treat this field case-insensitively.
-
-   Examples include "ID-RI" for the Riau province of Indonesia and
-   "NG-RI" for the Rivers province in Nigeria.
-
-2.1.4.  City field
-
-   The city field should be free text, excluding comma (',').
-
-   Examples include "Dublin", "New York", and "Sao Paulo", specifically
-   "S" followed by 0xc3, 0xa3, and "a Paulo".
-
-2.1.5.  Postal code field
-
-   The postal code field should be free text, excluding comma (',').
-
-   Examples include "106-6126" (in Minato ward, Tokyo, Japan).
+   only one entry per prefix.
 
 2.2.  Examples
 
    Example entries using different IP address formats and describing
    locations at country, region, city and postal code granularity level,
    respectively:
-
-
-
-
-Kline & Duleba           Expires April 29, 2013                 [Page 4]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
 
        192.0.2.0/25,US,US-AL,,
        192.0.2.5,US,US-AL,Alabaster,
@@ -262,6 +270,17 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
    TODO(ek).
 
+
+
+
+
+
+
+Kline & Duleba           Expires April 30, 2013                 [Page 5]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
 3.3.  Using 'reverse' DNS
 
    TODO(ek): document crazy _geo.4.3.2.1.in-addr.arpa TXT record format
@@ -270,16 +289,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
 4.  Consuming self-published IP geolocation feeds
-
-
-
-
-
-
-Kline & Duleba           Expires April 29, 2013                 [Page 5]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
 
 4.1.  Acceptable use implied
 
@@ -320,21 +329,19 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    expiration model (section 13.2 of [RFC2616]).  Specifically,
    publishers can include either an Expires header or a Cache-Control
    header specifying the max-age.  Where practical, consumers SHOULD
+
+
+
+Kline & Duleba           Expires April 30, 2013                 [Page 6]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
    refresh feed information before the expiry time is reached.
 
    In the absence of any other refresh timing information it is
    recommended that consumers SHOULD refresh feeds no less often than
    weekly.
-
-
-
-
-
-
-
-Kline & Duleba           Expires April 29, 2013                 [Page 6]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
 5.  Security Considerations
@@ -379,19 +386,19 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    [RFC4180]  Shafranovich, Y., "Common Format and MIME Type for Comma-
               Separated Values (CSV) Files", RFC 4180, October 2005.
 
+
+
+Kline & Duleba           Expires April 30, 2013                 [Page 7]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
    [RFC4291]  Hinden, R. and S. Deering, "IP Version 6 Addressing
               Architecture", RFC 4291, February 2006.
 
    [RFC4632]  Fuller, V. and T. Li, "Classless Inter-domain Routing
               (CIDR): The Internet Address Assignment and Aggregation
               Plan", BCP 122, RFC 4632, August 2006.
-
-
-
-Kline & Duleba           Expires April 29, 2013                 [Page 7]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
 
 7.2.  Informative References
 
@@ -437,12 +444,5 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-Kline & Duleba           Expires April 29, 2013                 [Page 8]
+Kline & Duleba           Expires April 30, 2013                 [Page 8]
 

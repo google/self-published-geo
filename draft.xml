@@ -125,83 +125,88 @@ Feeds MUST be in comma separated values format as described in
         </t>
 
         <t>
-IP address fields are mandatory, the rest is optional (can be empty), though
-the requisite minimum number of commas SHOULD be present.
+IP address fields are mandatory, all others are optional (can be empty),
+though the requisite minimum number of commas SHOULD be present.
         </t>
 
-        <t>
-Entries which fail to parse, either in part or in full, SHOULD be discarded.
-        </t>
-
-        <t>
-TODO(ek): longest matching prefix; also MUST use IP address matching, not string
-matching.
-        </t>
-
-        <t>
-TODO(ek): exact duplicate entries are erroneous, and consumer implementations MAY
-discard or overwrite prior duplicate entries with subsequent data.  Publisher
-MUST NOT rely upon any implementation-dependent behavior and instead SHOULD
-take measures to ensure one and only one entry per prefix.
-        </t>
-
-        <section title="IP address field">
-          <t>
-Each IP address field MUST be either a single IP address or an IP prefix in
-CIDR notation in conformance with
+        <section title="Geolocation feed individual entry fields">
+          <section title="IP address">
+            <t>
+Mandatory.  Each IP address field MUST be either a single IP address or an
+IP prefix in CIDR notation in conformance with
 <eref target="http://tools.ietf.org/html/rfc4632#section-3.1">section 3.1</eref>
 of <xref target="RFC4632"/> for IPv4 or
 <eref target="http://tools.ietf.org/html/rfc4291#section-2.3">section 2.3</eref>
 of <xref target="RFC4291"/> for IPv6.
-          </t>
-          <t>
+            </t>
+            <t>
 Examples include "192.0.2.1" and "192.0.2.0/24" for IPv4 and "2001:db8::1"
 and "2001:db8::/32" for IPv6.
-          </t>
-        </section>
+            </t>
+          </section>
 
-        <section title="Country field">
-          <t>
-The country field SHOULD be a 2 letter ISO country code conforming to ISO
-3166-1 alpha 2 <xref target="ISO.3166.1"/>.  Parsers should treat this field
-case-insensitively.  Empty country fields or a country identifier of "ZZ"
+          <section title="Country">
+            <t>
+Optional.  The country field SHOULD be a 2 letter ISO country code conforming
+to ISO 3166-1 alpha 2 <xref target="ISO.3166.1"/>.  Parsers should treat this
+field case-insensitively.  Empty country fields or a country identifier of "ZZ"
 indicate unassigned reserved IPs for which other existing geolocation
 information can, from the perspective of the publisher, safely be discarded.
-          </t>
-          <t>
+            </t>
+            <t>
 Examples include "US" for the United States, "JP" for Japan, and "PL" for
 Poland.
-          </t>
-        </section>
+            </t>
+          </section>
 
-        <section title="Region field">
-          <t>
-The region field should be a ISO region code conforming to ISO 3166-2
-<xref target="ISO.3166.2"/>.  Parsers should treat this field
+          <section title="Region">
+            <t>
+Optional.  The region field should be a ISO region code conforming to
+ISO 3166-2 <xref target="ISO.3166.2"/>.  Parsers should treat this field
 case-insensitively.
-          </t>
-          <t>
+            </t>
+            <t>
 Examples include "ID-RI" for the Riau province of Indonesia and "NG-RI" for
 the Rivers province in Nigeria.
-          </t>
-        </section>
+            </t>
+          </section>
 
-        <section title="City field">
-          <t>
-The city field should be free text, excluding comma (',').
-          </t>
-          <t>
+          <section title="City">
+            <t>
+Optional.  The city field should be free text, excluding comma (',').
+            </t>
+            <t>
 Examples include "Dublin", "New York", and "São Paulo", specifically
 "S" followed by 0xc3, 0xa3, and "a Paulo".
-          </t>
+            </t>
+          </section>
+
+          <section title="Postal code">
+            <t>
+Optional.  The postal code field should be free text, excluding comma (',').
+            </t>
+            <t>
+Examples include "106-6126" (in Minato ward, Tokyo, Japan).
+            </t>
+          </section>
         </section>
 
-        <section title="Postal code field">
+        <section title="Parsing and matching">
           <t>
-The postal code field should be free text, excluding comma (',').
+Entries which fail to parse, either in part or in full, SHOULD be discarded.
+It is RECOMMENDED that they also be logged for further administrative review.
           </t>
+
           <t>
-Examples include "106-6126" (in Minato ward, Tokyo, Japan).
+TODO(ek): longest matching prefix; also MUST use IP address matching, not string
+matching.
+          </t>
+
+          <t>
+TODO(ek): exact duplicate entries are erroneous, and consumer implementations MAY
+discard or overwrite prior duplicate entries with subsequent data.  Publishers
+MUST NOT rely upon any implementation-dependent behavior and instead SHOULD
+take measures to ensure one and only one entry per prefix.
           </t>
         </section>
       </section>
