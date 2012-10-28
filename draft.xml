@@ -18,6 +18,8 @@
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4408.xml">
     <!ENTITY rfc4632 PUBLIC ""
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4632.xml">
+    <!ENTITY rfc5952 PUBLIC ""
+      "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5952.xml">
 ]>
 
 <rfc category="exp"
@@ -198,8 +200,17 @@ It is RECOMMENDED that they also be logged for further administrative review.
           </t>
 
           <t>
-TODO(ek): longest matching prefix; also MUST use IP address matching, not string
-matching.
+When parsing and matching, consumers MUST NOT attempt to use simple string
+matching or regular expressions but instead MUST parse IP address and CIDR
+string representations into IP prefixes and perform set membership tests.
+While publishers SHOULD follow <xref target="RFC5952"/> style for IPv6
+addresses, consumers MUST nevertheless accept all valid string representations.
+          </t>
+
+          <t>
+Multiple entries which constitute nested prefixes are permitted.  Consumers
+SHOULD consider the entry with the longest matching prefix (i.e. the
+"most specific") to be the best matching entry for any given IP address.
           </t>
 
           <t>
@@ -404,6 +415,8 @@ International Organization for Standardization
 &rfc2818;
 
 &rfc4408;
+
+&rfc5952;
 
 <reference target="https://meetings.ripe.net/geo/google.csv"
            anchor="RIPE_NCC_GEO">
