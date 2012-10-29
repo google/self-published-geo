@@ -119,19 +119,19 @@ Feeds MUST be in comma separated values format as described in
 <xref target="RFC4180"/>.  Each feed entry is a text line of the form:
           <figure>
             <artwork>
-        IP_address_or_cidr,country,region,city,postal_code
+    cidr_prefix,country,region,city,postal_code,delegation_size
             </artwork>
           </figure>
         </t>
         <t>
-IP address fields are mandatory, all others are optional (can be empty),
+CIDR prefix fields are mandatory, all others are optional (can be empty),
 though the requisite minimum number of commas SHOULD be present.
         </t>
 
         <section title="Geolocation feed individual entry fields">
-          <section title="IP address">
+          <section title="CIDR prefix (or IP address)">
             <t>
-Mandatory.  Each IP address field MUST be either a single IP address or an
+Mandatory.  Each CIDR prefix field MUST be either a single IP address or an
 IP prefix in CIDR notation in conformance with
 <eref target="http://tools.ietf.org/html/rfc4632#section-3.1">section 3.1</eref>
 of <xref target="RFC4632"/> for IPv4 or
@@ -188,6 +188,24 @@ Optional.  The postal code field should be free text, excluding comma (',').
 Examples include "106-6126" (in Minato ward, Tokyo, Japan).
             </t>
           </section>
+
+          <section title="Delegation size">
+            <t>
+Optional.  A publisher may optionally communicate the average delegated
+prefix size for subnetworks within the IP prefix of this entry.  For a network
+operator this can used to help consumers distinguish IP prefixes among various
+use types such as residential prefixes, allocations to businesses, or data
+center customer allocations.
+            </t>
+            <t>
+Non-empty strings MUST be of the form required for CIDR notation suffixes,
+i.e. "/" followed by the integer prefix length allocation the subnetworks
+from within the entry's prefix.
+            </t>
+            <t>
+Examples include "/48", "/56", "/60", and "/64".
+            </t>
+          </section>
         </section>
 
         <section title="Parsing and matching">
@@ -224,10 +242,11 @@ Example entries using different IP address formats and describing locations
 at country, region, city and postal code granularity level, respectively:
           <figure>
             <artwork>
-    192.0.2.0/25,US,US-AL,,
-    192.0.2.5,US,US-AL,Alabaster,
-    192.0.2.128/25,PL,PL-MZ,,02-784
-    2001:db8:cafe::/48,PL,PL-MZ,,02-784
+    192.0.2.0/25,US,US-AL,,,
+    192.0.2.5,US,US-AL,Alabaster,,
+    192.0.2.128/25,PL,PL-MZ,,02-784,
+    2001:db8::/32,PL,,,,
+    2001:db8:cafe::/48,PL,PL-MZ,,02-784,/56
             </artwork>
           </figure>
         </t>
@@ -358,8 +377,8 @@ location data might be exploited.
     <section title="Acknowledgements">
       <t>
 The authors would like to express their gratitude to reviewers and early
-implementers, including but not limited to Richard L. Barnes,
-Marco Hogewoning, Menno Schepers, and Bjoern A. Zeeb.
+implementers, including but not limited to Mikael Abrahamsson,
+Richard L. Barnes, Marco Hogewoning, Menno Schepers, and Bjoern A. Zeeb.
       </t>
     </section>
   </middle>
