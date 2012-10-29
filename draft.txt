@@ -75,8 +75,8 @@ Table of Contents
        2.1.2.  Parsing and matching  . . . . . . . . . . . . . . . . . 4
      2.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . 5
    3.  Finding self-published IP geolocation feeds . . . . . . . . . . 5
-     3.1.  Ad hoc 'well known' URIs  . . . . . . . . . . . . . . . . . 5
-     3.2.  Publishing URIs in whois  . . . . . . . . . . . . . . . . . 5
+     3.1.  Ad hoc 'well known' URIs  . . . . . . . . . . . . . . . . . 6
+     3.2.  Publishing URIs in whois  . . . . . . . . . . . . . . . . . 6
      3.3.  Using 'reverse' DNS . . . . . . . . . . . . . . . . . . . . 6
    4.  Consuming self-published IP geolocation feeds . . . . . . . . . 6
      4.1.  Acceptable use implied  . . . . . . . . . . . . . . . . . . 6
@@ -210,13 +210,13 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    discarded.  It is RECOMMENDED that they also be logged for further
    administrative review.
 
-   TODO(ek): longest matching prefix; also MUST use IP address matching,
-   not string matching.
+   When parsing and matching, consumers MUST NOT attempt to use simple
+   string matching or regular expressions but instead MUST parse IP
+   address and CIDR string representations into IP prefixes and perform
+   set membership tests.  While publishers SHOULD follow [RFC5952] style
+   for IPv6 addresses, consumers MUST nevertheless accept all valid
+   string representations.
 
-   TODO(ek): exact duplicate entries are erroneous, and consumer
-   implementations MAY discard or overwrite prior duplicate entries with
-   subsequent data.  Publishers MUST NOT rely upon any implementation-
-   dependent behavior and instead SHOULD take measures to ensure one and
 
 
 
@@ -225,7 +225,18 @@ Kline & Duleba             Expires May 2, 2013                  [Page 4]
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
-   only one entry per prefix.
+   Multiple entries which constitute nested prefixes are permitted.
+   Consumers SHOULD consider the entry with the longest matching prefix
+   (i.e. the "most specific") to be the best matching entry for any
+   given IP address.
+
+   Duplicate IP address or prefix entries SHOULD be considered an error,
+   and consumer implementations SHOULD log the repeated entries for
+   further administrative review and MAY either discard or overwrite
+   prior duplicate entries with subsequent data.  Publishers MUST NOT
+   rely upon any individual implementation's behavior and instead SHOULD
+   take measures to ensure there is one and only one entry per IP
+   address and per prefix.
 
 2.2.  Examples
 
@@ -262,17 +273,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    [RFC2818].  Whenever possible, consumers SHOULD prefer retrieving
    geolocation feeds in a manner that guarantees integrity of the feed.
 
-3.1.  Ad hoc 'well known' URIs
-
-   TODO(ek).
-
-3.2.  Publishing URIs in whois
-
-   TODO(ek).
-
-
-
-
 
 
 
@@ -280,6 +280,14 @@ Kline & Duleba             Expires May 2, 2013                  [Page 5]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
+
+3.1.  Ad hoc 'well known' URIs
+
+   TODO(ek).
+
+3.2.  Publishing URIs in whois
+
+   TODO(ek).
 
 3.3.  Using 'reverse' DNS
 
@@ -321,14 +329,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    refresh local copies of feed data.  If the feed discovery mechanism
    offers hints about data validity time (e.g. the TTL field of the DNS
    Resource Record which identified a feed (section 3.2.1 of
-   [RFC1035])), then the given feed SHOULD be refreshed before the
-   expiration of this validity timer.
-
-   For feeds available via HTTPS (or HTTP), the publisher MAY
-   communicate refresh timing information by means of the standard HTTP
-   expiration model (section 13.2 of [RFC2616]).  Specifically,
-   publishers can include either an Expires header or a Cache-Control
-   header specifying the max-age.  Where practical, consumers SHOULD
 
 
 
@@ -337,6 +337,14 @@ Kline & Duleba             Expires May 2, 2013                  [Page 6]
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
+   [RFC1035])), then the given feed SHOULD be refreshed before the
+   expiration of this validity timer.
+
+   For feeds available via HTTPS (or HTTP), the publisher MAY
+   communicate refresh timing information by means of the standard HTTP
+   expiration model (section 13.2 of [RFC2616]).  Specifically,
+   publishers can include either an Expires header or a Cache-Control
+   header specifying the max-age.  Where practical, consumers SHOULD
    refresh feed information before the expiry time is reached.
 
    In the absence of any other refresh timing information it is
@@ -377,6 +385,14 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
               Requirement Levels", BCP 14, RFC 2119, March 1997.
 
    [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
+
+
+
+Kline & Duleba             Expires May 2, 2013                  [Page 7]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
               Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
               Transfer Protocol -- HTTP/1.1", RFC 2616, June 1999.
 
@@ -385,13 +401,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
    [RFC4180]  Shafranovich, Y., "Common Format and MIME Type for Comma-
               Separated Values (CSV) Files", RFC 4180, October 2005.
-
-
-
-Kline & Duleba             Expires May 2, 2013                  [Page 7]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
 
    [RFC4291]  Hinden, R. and S. Deering, "IP Version 6 Addressing
               Architecture", RFC 4291, February 2006.
@@ -416,9 +425,28 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
               for Authorizing Use of Domains in E-Mail, Version 1",
               RFC 4408, April 2006.
 
+   [RFC5952]  Kawamura, S. and M. Kawashima, "A Recommendation for IPv6
+              Address Text Representation", RFC 5952, August 2010.
+
    [RIPE_NCC_GEO]
               Schepers, M., "RIPE NCC Meeting Geolocation Data",
               <https://meetings.ripe.net/geo/google.csv>.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kline & Duleba             Expires May 2, 2013                  [Page 8]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
 Authors' Addresses
@@ -444,5 +472,33 @@ Authors' Addresses
 
 
 
-Kline & Duleba             Expires May 2, 2013                  [Page 8]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kline & Duleba             Expires May 2, 2013                  [Page 9]
 

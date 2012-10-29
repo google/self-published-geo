@@ -109,13 +109,11 @@ only entries for IP addresses whose geolocation data has changed or differ
 from current observed geolocation behavior "at large", are likely to be too
 operationally complex.
         </t>
-
         <t>
 Feeds MUST use UTF-8 <xref target="RFC3629"/> character encoding.
 Text after a '#' character is treated as a comment only and ignored.
 Blank lines are similarly ignored.
         </t>
-
         <t>
 Feeds MUST be in comma separated values format as described in
 <xref target="RFC4180"/>.  Each feed entry is a text line of the form:
@@ -125,7 +123,6 @@ Feeds MUST be in comma separated values format as described in
             </artwork>
           </figure>
         </t>
-
         <t>
 IP address fields are mandatory, all others are optional (can be empty),
 though the requisite minimum number of commas SHOULD be present.
@@ -198,7 +195,6 @@ Examples include "106-6126" (in Minato ward, Tokyo, Japan).
 Entries which fail to parse, either in part or in full, SHOULD be discarded.
 It is RECOMMENDED that they also be logged for further administrative review.
           </t>
-
           <t>
 When parsing and matching, consumers MUST NOT attempt to use simple string
 matching or regular expressions but instead MUST parse IP address and CIDR
@@ -206,18 +202,18 @@ string representations into IP prefixes and perform set membership tests.
 While publishers SHOULD follow <xref target="RFC5952"/> style for IPv6
 addresses, consumers MUST nevertheless accept all valid string representations.
           </t>
-
           <t>
 Multiple entries which constitute nested prefixes are permitted.  Consumers
 SHOULD consider the entry with the longest matching prefix (i.e. the
 "most specific") to be the best matching entry for any given IP address.
           </t>
-
           <t>
-TODO(ek): exact duplicate entries are erroneous, and consumer implementations MAY
-discard or overwrite prior duplicate entries with subsequent data.  Publishers
-MUST NOT rely upon any implementation-dependent behavior and instead SHOULD
-take measures to ensure one and only one entry per prefix.
+Duplicate IP address or prefix entries SHOULD be considered an error, and
+consumer implementations SHOULD log the repeated entries for further
+administrative review and MAY either discard or overwrite prior duplicate
+entries with subsequent data.  Publishers MUST NOT rely upon any individual
+implementation's behavior and instead SHOULD take measures to ensure there is
+one and only one entry per IP address and per prefix.
           </t>
         </section>
       </section>
@@ -272,6 +268,7 @@ means of publication, for example by using HTTP over TLS
 <xref target="RFC2818"/>.  Whenever possible, consumers SHOULD prefer
 retrieving geolocation feeds in a manner that guarantees integrity of the feed.
       </t>
+
       <section title="Ad hoc 'well known' URIs">
         <t>
 TODO(ek).
