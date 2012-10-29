@@ -250,8 +250,11 @@ Examples include "/48", "/56", "/60", and "/64".
 
         <section title="Parsing and matching">
           <t>
-Entries which fail to parse, either in part or in full, SHOULD be discarded.
-It is RECOMMENDED that they also be logged for further administrative review.
+Entries with expected fields which fail to parse, either in part or in full,
+SHOULD be discarded.  It is RECOMMENDED that they also be logged for further administrative review.  For compatibility with future additional fields a
+parser MUST ignore any fields beyond those it expects.  The data from
+fields which are expected and which parse successfully MUST still be
+considered valid.
           </t>
           <t>
 When parsing and matching, consumers MUST NOT attempt to use simple string

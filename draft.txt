@@ -74,20 +74,20 @@ Table of Contents
        2.1.1.  Geolocation feed individual entry fields . . . . . . .  4
        2.1.2.  Parsing and matching . . . . . . . . . . . . . . . . .  5
      2.2.  Examples . . . . . . . . . . . . . . . . . . . . . . . . .  6
-   3.  Finding self-published IP geolocation feeds  . . . . . . . . .  6
+   3.  Finding self-published IP geolocation feeds  . . . . . . . . .  7
      3.1.  Ad hoc 'well known' URIs . . . . . . . . . . . . . . . . .  7
      3.2.  Using public databases of network authority  . . . . . . .  7
-     3.3.  Using 'reverse' DNS  . . . . . . . . . . . . . . . . . . .  7
+     3.3.  Using 'reverse' DNS  . . . . . . . . . . . . . . . . . . .  8
    4.  Consuming self-published IP geolocation feeds  . . . . . . . .  8
      4.1.  Acceptable use implied . . . . . . . . . . . . . . . . . .  8
-     4.2.  Feed integrity . . . . . . . . . . . . . . . . . . . . . .  8
+     4.2.  Feed integrity . . . . . . . . . . . . . . . . . . . . . .  9
      4.3.  Verification of authority  . . . . . . . . . . . . . . . .  9
      4.4.  Refreshing feed information  . . . . . . . . . . . . . . .  9
-   5.  Security Considerations  . . . . . . . . . . . . . . . . . . .  9
+   5.  Security Considerations  . . . . . . . . . . . . . . . . . . . 10
    6.  Acknowledgements . . . . . . . . . . . . . . . . . . . . . . . 10
    7.  References . . . . . . . . . . . . . . . . . . . . . . . . . . 10
      7.1.  Normative References . . . . . . . . . . . . . . . . . . . 10
-     7.2.  Informative References . . . . . . . . . . . . . . . . . . 10
+     7.2.  Informative References . . . . . . . . . . . . . . . . . . 11
    Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 11
 
 
@@ -265,14 +265,14 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 2.1.2.  Parsing and matching
 
-   Entries which fail to parse, either in part or in full, SHOULD be
-   discarded.  It is RECOMMENDED that they also be logged for further
-   administrative review.
+   Entries with expected fields which fail to parse, either in part or
+   in full, SHOULD be discarded.  It is RECOMMENDED that they also be
+   logged for further administrative review.  For compatibility with
+   future additional fields a parser MUST ignore any fields beyond those
+   it expects.  The data from fields which are expected and which parse
+   successfully MUST still be considered valid.
 
    When parsing and matching, consumers MUST NOT attempt to use simple
-   string matching or regular expressions but instead MUST parse IP
-   address and CIDR string representations into IP prefixes and perform
-   set membership tests.  While publishers SHOULD follow [RFC5952] style
 
 
 
@@ -281,6 +281,9 @@ Kline & Duleba             Expires May 2, 2013                  [Page 5]
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
+   string matching or regular expressions but instead MUST parse IP
+   address and CIDR string representations into IP prefixes and perform
+   set membership tests.  While publishers SHOULD follow [RFC5952] style
    for IPv6 addresses, consumers MUST nevertheless accept all valid
    string representations.
 
@@ -324,11 +327,8 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
        2620:f:8000::/48,US,US-CA,Los Angeles,
 
 
-3.  Finding self-published IP geolocation feeds
 
-   The issue of finding, and later verifying, geolocation feeds is not
-   specifically addressed in this document.  At this time, only ad hoc
-   feed location and verification has a modicum of established practice
+
 
 
 
@@ -337,6 +337,11 @@ Kline & Duleba             Expires May 2, 2013                  [Page 6]
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
+3.  Finding self-published IP geolocation feeds
+
+   The issue of finding, and later verifying, geolocation feeds is not
+   specifically addressed in this document.  At this time, only ad hoc
+   feed location and verification has a modicum of established practice
    (see below).  Regardless, both the ad hoc mechanics and a few
    proposed but not yet implemented alternatives are discussed.
 
@@ -378,13 +383,8 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    known.  The anticipation of additional operational burden on the
    public resource of record is noted however.
 
-3.3.  Using 'reverse' DNS
 
-   Another possibility for automating the location and verification of a
-   feed is to incorporate feed URIs into the DNS, specifically the in-
-   addr.arpa and ip6.arpa portions of the DNS hierarchy.  A suitably
-   formated query for a TXT record that would return an answer in a
-   well-known format, e.g. "v=1 https://example.net/ipgeo/v1.csv", could
+
 
 
 
@@ -393,6 +393,13 @@ Kline & Duleba             Expires May 2, 2013                  [Page 7]
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
+3.3.  Using 'reverse' DNS
+
+   Another possibility for automating the location and verification of a
+   feed is to incorporate feed URIs into the DNS, specifically the in-
+   addr.arpa and ip6.arpa portions of the DNS hierarchy.  A suitably
+   formated query for a TXT record that would return an answer in a
+   well-known format, e.g. "v=1 https://example.net/ipgeo/v1.csv", could
    suffice.
 
    Attempts to locate the geolocation feed for a given IP address would
@@ -434,13 +441,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    acceptable use policies for self-published data.  Publication itself
    is inferred as a desire by the publisher for the data to be usefully
    consumed, similar to the publication of information like hostnames,
-   cryptographic keys, and SPF records [RFC4408] in the DNS.
-
-4.2.  Feed integrity
-
-   The integrity of published information SHOULD be protected by
-   securing the means of publication, for example by using HTTP over TLS
-   [RFC2818].  Whenever possible, consumers SHOULD prefer retrieving
 
 
 
@@ -449,6 +449,13 @@ Kline & Duleba             Expires May 2, 2013                  [Page 8]
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
+   cryptographic keys, and SPF records [RFC4408] in the DNS.
+
+4.2.  Feed integrity
+
+   The integrity of published information SHOULD be protected by
+   securing the means of publication, for example by using HTTP over TLS
+   [RFC2818].  Whenever possible, consumers SHOULD prefer retrieving
    geolocation feeds in a manner that guarantees integrity of the feed.
 
 4.3.  Verification of authority
@@ -489,13 +496,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    weekly.
 
 
-5.  Security Considerations
-
-   As there is no true security in the obscurity of the location of any
-   given IP address, self-publication of this data fundamentally opens
-   no new attack vectors.  Self-published data merely increases the ease
-   with which such location data might be exploited.
-
 
 
 
@@ -503,6 +503,14 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 Kline & Duleba             Expires May 2, 2013                  [Page 9]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
+5.  Security Considerations
+
+   As there is no true security in the obscurity of the location of any
+   given IP address, self-publication of this data fundamentally opens
+   no new attack vectors.  Self-published data merely increases the ease
+   with which such location data might be exploited.
 
 
 6.  Acknowledgements
@@ -545,6 +553,14 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
    [RFC4632]  Fuller, V. and T. Li, "Classless Inter-domain Routing
               (CIDR): The Internet Address Assignment and Aggregation
+
+
+
+Kline & Duleba             Expires May 2, 2013                 [Page 10]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
               Plan", BCP 122, RFC 4632, August 2006.
 
 7.2.  Informative References
@@ -553,13 +569,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
               Internet Corporation For Assigned Names and Numbers,
               "ICANN Meeting Geolocation Data",
               <https://registration.icann.org/geo/google.csv>.
-
-
-
-Kline & Duleba             Expires May 2, 2013                 [Page 10]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
 
    [RFC1035]  Mockapetris, P., "Domain names - implementation and
               specification", STD 13, RFC 1035, November 1987.
@@ -595,15 +604,6 @@ Authors' Addresses
 
    Krzysztof Duleba
    Google Inc.
-
-
-
-
-
-
-
-
-
 
 
 
