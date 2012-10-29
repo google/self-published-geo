@@ -10,6 +10,8 @@
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2818.xml">
     <!ENTITY rfc3629 PUBLIC ""
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3629.xml">
+    <!ENTITY rfc3912 PUBLIC ""
+      "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3912.xml">
     <!ENTITY rfc4180 PUBLIC ""
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4180.xml">
     <!ENTITY rfc4291 PUBLIC ""
@@ -66,8 +68,8 @@
       <t>
 This document records a format whereby a network operator can publish a
 mapping of IP address ranges to simplified geolocation information,
-colloquially termed a geolocation "feed".  Consumers can poll and parse
-these feeds to update or merge with other geolocation data sources and
+colloquially termed a geolocation "feed".  Interested parties can poll and
+parse these feeds to update or merge with other geolocation data sources and
 procedures.
       </t>
       <t>
@@ -83,7 +85,32 @@ into a geolocation data pipeline.
     <section title="Introduction">
       <section title="Motivation">
         <t>
-TODO(ek).
+Providers of services over the Internet have grown to depend on best-effort
+geolocation information to improve the user experience.  Locality information
+can aid in directing traffic to the nearest serving location, inferring likely
+native language, and providing additional context for services involving
+search queries.
+        </t>
+        <t>
+When a network provider changes the location of an IP prefix, services which
+may use of geolocation information may begin to suffer worse performance.
+This can lead to customer complaints, possibly to the network provider
+directly.  Resolution of incorrect geolocation data is complicated by the
+lack of any centralized means to coordinate and communicate location
+information to all interested consumers of the data.
+        </t>
+        <t>
+This document records a format whereby a network operator can publish a
+mapping of IP address ranges to simplified geolocation information,
+colloquially termed a "geolocation feed".  Interested parties can poll and
+parse these feeds to update or merge with other geolocation data sources and
+procedures.
+        </t>
+        <t>
+Some technical organizations operating networks that move from one meeting
+location to the next have already experimentally published small geolocation
+feeds.  At least one consumer (Google) has incorporated these ad hoc feeds
+into a geolocation data pipeline.
         </t>
       </section>
 
@@ -98,7 +125,17 @@ interpreted as described in <xref target="RFC2119"/>.
 
     <section title="Self-published IP geolocation feeds">
       <t>
-TODO(ek).
+The format described here grew out of response to requests to provide useful
+geolocation information in advance of need by technical conferences which
+frequently use the same network prefixes advertised from different meeting
+locations.
+      </t>
+      <t>
+At its simplest, the mechanism consists of a network provider publishing a
+file (the "geolocation feed"), which contains several text entries, one per
+line.  Each entry is keyed by a unique (within the feed) IP prefix (or single
+IP address) followed by a sequence of network locality attributes to be
+ascribed to the given prefix.
       </t>
 
       <section title="Specification">
@@ -200,7 +237,10 @@ center customer allocations.
             <t>
 Non-empty strings MUST be of the form required for CIDR notation suffixes,
 i.e. "/" followed by the integer prefix length allocation the subnetworks
-from within the entry's prefix.
+from within the entry's prefix.  In the absence of data to the contrary, it
+is common to assume that leaf networks may be delegated a prefix ranging from
+/24 to /32 in IPv4 and /48 to /64 in IPv6.  Default assumptions about
+delegation size are left to the consumer's implementation.
             </t>
             <t>
 Examples include "/48", "/56", "/60", and "/64".
@@ -279,32 +319,98 @@ contains:
 
     <section title="Finding self-published IP geolocation feeds">
       <t>
-TODO(ek).
-      </t>
-      <t>
-The integrity of published information SHOULD be protected by securing the
-means of publication, for example by using HTTP over TLS
-<xref target="RFC2818"/>.  Whenever possible, consumers SHOULD prefer
-retrieving geolocation feeds in a manner that guarantees integrity of the feed.
+The issue of finding, and later verifying, geolocation feeds is not
+specifically addressed in this document.  At this time, only ad hoc feed
+location and verification has a modicum of established practice (see below).
+Regardless, both the ad hoc mechanics and a few proposed but not yet
+implemented alternatives are discussed.
       </t>
 
       <section title="Ad hoc 'well known' URIs">
         <t>
-TODO(ek).
+To date, geolocation feeds have been shared informally in the form of HTTP
+URIs exchanged in email threads.  The two example URIs documented above
+describe networks that change locations periodically, the operators and
+operational practices of which are well known within their respective
+technical communities.
+        </t>
+        <t>
+The contents of the feeds are verified by a similarly ad hoc process
+including:
+          <list style="symbols">
+            <t>
+personal knowledge of the parties involved in the exchange, and
+            </t>
+            <t>
+comparison of feed-advertised prefixes with the BGP-advertised prefixes
+of Autonomous System Numbers known to be operated by the publishers.
+            </t>
+          </list>
+        </t>
+        <t>
+Ad hoc mechanisms, while useful for early experimentation by producers and
+consumers, are unlikely to be adequate for long-term, widespread use by
+multiple parties.  Future versions of any such self-published geolocation
+feed mechanism SHOULD address scalability concerns by incorporating a means
+for automated discovery and verification of operational authority of
+advertised prefixes.
         </t>
       </section>
 
-      <section title="Publishing URIs in whois">
+      <section title="Using public databases of network authority">
         <t>
-TODO(ek).
+One possibility for enabling automation would be publication of feed URIs as
+a well-known attribute in public databases of network authority, e.g. the
+whois service (<xref target="RFC3912"/>) operated by RIRs.  Verification
+may be performed if the same or similarly authoritative service provides the
+identical feed URI for queries for each entry's CIDR prefix.
+        </t>
+        <t>
+The burden of serving this data to all interested consumers, especially the
+load imposed by any verification process, is not yet known.  The anticipation
+of additional operational burden on the public resource of record is noted
+however.
         </t>
       </section>
 
       <section title="Using 'reverse' DNS">
         <t>
-TODO(ek): document crazy _geo.4.3.2.1.in-addr.arpa TXT record format that
-basically returns "v=1 https://example.net/ipgeo/v1.csv".  Also: can ask the
-root of the zone in the SOA.
+Another possibility for automating the location and verification of a feed
+is to incorporate feed URIs into the DNS, specifically the in-addr.arpa and
+ip6.arpa portions of the DNS hierarchy.  A suitably formated query for a
+TXT record that would return an answer in a well-known format, e.g.
+"v=1 https://example.net/ipgeo/v1.csv", could suffice.
+        </t>
+        <t>
+Attempts to locate the geolocation feed for a given IP address would begin by
+querying directly for a TXT record associated with the PTR-style name
+prefixed by "_geo.". For example, 192.0.2.4 and 2001:db8::6 would cause a
+TXT record request to be issued for "_geo.4.2.0.192.in-addr.arpa" and
+"_geo.6.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa",
+respectively.
+        </t>
+        <t>
+If no such record exists one further query for the fully qualified domainname
+of the SOA record in the authority section of the response to the previous
+query, similarly prefixed with "_geo.", would be performed
+("_geo.2.0.192.in-addr.arpa" and "_geo.d.0.1.0.0.2.ip6.arpa" in the examples
+above).  Successfully located feed URIs could then be processed as outlined by
+this document, possibly taking in to the consider the TTL of the successful
+response for refresh timing information.
+        </t>
+        <t>
+Verification of the contents of a feed would proceed in essentially the same
+way.  CIDR prefixes may be verified by constructing a query for any single
+address (at random) within the prefix and proceeding as above.  While not
+strictly provably correct (in cases where a publisher has delegated some
+portion of the advertised prefix but not excluded it from its feed), it may
+nevertheless suffice for operational purposes.
+        </t>
+        <t>
+This mode is untested and may prove impratical.  However, the operational
+burden is more closely located with those wishing and willing to bear it, i.e.
+the publishers who would likely handle serving in-addr.arpa and ip6.arpa for
+the IP prefixes under their authority.
         </t>
       </section>
     </section>
@@ -320,7 +426,16 @@ SPF records <xref target="RFC4408"/> in the DNS.
         </t>
       </section>
 
-      <section title="Trust and verification">
+      <section title="Feed integrity">
+        <t>
+The integrity of published information SHOULD be protected by securing the
+means of publication, for example by using HTTP over TLS
+<xref target="RFC2818"/>.  Whenever possible, consumers SHOULD prefer
+retrieving geolocation feeds in a manner that guarantees integrity of the feed.
+        </t>
+      </section>
+
+      <section title="Verification of authority">
         <t>
 Consumers of self-published IP geolocation feeds SHOULD perform some form
 of verification that the publisher is in fact authoritative for the
@@ -429,6 +544,8 @@ International Organization for Standardization
 &rfc1035;
 
 &rfc2818;
+
+&rfc3912;
 
 &rfc4408;
 

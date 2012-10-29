@@ -14,9 +14,9 @@ Abstract
 
    This document records a format whereby a network operator can publish
    a mapping of IP address ranges to simplified geolocation information,
-   colloquially termed a geolocation "feed".  Consumers can poll and
-   parse these feeds to update or merge with other geolocation data
-   sources and procedures.
+   colloquially termed a geolocation "feed".  Interested parties can
+   poll and parse these feeds to update or merge with other geolocation
+   data sources and procedures.
 
    Some technical organizations operating networks that move from one
    meeting location to the next have already experimentally published
@@ -66,29 +66,29 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 Table of Contents
 
-   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . . . 3
-     1.1.  Motivation  . . . . . . . . . . . . . . . . . . . . . . . . 3
-     1.2.  Requirements notation . . . . . . . . . . . . . . . . . . . 3
-   2.  Self-published IP geolocation feeds . . . . . . . . . . . . . . 3
-     2.1.  Specification . . . . . . . . . . . . . . . . . . . . . . . 3
-       2.1.1.  Geolocation feed individual entry fields  . . . . . . . 3
-       2.1.2.  Parsing and matching  . . . . . . . . . . . . . . . . . 5
-     2.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . 5
-   3.  Finding self-published IP geolocation feeds . . . . . . . . . . 6
-     3.1.  Ad hoc 'well known' URIs  . . . . . . . . . . . . . . . . . 6
-     3.2.  Publishing URIs in whois  . . . . . . . . . . . . . . . . . 6
-     3.3.  Using 'reverse' DNS . . . . . . . . . . . . . . . . . . . . 6
-   4.  Consuming self-published IP geolocation feeds . . . . . . . . . 6
-     4.1.  Acceptable use implied  . . . . . . . . . . . . . . . . . . 6
-     4.2.  Trust and verification  . . . . . . . . . . . . . . . . . . 6
-     4.3.  Refreshing feed information . . . . . . . . . . . . . . . . 7
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . . . 7
-   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . 7
-   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . . . 8
-     7.1.  Normative References  . . . . . . . . . . . . . . . . . . . 8
-     7.2.  Informative References  . . . . . . . . . . . . . . . . . . 8
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . . 9
-
+   1.  Introduction . . . . . . . . . . . . . . . . . . . . . . . . .  3
+     1.1.  Motivation . . . . . . . . . . . . . . . . . . . . . . . .  3
+     1.2.  Requirements notation  . . . . . . . . . . . . . . . . . .  3
+   2.  Self-published IP geolocation feeds  . . . . . . . . . . . . .  3
+     2.1.  Specification  . . . . . . . . . . . . . . . . . . . . . .  4
+       2.1.1.  Geolocation feed individual entry fields . . . . . . .  4
+       2.1.2.  Parsing and matching . . . . . . . . . . . . . . . . .  5
+     2.2.  Examples . . . . . . . . . . . . . . . . . . . . . . . . .  6
+   3.  Finding self-published IP geolocation feeds  . . . . . . . . .  6
+     3.1.  Ad hoc 'well known' URIs . . . . . . . . . . . . . . . . .  7
+     3.2.  Using public databases of network authority  . . . . . . .  7
+     3.3.  Using 'reverse' DNS  . . . . . . . . . . . . . . . . . . .  7
+   4.  Consuming self-published IP geolocation feeds  . . . . . . . .  8
+     4.1.  Acceptable use implied . . . . . . . . . . . . . . . . . .  8
+     4.2.  Feed integrity . . . . . . . . . . . . . . . . . . . . . .  8
+     4.3.  Verification of authority  . . . . . . . . . . . . . . . .  9
+     4.4.  Refreshing feed information  . . . . . . . . . . . . . . .  9
+   5.  Security Considerations  . . . . . . . . . . . . . . . . . . .  9
+   6.  Acknowledgements . . . . . . . . . . . . . . . . . . . . . . . 10
+   7.  References . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+     7.1.  Normative References . . . . . . . . . . . . . . . . . . . 10
+     7.2.  Informative References . . . . . . . . . . . . . . . . . . 10
+   Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 11
 
 
 
@@ -117,7 +117,30 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 1.1.  Motivation
 
-   TODO(ek).
+   Providers of services over the Internet have grown to depend on best-
+   effort geolocation information to improve the user experience.
+   Locality information can aid in directing traffic to the nearest
+   serving location, inferring likely native language, and providing
+   additional context for services involving search queries.
+
+   When a network provider changes the location of an IP prefix,
+   services which may use of geolocation information may begin to suffer
+   worse performance.  This can lead to customer complaints, possibly to
+   the network provider directly.  Resolution of incorrect geolocation
+   data is complicated by the lack of any centralized means to
+   coordinate and communicate location information to all interested
+   consumers of the data.
+
+   This document records a format whereby a network operator can publish
+   a mapping of IP address ranges to simplified geolocation information,
+   colloquially termed a "geolocation feed".  Interested parties can
+   poll and parse these feeds to update or merge with other geolocation
+   data sources and procedures.
+
+   Some technical organizations operating networks that move from one
+   meeting location to the next have already experimentally published
+   small geolocation feeds.  At least one consumer (Google) has
+   incorporated these ad hoc feeds into a geolocation data pipeline.
 
 1.2.  Requirements notation
 
@@ -128,7 +151,23 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 2.  Self-published IP geolocation feeds
 
-   TODO(ek).
+   The format described here grew out of response to requests to provide
+   useful geolocation information in advance of need by technical
+   conferences which frequently use the same network prefixes advertised
+   from different meeting locations.
+
+   At its simplest, the mechanism consists of a network provider
+   publishing a file (the "geolocation feed"), which contains several
+   text entries, one per line.  Each entry is keyed by a unique (within
+   the feed) IP prefix (or single IP address) followed by a sequence of
+   network locality attributes to be ascribed to the given prefix.
+
+
+
+Kline & Duleba             Expires May 2, 2013                  [Page 3]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
 
 2.1.  Specification
 
@@ -162,13 +201,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    Examples include "192.0.2.1" and "192.0.2.0/24" for IPv4 and "2001:
    db8::1" and "2001:db8::/32" for IPv6.
 
-
-
-Kline & Duleba             Expires May 2, 2013                  [Page 3]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
-
 2.1.1.2.  Country
 
    Optional.  The country field SHOULD be a 2 letter ISO country code
@@ -185,6 +217,14 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
    Optional.  The region field should be a ISO region code conforming to
    ISO 3166-2 [ISO.3166.2].  Parsers should treat this field case-
+
+
+
+Kline & Duleba             Expires May 2, 2013                  [Page 4]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
    insensitively.
 
    Examples include "ID-RI" for the Riau province of Indonesia and
@@ -215,15 +255,11 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
    Non-empty strings MUST be of the form required for CIDR notation
    suffixes, i.e. "/" followed by the integer prefix length allocation
-   the subnetworks from within the entry's prefix.
-
-
-
-
-Kline & Duleba             Expires May 2, 2013                  [Page 4]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
+   the subnetworks from within the entry's prefix.  In the absence of
+   data to the contrary, it is common to assume that leaf networks may
+   be delegated a prefix ranging from /24 to /32 in IPv4 and /48 to /64
+   in IPv6.  Default assumptions about delegation size are left to the
+   consumer's implementation.
 
    Examples include "/48", "/56", "/60", and "/64".
 
@@ -237,6 +273,14 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    string matching or regular expressions but instead MUST parse IP
    address and CIDR string representations into IP prefixes and perform
    set membership tests.  While publishers SHOULD follow [RFC5952] style
+
+
+
+Kline & Duleba             Expires May 2, 2013                  [Page 5]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
    for IPv6 addresses, consumers MUST nevertheless accept all valid
    string representations.
 
@@ -273,14 +317,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
        2001:67c:64::/48,IE,IE-D,Dublin,
 
    Similarly, ICANN has published geolocation information for their
-
-
-
-Kline & Duleba             Expires May 2, 2013                  [Page 5]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
-
    portable meeting network prefixes.  [ICANN_GEO] at the time of
    writing contains:
 
@@ -290,26 +326,104 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 3.  Finding self-published IP geolocation feeds
 
-   TODO(ek).
+   The issue of finding, and later verifying, geolocation feeds is not
+   specifically addressed in this document.  At this time, only ad hoc
+   feed location and verification has a modicum of established practice
 
-   The integrity of published information SHOULD be protected by
-   securing the means of publication, for example by using HTTP over TLS
-   [RFC2818].  Whenever possible, consumers SHOULD prefer retrieving
-   geolocation feeds in a manner that guarantees integrity of the feed.
+
+
+Kline & Duleba             Expires May 2, 2013                  [Page 6]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
+   (see below).  Regardless, both the ad hoc mechanics and a few
+   proposed but not yet implemented alternatives are discussed.
 
 3.1.  Ad hoc 'well known' URIs
 
-   TODO(ek).
+   To date, geolocation feeds have been shared informally in the form of
+   HTTP URIs exchanged in email threads.  The two example URIs
+   documented above describe networks that change locations
+   periodically, the operators and operational practices of which are
+   well known within their respective technical communities.
 
-3.2.  Publishing URIs in whois
+   The contents of the feeds are verified by a similarly ad hoc process
+   including:
 
-   TODO(ek).
+   o  personal knowledge of the parties involved in the exchange, and
+
+   o  comparison of feed-advertised prefixes with the BGP-advertised
+      prefixes of Autonomous System Numbers known to be operated by the
+      publishers.
+
+   Ad hoc mechanisms, while useful for early experimentation by
+   producers and consumers, are unlikely to be adequate for long-term,
+   widespread use by multiple parties.  Future versions of any such
+   self-published geolocation feed mechanism SHOULD address scalability
+   concerns by incorporating a means for automated discovery and
+   verification of operational authority of advertised prefixes.
+
+3.2.  Using public databases of network authority
+
+   One possibility for enabling automation would be publication of feed
+   URIs as a well-known attribute in public databases of network
+   authority, e.g. the whois service ([RFC3912]) operated by RIRs.
+   Verification may be performed if the same or similarly authoritative
+   service provides the identical feed URI for queries for each entry's
+   CIDR prefix.
+
+   The burden of serving this data to all interested consumers,
+   especially the load imposed by any verification process, is not yet
+   known.  The anticipation of additional operational burden on the
+   public resource of record is noted however.
 
 3.3.  Using 'reverse' DNS
 
-   TODO(ek): document crazy _geo.4.3.2.1.in-addr.arpa TXT record format
-   that basically returns "v=1 https://example.net/ipgeo/v1.csv".  Also:
-   can ask the root of the zone in the SOA.
+   Another possibility for automating the location and verification of a
+   feed is to incorporate feed URIs into the DNS, specifically the in-
+   addr.arpa and ip6.arpa portions of the DNS hierarchy.  A suitably
+   formated query for a TXT record that would return an answer in a
+   well-known format, e.g. "v=1 https://example.net/ipgeo/v1.csv", could
+
+
+
+Kline & Duleba             Expires May 2, 2013                  [Page 7]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
+   suffice.
+
+   Attempts to locate the geolocation feed for a given IP address would
+   begin by querying directly for a TXT record associated with the PTR-
+   style name prefixed by "_geo.".  For example, 192.0.2.4 and 2001:
+   db8::6 would cause a TXT record request to be issued for
+   "_geo.4.2.0.192.in-addr.arpa" and "_geo.6.0.0.0.0.0.0.0.0.0.0.0.0.0.0
+   .0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa", respectively.
+
+   If no such record exists one further query for the fully qualified
+   domainname of the SOA record in the authority section of the response
+   to the previous query, similarly prefixed with "_geo.", would be
+   performed ("_geo.2.0.192.in-addr.arpa" and
+   "_geo.d.0.1.0.0.2.ip6.arpa" in the examples above).  Successfully
+   located feed URIs could then be processed as outlined by this
+   document, possibly taking in to the consider the TTL of the
+   successful response for refresh timing information.
+
+   Verification of the contents of a feed would proceed in essentially
+   the same way.  CIDR prefixes may be verified by constructing a query
+   for any single address (at random) within the prefix and proceeding
+   as above.  While not strictly provably correct (in cases where a
+   publisher has delegated some portion of the advertised prefix but not
+   excluded it from its feed), it may nevertheless suffice for
+   operational purposes.
+
+   This mode is untested and may prove impratical.  However, the
+   operational burden is more closely located with those wishing and
+   willing to bear it, i.e. the publishers who would likely handle
+   serving in-addr.arpa and ip6.arpa for the IP prefixes under their
+   authority.
 
 
 4.  Consuming self-published IP geolocation feeds
@@ -322,21 +436,28 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    consumed, similar to the publication of information like hostnames,
    cryptographic keys, and SPF records [RFC4408] in the DNS.
 
-4.2.  Trust and verification
+4.2.  Feed integrity
+
+   The integrity of published information SHOULD be protected by
+   securing the means of publication, for example by using HTTP over TLS
+   [RFC2818].  Whenever possible, consumers SHOULD prefer retrieving
+
+
+
+Kline & Duleba             Expires May 2, 2013                  [Page 8]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
+   geolocation feeds in a manner that guarantees integrity of the feed.
+
+4.3.  Verification of authority
 
    Consumers of self-published IP geolocation feeds SHOULD perform some
    form of verification that the publisher is in fact authoritative for
    the addresses in the feed.  The actual means of verification is
    dependent upon the way in which the feed is discovered.  Ad hoc
    shared URIs, for example, will likely require an ad hoc verification
-
-
-
-Kline & Duleba             Expires May 2, 2013                  [Page 6]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
-
    process.  Automated means of feed discovery SHOULD have an
    accompanying automated means of verification.
 
@@ -346,7 +467,7 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    MUST be ignored and SHOULD be logged for further administrative
    review.
 
-4.3.  Refreshing feed information
+4.4.  Refreshing feed information
 
    As a publisher can change geolocation data at any time and without
    notification consumers SHOULD implement mechanisms to periodically
@@ -376,6 +497,14 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    with which such location data might be exploited.
 
 
+
+
+
+Kline & Duleba             Expires May 2, 2013                  [Page 9]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
 6.  Acknowledgements
 
    The authors would like to express their gratitude to reviewers and
@@ -385,13 +514,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
 7.  References
-
-
-
-Kline & Duleba             Expires May 2, 2013                  [Page 7]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
 
 7.1.  Normative References
 
@@ -432,22 +554,24 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
               "ICANN Meeting Geolocation Data",
               <https://registration.icann.org/geo/google.csv>.
 
+
+
+Kline & Duleba             Expires May 2, 2013                 [Page 10]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
    [RFC1035]  Mockapetris, P., "Domain names - implementation and
               specification", STD 13, RFC 1035, November 1987.
 
    [RFC2818]  Rescorla, E., "HTTP Over TLS", RFC 2818, May 2000.
 
+   [RFC3912]  Daigle, L., "WHOIS Protocol Specification", RFC 3912,
+              September 2004.
+
    [RFC4408]  Wong, M. and W. Schlitt, "Sender Policy Framework (SPF)
               for Authorizing Use of Domains in E-Mail, Version 1",
               RFC 4408, April 2006.
-
-
-
-
-Kline & Duleba             Expires May 2, 2013                  [Page 8]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
 
    [RFC5952]  Kawamura, S. and M. Kawashima, "A Recommendation for IPv6
               Address Text Representation", RFC 5952, August 2010.
@@ -488,17 +612,5 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-Kline & Duleba             Expires May 2, 2013                  [Page 9]
+Kline & Duleba             Expires May 2, 2013                 [Page 11]
 
