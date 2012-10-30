@@ -2,9 +2,10 @@
 
 
 Network Working Group                                           E. Kline
-Internet-Draft                                                 K. Duleba
-Intended status: Experimental                                Google Inc.
-Expires: May 2, 2013                                    October 29, 2012
+Internet-Draft                                              Google Japan
+Intended status: Experimental                                  K. Duleba
+Expires: May 3, 2013                             Google Switzerland GmbH
+                                                        October 30, 2012
 
 
                    Self-published IP Geolocation Data
@@ -38,7 +39,7 @@ Status of this Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 2, 2013.
+   This Internet-Draft will expire on May 3, 2013.
 
 Copyright Notice
 
@@ -48,15 +49,15 @@ Copyright Notice
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
    (http://trustee.ietf.org/license-info) in effect on the date of
-   publication of this document.  Please review these documents
 
 
 
-Kline & Duleba             Expires May 2, 2013                  [Page 1]
+Kline & Duleba             Expires May 3, 2013                  [Page 1]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
+   publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
    include Simplified BSD License text as described in Section 4.e of
@@ -88,6 +89,7 @@ Table of Contents
    7.  References . . . . . . . . . . . . . . . . . . . . . . . . . . 10
      7.1.  Normative References . . . . . . . . . . . . . . . . . . . 10
      7.2.  Informative References . . . . . . . . . . . . . . . . . . 11
+   Appendix A.  Sample Python validation code . . . . . . . . . . . . 11
    Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 11
 
 
@@ -106,9 +108,7 @@ Table of Contents
 
 
 
-
-
-Kline & Duleba             Expires May 2, 2013                  [Page 2]
+Kline & Duleba             Expires May 3, 2013                  [Page 2]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
@@ -164,7 +164,7 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
 
-Kline & Duleba             Expires May 2, 2013                  [Page 3]
+Kline & Duleba             Expires May 3, 2013                  [Page 3]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
@@ -220,7 +220,7 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
 
-Kline & Duleba             Expires May 2, 2013                  [Page 4]
+Kline & Duleba             Expires May 3, 2013                  [Page 4]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
@@ -235,7 +235,7 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    Optional.  The city field should be free text, excluding comma (',').
 
    Examples include "Dublin", "New York", and "Sao Paulo", specifically
-   "S" followed by 0xc3, 0xa3, and "a Paulo".
+   "S" followed by 0xc3, 0xa3, and "o Paulo".
 
 2.1.1.5.  Postal code
 
@@ -276,7 +276,7 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
 
-Kline & Duleba             Expires May 2, 2013                  [Page 5]
+Kline & Duleba             Expires May 3, 2013                  [Page 5]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
@@ -332,7 +332,7 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
 
-Kline & Duleba             Expires May 2, 2013                  [Page 6]
+Kline & Duleba             Expires May 3, 2013                  [Page 6]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
@@ -388,7 +388,7 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
 
-Kline & Duleba             Expires May 2, 2013                  [Page 7]
+Kline & Duleba             Expires May 3, 2013                  [Page 7]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
@@ -398,7 +398,7 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    Another possibility for automating the location and verification of a
    feed is to incorporate feed URIs into the DNS, specifically the in-
    addr.arpa and ip6.arpa portions of the DNS hierarchy.  A suitably
-   formated query for a TXT record that would return an answer in a
+   formatted query for a TXT record that would return an answer in a
    well-known format, e.g. "v=1 https://example.net/ipgeo/v1.csv", could
    suffice.
 
@@ -426,7 +426,7 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    excluded it from its feed), it may nevertheless suffice for
    operational purposes.
 
-   This mode is untested and may prove impratical.  However, the
+   This mode is untested and may prove impractical.  However, the
    operational burden is more closely located with those wishing and
    willing to bear it, i.e. the publishers who would likely handle
    serving in-addr.arpa and ip6.arpa for the IP prefixes under their
@@ -444,7 +444,7 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
 
-Kline & Duleba             Expires May 2, 2013                  [Page 8]
+Kline & Duleba             Expires May 3, 2013                  [Page 8]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
@@ -500,7 +500,7 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
 
-Kline & Duleba             Expires May 2, 2013                  [Page 9]
+Kline & Duleba             Expires May 3, 2013                  [Page 9]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
@@ -556,7 +556,7 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
 
-Kline & Duleba             Expires May 2, 2013                 [Page 10]
+Kline & Duleba             Expires May 3, 2013                 [Page 10]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
@@ -590,20 +590,40 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
               <https://meetings.ripe.net/geo/google.csv>.
 
 
+Appendix A.  Sample Python validation code
+
+   TODO(kduleba).
+
+
 Authors' Addresses
 
    Erik Kline
-   Google Inc.
+   Google Japan
    Roppongi 6-10-1, 26th Floor
    Minato, Tokyo  106-6126
-   JP
+   Japan
 
    Phone: +81 03 6384 9000
    Email: ek@google.com
 
 
+
+
+
+
+
+Kline & Duleba             Expires May 3, 2013                 [Page 11]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
    Krzysztof Duleba
-   Google Inc.
+   Google Switzerland GmbH
+   Brandschenkestrasse 110
+   Zuerich  8002
+   Switzerland
+
+   Email: kduleba@google.com
 
 
 
@@ -612,5 +632,41 @@ Authors' Addresses
 
 
 
-Kline & Duleba             Expires May 2, 2013                 [Page 11]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kline & Duleba             Expires May 3, 2013                 [Page 12]
 

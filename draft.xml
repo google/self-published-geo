@@ -42,14 +42,14 @@
     <title>Self-published IP Geolocation Data</title>
 
     <author initials="E." surname="Kline" fullname="Erik Kline">
-      <organization>Google Inc.</organization>
+      <organization>Google Japan</organization>
       <address>
         <postal>
           <street>Roppongi 6-10-1, 26th Floor</street>
           <city>Minato</city>
           <region>Tokyo</region>
           <code>106-6126</code>
-          <country>JP</country>
+          <country>Japan</country>
         </postal>
 
         <phone>+81 03 6384 9000</phone>
@@ -59,7 +59,18 @@
     </author>
 
     <author initials="K." surname="Duleba" fullname="Krzysztof Duleba">
-      <organization>Google Inc.</organization>
+      <organization>Google Switzerland GmbH</organization>
+      <address>
+        <postal>
+          <street>Brandschenkestrasse 110</street>
+          <code>8002</code>
+          <city>Zürich</city>
+          <country>Switzerland</country>
+        </postal>
+
+        <email>kduleba@google.com</email>
+      </address>
+
     </author>
 
     <date/>
@@ -213,7 +224,7 @@ Optional.  The city field should be free text, excluding comma (',').
             </t>
             <t>
 Examples include "Dublin", "New York", and "São Paulo", specifically
-"S" followed by 0xc3, 0xa3, and "a Paulo".
+"S" followed by 0xc3, 0xa3, and "o Paulo".
             </t>
           </section>
 
@@ -380,7 +391,7 @@ however.
         <t>
 Another possibility for automating the location and verification of a feed
 is to incorporate feed URIs into the DNS, specifically the in-addr.arpa and
-ip6.arpa portions of the DNS hierarchy.  A suitably formated query for a
+ip6.arpa portions of the DNS hierarchy.  A suitably formatted query for a
 TXT record that would return an answer in a well-known format, e.g.
 "v=1 https://example.net/ipgeo/v1.csv", could suffice.
         </t>
@@ -410,7 +421,7 @@ portion of the advertised prefix but not excluded it from its feed), it may
 nevertheless suffice for operational purposes.
         </t>
         <t>
-This mode is untested and may prove impratical.  However, the operational
+This mode is untested and may prove impractical.  However, the operational
 burden is more closely located with those wishing and willing to bear it, i.e.
 the publishers who would likely handle serving in-addr.arpa and ip6.arpa for
 the IP prefixes under their authority.
@@ -578,5 +589,11 @@ Internet Corporation For Assigned Names and Numbers
   </front>
 </reference>
       </references>
+
+      <section title="Sample Python validation code">
+        <t>
+TODO(kduleba).
+        </t>
+      </section>
   </back>
 </rfc>
