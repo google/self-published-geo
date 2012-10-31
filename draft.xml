@@ -145,6 +145,16 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 interpreted as described in <xref target="RFC2119"/>.
         </t>
       </section>
+
+      <section title="Acceptable use implied">
+        <t>
+This proposal does not incorporate a mechanism to communicate acceptable
+use policies for self-published data.  Publication itself is inferred as
+a desire by the publisher for the data to be usefully consumed, similar
+to the publication of information like hostnames, cryptographic keys, and
+SPF records <xref target="RFC4408"/> in the DNS.
+        </t>
+      </section>
     </section>
 
     <section title="Self-published IP geolocation feeds">
@@ -225,9 +235,13 @@ expressed in form "192.0.2.3-192.0.2.25".
             <t>
 Optional.  The country field SHOULD be a 2 letter ISO country code conforming
 to ISO 3166-1 alpha 2 <xref target="ISO.3166.1"/>.  Parsers should treat this
-field case-insensitively.  Empty country fields or a country identifier of "ZZ"
-indicate unassigned reserved IPs for which other existing geolocation
+field case-insensitively.
+            </t>
+            <t>
+Empty country fields or a country identifier of "ZZ" indicate either
+unassigned reserved IP ranges or IP ranges for which existing geolocation
 information can, from the perspective of the publisher, safely be discarded.
+<xref target="consumers"/> contains advice to consumers of this data.
             </t>
             <t>
 Examples include "US" for the United States, "JP" for Japan, and "PL" for
@@ -471,26 +485,14 @@ the IP prefixes under their authority.
       </section>
     </section>
 
-    <section title="Consuming self-published IP geolocation feeds">
+    <section anchor="consumers"
+             title="Consuming self-published IP geolocation feeds">
       <t>
-TODO(ek).
+While consumers MAY treat published feed data as a hint only and MAY choose
+to prefer other sources of geolocation information for any given IP range
+there are some guidelines for sensibly and effectively consuming published
+feeds.
       </t>
-
-      <section title="Acceptable use implied">
-        <t>
-This proposal does not incorporate a mechanism to communicate acceptable
-use policies for self-published data.  Publication itself is inferred as
-a desire by the publisher for the data to be usefully consumed, similar
-to the publication of information like hostnames, cryptographic keys, and
-SPF records <xref target="RFC4408"/> in the DNS.
-        </t>
-      </section>
-
-      <section title="Independent verification">
-        <t>
-TODO(ek).
-        </t>
-      </section>
 
       <section title="Feed integrity">
         <t>
@@ -515,6 +517,20 @@ A consumer MUST only trust geolocation information for IP addresses or ranges
 for which the publisher has been verified as administratively authoritative.
 All other geolocation feed entries MUST be ignored and SHOULD be logged for
 further administrative review.
+        </t>
+      </section>
+
+      <section title="Verification of accuracy">
+        <t>
+Errors and inaccuracies may occur at many levels, and publication and
+consumption of geolocation data are no exceptions.  To the extent practical
+consumers SHOULD take steps to verify the accuracy of published locality.
+Verification methodology, resolution of discrepancies, and preference for
+alternative sources of data are left to the descretion of the consumer.
+        </t>
+        <t>
+Consumers SHOULD decide on discrepancy thresholds and SHOULD flag for
+administrative review feed entries which exceed set thresholds.
         </t>
       </section>
 
@@ -550,8 +566,18 @@ consumers SHOULD refresh feeds no less often than weekly.
       <t>
 As there is no true security in the obscurity of the location of any given
 IP address, self-publication of this data fundamentally opens no new attack
-vectors.  Self-published data merely increases the ease with which such
-location data might be exploited.
+vectors.  For publishers, self-published data merely increases the ease with
+which such location data might be exploited.
+      </t>
+      <t>
+For consumers, feed retrieval processes may receive input from potentially
+hostile sources (e.g. in the event of hijacked traffic).  As such, proper
+input validation and defense measures MUST be taken.
+      </t>
+      <t>
+Similarly, consumers who do not perform sufficient verification of published
+data bear the same risks as from other forms of geolocation configuration
+errors.
       </t>
     </section>
 
