@@ -4,8 +4,9 @@
 Network Working Group                                           E. Kline
 Internet-Draft                                              Google Japan
 Intended status: Experimental                                  K. Duleba
-Expires: May 3, 2013                             Google Switzerland GmbH
-                                                        October 30, 2012
+Expires: May 4, 2013                                         Z. Szamonek
+                                                 Google Switzerland GmbH
+                                                        October 31, 2012
 
 
                    Self-published IP Geolocation Data
@@ -39,7 +40,7 @@ Status of this Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 3, 2013.
+   This Internet-Draft will expire on May 4, 2013.
 
 Copyright Notice
 
@@ -48,15 +49,15 @@ Copyright Notice
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
-   (http://trustee.ietf.org/license-info) in effect on the date of
 
 
 
-Kline & Duleba             Expires May 3, 2013                  [Page 1]
+Kline, et al.              Expires May 4, 2013                  [Page 1]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
+   (http://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
@@ -75,22 +76,25 @@ Table of Contents
        2.1.1.  Geolocation feed individual entry fields . . . . . . .  4
        2.1.2.  Parsing and matching . . . . . . . . . . . . . . . . .  5
      2.2.  Examples . . . . . . . . . . . . . . . . . . . . . . . . .  6
+     2.3.  Proposed extensions  . . . . . . . . . . . . . . . . . . .  6
+       2.3.1.  Delegation size  . . . . . . . . . . . . . . . . . . .  7
    3.  Finding self-published IP geolocation feeds  . . . . . . . . .  7
      3.1.  Ad hoc 'well known' URIs . . . . . . . . . . . . . . . . .  7
-     3.2.  Using public databases of network authority  . . . . . . .  7
+     3.2.  Using public databases of network authority  . . . . . . .  8
      3.3.  Using 'reverse' DNS  . . . . . . . . . . . . . . . . . . .  8
-   4.  Consuming self-published IP geolocation feeds  . . . . . . . .  8
-     4.1.  Acceptable use implied . . . . . . . . . . . . . . . . . .  8
-     4.2.  Feed integrity . . . . . . . . . . . . . . . . . . . . . .  9
-     4.3.  Verification of authority  . . . . . . . . . . . . . . . .  9
-     4.4.  Refreshing feed information  . . . . . . . . . . . . . . .  9
+   4.  Consuming self-published IP geolocation feeds  . . . . . . . .  9
+     4.1.  Acceptable use implied . . . . . . . . . . . . . . . . . .  9
+     4.2.  Independent verification . . . . . . . . . . . . . . . . .  9
+     4.3.  Feed integrity . . . . . . . . . . . . . . . . . . . . . .  9
+     4.4.  Verification of authority  . . . . . . . . . . . . . . . .  9
+     4.5.  Refreshing feed information  . . . . . . . . . . . . . . . 10
    5.  Security Considerations  . . . . . . . . . . . . . . . . . . . 10
    6.  Acknowledgements . . . . . . . . . . . . . . . . . . . . . . . 10
-   7.  References . . . . . . . . . . . . . . . . . . . . . . . . . . 10
-     7.1.  Normative References . . . . . . . . . . . . . . . . . . . 10
+   7.  References . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+     7.1.  Normative References . . . . . . . . . . . . . . . . . . . 11
      7.2.  Informative References . . . . . . . . . . . . . . . . . . 11
-   Appendix A.  Sample Python validation code . . . . . . . . . . . . 11
-   Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 11
+   Appendix A.  Sample Python validation code . . . . . . . . . . . . 12
+   Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 12
 
 
 
@@ -104,11 +108,7 @@ Table of Contents
 
 
 
-
-
-
-
-Kline & Duleba             Expires May 3, 2013                  [Page 2]
+Kline, et al.              Expires May 4, 2013                  [Page 2]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
@@ -151,23 +151,29 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 2.  Self-published IP geolocation feeds
 
-   The format described here grew out of response to requests to provide
-   useful geolocation information in advance of need by technical
-   conferences which frequently use the same network prefixes advertised
-   from different meeting locations.
+   The format described here was developed to address the need of
+   network operators to rapidly and usefully share geolocation
+   information changes.  Originally, there arose a specific case where
+   regional operators found it desirable to publish location changes
+   rather than wait for geolocation algorithms to "learn" about them.
+   Later on technical conferences, which frequently use the same network
+   prefixes advertised from different meeting locations, experimented by
+   publishing geolocation changes in advance of need in order to better
+   serve conference attendees.
+
+
+
+
+Kline, et al.              Expires May 4, 2013                  [Page 3]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
 
    At its simplest, the mechanism consists of a network provider
    publishing a file (the "geolocation feed"), which contains several
    text entries, one per line.  Each entry is keyed by a unique (within
    the feed) IP prefix (or single IP address) followed by a sequence of
    network locality attributes to be ascribed to the given prefix.
-
-
-
-Kline & Duleba             Expires May 3, 2013                  [Page 3]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
 
 2.1.  Specification
 
@@ -184,22 +190,40 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    Feeds MUST be in comma separated values format as described in
    [RFC4180].  Each feed entry is a text line of the form:
 
-       cidr_prefix,country,region,city,postal_code,delegation_size
+       ip_range,country,region,city,postal_code
 
-   CIDR prefix fields are mandatory, all others are optional (can be
+   IP range fields are mandatory, all others are optional (can be
    empty), though the requisite minimum number of commas SHOULD be
    present.
 
 2.1.1.  Geolocation feed individual entry fields
 
-2.1.1.1.  CIDR prefix (or IP address)
+2.1.1.1.  IP Range
 
-   Mandatory.  Each CIDR prefix field MUST be either a single IP address
-   or an IP prefix in CIDR notation in conformance with section 3.1 of
+   Mandatory.  Each IP range field MUST be either a single IP address or
+   an IP prefix in CIDR notation in conformance with section 3.1 of
    [RFC4632] for IPv4 or section 2.3 of [RFC4291] for IPv6.
 
+   Due to the density of some IPv4 allocations in some networks it can
+   be more convenient to list IP ranges in an alternate, hyphenated
+   form.  IPv4 ranges, and only IPv4 ranges, MAY be formatted as
+   "start_address-end_address", indicating that all IPv4 addresses from
+   the start address incrementing numerically through the end address
+   inclusive constitute the IP range for the given entry.  Publishers
+   MUST prefer CIDR notation over this hyphenated altnerative if the
+   expressed IP ranges are equivalent.
+
    Examples include "192.0.2.1" and "192.0.2.0/24" for IPv4 and "2001:
-   db8::1" and "2001:db8::/32" for IPv6.
+   db8::1" and "2001:db8::/32" for IPv6.  Additionally, IPv4 ranges
+   (only) may be expressed in form "192.0.2.3-192.0.2.25".
+
+
+
+
+Kline, et al.              Expires May 4, 2013                  [Page 4]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
 
 2.1.1.2.  Country
 
@@ -217,14 +241,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
    Optional.  The region field should be a ISO region code conforming to
    ISO 3166-2 [ISO.3166.2].  Parsers should treat this field case-
-
-
-
-Kline & Duleba             Expires May 3, 2013                  [Page 4]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
-
    insensitively.
 
    Examples include "ID-RI" for the Riau province of Indonesia and
@@ -244,25 +260,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
    Examples include "106-6126" (in Minato ward, Tokyo, Japan).
 
-2.1.1.6.  Delegation size
-
-   Optional.  A publisher may optionally communicate the average
-   delegated prefix size for subnetworks within the IP prefix of this
-   entry.  For a network operator this can used to help consumers
-   distinguish IP prefixes among various use types such as residential
-   prefixes, allocations to businesses, or data center customer
-   allocations.
-
-   Non-empty strings MUST be of the form required for CIDR notation
-   suffixes, i.e. "/" followed by the integer prefix length allocation
-   the subnetworks from within the entry's prefix.  In the absence of
-   data to the contrary, it is common to assume that leaf networks may
-   be delegated a prefix ranging from /24 to /32 in IPv4 and /48 to /64
-   in IPv6.  Default assumptions about delegation size are left to the
-   consumer's implementation.
-
-   Examples include "/48", "/56", "/60", and "/64".
-
 2.1.2.  Parsing and matching
 
    Entries with expected fields which fail to parse, either in part or
@@ -273,17 +270,17 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    successfully MUST still be considered valid.
 
    When parsing and matching, consumers MUST NOT attempt to use simple
+   string matching or regular expressions but instead MUST parse IP
+   address and CIDR string representations into IP prefixes and perform
+   set membership tests.  While publishers SHOULD follow [RFC5952] style
 
 
 
-Kline & Duleba             Expires May 3, 2013                  [Page 5]
+Kline, et al.              Expires May 4, 2013                  [Page 5]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
-   string matching or regular expressions but instead MUST parse IP
-   address and CIDR string representations into IP prefixes and perform
-   set membership tests.  While publishers SHOULD follow [RFC5952] style
    for IPv6 addresses, consumers MUST nevertheless accept all valid
    string representations.
 
@@ -306,11 +303,12 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    locations at country, region, city and postal code granularity level,
    respectively:
 
-       192.0.2.0/25,US,US-AL,,,
-       192.0.2.5,US,US-AL,Alabaster,,
-       192.0.2.128/25,PL,PL-MZ,,02-784,
-       2001:db8::/32,PL,,,,
-       2001:db8:cafe::/48,PL,PL-MZ,,02-784,/56
+       192.0.2.0/25,US,US-AL,,
+       192.0.2.5,US,US-AL,Alabaster,
+       192.0.2.50-192.0.2.63,US,US-CA,Santa Monica,
+       192.0.2.128/25,PL,PL-MZ,,02-784
+       2001:db8::/32,PL,,,
+       2001:db8:cafe::/48,PL,PL-MZ,,02-784
 
    Experimentally, RIPE has published geolocation information for their
    meeting network prefixes, which change location in accordance with
@@ -326,15 +324,42 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
        199.91.192.0/21,US,US-CA,Los Angeles,
        2620:f:8000::/48,US,US-CA,Los Angeles,
 
+2.3.  Proposed extensions
+
+   Already some discussions have resulted in proposed extensions.  While
+   the purpose of this document is principally to record existing
+   implementation details, it may be that there is a larger desire to
 
 
 
-
-
-
-Kline & Duleba             Expires May 3, 2013                  [Page 6]
+Kline, et al.              Expires May 4, 2013                  [Page 6]
 
 Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
+   publish other "network attributes" in a similar manner.  One such
+   network attribute, "delegation size", is not currently implemented
+   but the state of the proposed extension is recorded here to
+   demonstrate the flexibility required of parser implementations.
+
+2.3.1.  Delegation size
+
+   Optional.  A publisher may optionally communicate the average
+   delegated prefix size for subnetworks within the IP prefix of this
+   entry.  For a network operator this can be used to help consumers
+   distinguish IP prefixes among various use types such as residential
+   prefixes, allocations to businesses, or data center customer
+   allocations.
+
+   Non-empty strings MUST be of the form required for CIDR notation
+   suffixes, i.e. "/" followed by the integer prefix length of the
+   expected allocation to the subnetworks from within the entry's
+   prefix.  In the absence of data to the contrary, it is common to
+   assume that leaf networks may be delegated a prefix ranging from /24
+   to /32 in IPv4 and /48 to /64 in IPv6.  Default assumptions about
+   delegation size are left to the consumer's implementation.
+
+   Examples include "/48", "/56", "/60", and "/64".
 
 
 3.  Finding self-published IP geolocation feeds
@@ -360,6 +385,14 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
    o  comparison of feed-advertised prefixes with the BGP-advertised
       prefixes of Autonomous System Numbers known to be operated by the
+
+
+
+Kline, et al.              Expires May 4, 2013                  [Page 7]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
       publishers.
 
    Ad hoc mechanisms, while useful for early experimentation by
@@ -382,16 +415,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    especially the load imposed by any verification process, is not yet
    known.  The anticipation of additional operational burden on the
    public resource of record is noted however.
-
-
-
-
-
-
-Kline & Duleba             Expires May 3, 2013                  [Page 7]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
 
 3.3.  Using 'reverse' DNS
 
@@ -418,6 +441,14 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    document, possibly taking in to the consider the TTL of the
    successful response for refresh timing information.
 
+
+
+
+Kline, et al.              Expires May 4, 2013                  [Page 8]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
    Verification of the contents of a feed would proceed in essentially
    the same way.  CIDR prefixes may be verified by constructing a query
    for any single address (at random) within the prefix and proceeding
@@ -435,30 +466,28 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 4.  Consuming self-published IP geolocation feeds
 
+   TODO(ek).
+
 4.1.  Acceptable use implied
 
    This proposal does not incorporate a mechanism to communicate
    acceptable use policies for self-published data.  Publication itself
    is inferred as a desire by the publisher for the data to be usefully
    consumed, similar to the publication of information like hostnames,
-
-
-
-Kline & Duleba             Expires May 3, 2013                  [Page 8]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
-
    cryptographic keys, and SPF records [RFC4408] in the DNS.
 
-4.2.  Feed integrity
+4.2.  Independent verification
+
+   TODO(ek).
+
+4.3.  Feed integrity
 
    The integrity of published information SHOULD be protected by
    securing the means of publication, for example by using HTTP over TLS
    [RFC2818].  Whenever possible, consumers SHOULD prefer retrieving
    geolocation feeds in a manner that guarantees integrity of the feed.
 
-4.3.  Verification of authority
+4.4.  Verification of authority
 
    Consumers of self-published IP geolocation feeds SHOULD perform some
    form of verification that the publisher is in fact authoritative for
@@ -468,13 +497,21 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    process.  Automated means of feed discovery SHOULD have an
    accompanying automated means of verification.
 
+
+
+
+Kline, et al.              Expires May 4, 2013                  [Page 9]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
    A consumer MUST only trust geolocation information for IP addresses
    or ranges for which the publisher has been verified as
    administratively authoritative.  All other geolocation feed entries
    MUST be ignored and SHOULD be logged for further administrative
    review.
 
-4.4.  Refreshing feed information
+4.5.  Refreshing feed information
 
    As a publisher can change geolocation data at any time and without
    notification consumers SHOULD implement mechanisms to periodically
@@ -496,15 +533,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    weekly.
 
 
-
-
-
-
-Kline & Duleba             Expires May 3, 2013                  [Page 9]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
-
 5.  Security Considerations
 
    As there is no true security in the obscurity of the location of any
@@ -517,11 +545,21 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
    The authors would like to express their gratitude to reviewers and
    early implementers, including but not limited to Mikael Abrahamsson,
-   Richard L. Barnes, Marco Hogewoning, Menno Schepers, and Bjoern A.
-   Zeeb.
+   Richard L. Barnes, Andras Erdei, Marco Hogewoning, Menno Schepers,
+   Justyna Sidorska, and Bjoern A. Zeeb.
 
 
 7.  References
+
+
+
+
+
+
+Kline, et al.              Expires May 4, 2013                 [Page 10]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
 
 7.1.  Normative References
 
@@ -553,14 +591,6 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
    [RFC4632]  Fuller, V. and T. Li, "Classless Inter-domain Routing
               (CIDR): The Internet Address Assignment and Aggregation
-
-
-
-Kline & Duleba             Expires May 3, 2013                 [Page 10]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
-
               Plan", BCP 122, RFC 4632, August 2006.
 
 7.2.  Informative References
@@ -579,6 +609,14 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
               September 2004.
 
    [RFC4408]  Wong, M. and W. Schlitt, "Sender Policy Framework (SPF)
+
+
+
+Kline, et al.              Expires May 4, 2013                 [Page 11]
+
+Internet-Draft     Self-published IP Geolocation Data       October 2012
+
+
               for Authorizing Use of Domains in E-Mail, Version 1",
               RFC 4408, April 2006.
 
@@ -607,16 +645,6 @@ Authors' Addresses
    Email: ek@google.com
 
 
-
-
-
-
-
-Kline & Duleba             Expires May 3, 2013                 [Page 11]
-
-Internet-Draft     Self-published IP Geolocation Data       October 2012
-
-
    Krzysztof Duleba
    Google Switzerland GmbH
    Brandschenkestrasse 110
@@ -626,6 +654,13 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
    Email: kduleba@google.com
 
 
+   Zoltan Szamonek
+   Google Switzerland GmbH
+   Brandschenkestrasse 110
+   Zuerich  8002
+   Switzerland
+
+   Email: zszami@google.com
 
 
 
@@ -633,40 +668,5 @@ Internet-Draft     Self-published IP Geolocation Data       October 2012
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Kline & Duleba             Expires May 3, 2013                 [Page 12]
+Kline, et al.              Expires May 4, 2013                 [Page 12]
 

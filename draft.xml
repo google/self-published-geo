@@ -70,7 +70,20 @@
 
         <email>kduleba@google.com</email>
       </address>
+    </author>
 
+    <author initials="Z." surname="Szamonek" fullname="Zoltan Szamonek">
+      <organization>Google Switzerland GmbH</organization>
+      <address>
+        <postal>
+          <street>Brandschenkestrasse 110</street>
+          <code>8002</code>
+          <city>Zürich</city>
+          <country>Switzerland</country>
+        </postal>
+
+        <email>zszami@google.com</email>
+      </address>
     </author>
 
     <date/>
@@ -136,10 +149,14 @@ interpreted as described in <xref target="RFC2119"/>.
 
     <section title="Self-published IP geolocation feeds">
       <t>
-The format described here grew out of response to requests to provide useful
-geolocation information in advance of need by technical conferences which
+The format described here was developed to address the need of network
+operators to rapidly and usefully share geolocation information changes.
+Originally, there arose a specific case where regional operators found it
+desirable to publish location changes rather than wait for geolocation
+algorithms to "learn" about them.  Later on technical conferences, which
 frequently use the same network prefixes advertised from different meeting
-locations.
+locations, experimented by publishing geolocation changes in advance
+of need in order to better serve conference attendees.
       </t>
       <t>
 At its simplest, the mechanism consists of a network provider publishing a
@@ -167,28 +184,40 @@ Feeds MUST be in comma separated values format as described in
 <xref target="RFC4180"/>.  Each feed entry is a text line of the form:
           <figure>
             <artwork>
-    cidr_prefix,country,region,city,postal_code,delegation_size
+    ip_range,country,region,city,postal_code
             </artwork>
           </figure>
         </t>
         <t>
-CIDR prefix fields are mandatory, all others are optional (can be empty),
+IP range fields are mandatory, all others are optional (can be empty),
 though the requisite minimum number of commas SHOULD be present.
         </t>
 
         <section title="Geolocation feed individual entry fields">
-          <section title="CIDR prefix (or IP address)">
+          <section title="IP Range">
             <t>
-Mandatory.  Each CIDR prefix field MUST be either a single IP address or an
+Mandatory.  Each IP range field MUST be either a single IP address or an
 IP prefix in CIDR notation in conformance with
 <eref target="http://tools.ietf.org/html/rfc4632#section-3.1">section 3.1</eref>
 of <xref target="RFC4632"/> for IPv4 or
 <eref target="http://tools.ietf.org/html/rfc4291#section-2.3">section 2.3</eref>
 of <xref target="RFC4291"/> for IPv6.
             </t>
+
+            <t>
+Due to the density of some IPv4 allocations in some networks it can be more
+convenient to list IP ranges in an alternate, hyphenated form.  IPv4 ranges,
+and only IPv4 ranges, MAY be formatted as "start_address-end_address",
+indicating that all IPv4 addresses from the start address incrementing
+numerically through the end address inclusive constitute the IP range for
+the given entry.  Publishers MUST prefer CIDR notation over this hyphenated
+altnerative if the expressed IP ranges are equivalent.
+            </t>
+
             <t>
 Examples include "192.0.2.1" and "192.0.2.0/24" for IPv4 and "2001:db8::1"
-and "2001:db8::/32" for IPv6.
+and "2001:db8::/32" for IPv6.  Additionally, IPv4 ranges (only) may be
+expressed in form "192.0.2.3-192.0.2.25".
             </t>
           </section>
 
@@ -236,27 +265,6 @@ Optional.  The postal code field should be free text, excluding comma (',').
 Examples include "106-6126" (in Minato ward, Tokyo, Japan).
             </t>
           </section>
-
-          <section title="Delegation size">
-            <t>
-Optional.  A publisher may optionally communicate the average delegated
-prefix size for subnetworks within the IP prefix of this entry.  For a network
-operator this can used to help consumers distinguish IP prefixes among various
-use types such as residential prefixes, allocations to businesses, or data
-center customer allocations.
-            </t>
-            <t>
-Non-empty strings MUST be of the form required for CIDR notation suffixes,
-i.e. "/" followed by the integer prefix length allocation the subnetworks
-from within the entry's prefix.  In the absence of data to the contrary, it
-is common to assume that leaf networks may be delegated a prefix ranging from
-/24 to /32 in IPv4 and /48 to /64 in IPv6.  Default assumptions about
-delegation size are left to the consumer's implementation.
-            </t>
-            <t>
-Examples include "/48", "/56", "/60", and "/64".
-            </t>
-          </section>
         </section>
 
         <section title="Parsing and matching">
@@ -296,11 +304,12 @@ Example entries using different IP address formats and describing locations
 at country, region, city and postal code granularity level, respectively:
           <figure>
             <artwork>
-    192.0.2.0/25,US,US-AL,,,
-    192.0.2.5,US,US-AL,Alabaster,,
-    192.0.2.128/25,PL,PL-MZ,,02-784,
-    2001:db8::/32,PL,,,,
-    2001:db8:cafe::/48,PL,PL-MZ,,02-784,/56
+    192.0.2.0/25,US,US-AL,,
+    192.0.2.5,US,US-AL,Alabaster,
+    192.0.2.50-192.0.2.63,US,US-CA,Santa Monica,
+    192.0.2.128/25,PL,PL-MZ,,02-784
+    2001:db8::/32,PL,,,
+    2001:db8:cafe::/48,PL,PL-MZ,,02-784
             </artwork>
           </figure>
         </t>
@@ -328,6 +337,39 @@ contains:
             </artwork>
           </figure>
         </t>
+      </section>
+
+      <section title="Proposed extensions">
+        <t>
+Already some discussions have resulted in proposed extensions.  While the
+purpose of this document is principally to record existing implementation
+details, it may be that there is a larger desire to publish other "network
+attributes" in a similar manner.  One such network attribute, "delegation
+size", is not currently implemented but the state of the proposed
+extension is recorded here to demonstrate the flexibility required of
+parser implementations.
+        </t>
+
+        <section title="Delegation size">
+          <t>
+Optional.  A publisher may optionally communicate the average delegated
+prefix size for subnetworks within the IP prefix of this entry.  For a network
+operator this can be used to help consumers distinguish IP prefixes among
+various use types such as residential prefixes, allocations to businesses,
+or data center customer allocations.
+          </t>
+          <t>
+Non-empty strings MUST be of the form required for CIDR notation suffixes,
+i.e. "/" followed by the integer prefix length of the expected allocation
+to the subnetworks from within the entry's prefix.  In the absence of data
+to the contrary, it is common to assume that leaf networks may be delegated
+a prefix ranging from /24 to /32 in IPv4 and /48 to /64 in IPv6.  Default
+assumptions about delegation size are left to the consumer's implementation.
+          </t>
+          <t>
+Examples include "/48", "/56", "/60", and "/64".
+          </t>
+        </section>
       </section>
     </section>
 
@@ -430,6 +472,10 @@ the IP prefixes under their authority.
     </section>
 
     <section title="Consuming self-published IP geolocation feeds">
+      <t>
+TODO(ek).
+      </t>
+
       <section title="Acceptable use implied">
         <t>
 This proposal does not incorporate a mechanism to communicate acceptable
@@ -437,6 +483,12 @@ use policies for self-published data.  Publication itself is inferred as
 a desire by the publisher for the data to be usefully consumed, similar
 to the publication of information like hostnames, cryptographic keys, and
 SPF records <xref target="RFC4408"/> in the DNS.
+        </t>
+      </section>
+
+      <section title="Independent verification">
+        <t>
+TODO(ek).
         </t>
       </section>
 
@@ -507,7 +559,8 @@ location data might be exploited.
       <t>
 The authors would like to express their gratitude to reviewers and early
 implementers, including but not limited to Mikael Abrahamsson,
-Richard L. Barnes, Marco Hogewoning, Menno Schepers, and Bjoern A. Zeeb.
+Richard L. Barnes, Andras Erdei, Marco Hogewoning, Menno Schepers,
+Justyna Sidorska, and Bjoern A. Zeeb.
       </t>
     </section>
   </middle>
