@@ -331,7 +331,7 @@ at country, region, city and postal code granularity level, respectively:
         <t>
 Experimentally, RIPE has published geolocation information for their meeting
 network prefixes, which change location in accordance with each new meeting.
-<xref target="RIPE_NCC_GEO"/> at the time of writing contains:
+<xref target="GEO_RIPE_NCC"/> at the time of writing contains:
           <figure>
             <artwork>
     193.0.24.0/21,IE,IE-D,Dublin,
@@ -342,7 +342,7 @@ network prefixes, which change location in accordance with each new meeting.
 
         <t>
 Similarly, ICANN has published geolocation information for their portable
-meeting network prefixes.  <xref target="ICANN_GEO"/> at the time of writing
+meeting network prefixes.  <xref target="GEO_ICANN"/> at the time of writing
 contains:
           <figure>
             <artwork>
@@ -645,7 +645,7 @@ International Organization for Standardization
 &rfc5952;
 
 <reference target="https://meetings.ripe.net/geo/google.csv"
-           anchor="RIPE_NCC_GEO">
+           anchor="GEO_RIPE_NCC">
   <front>
     <title>RIPE NCC Meeting Geolocation Data</title>
     <author fullname="Menno Schepers" initials="M." surname="Schepers">
@@ -657,7 +657,7 @@ Réseaux IP Européens Network Coordination Centre
 </reference>
 
 <reference target="https://registration.icann.org/geo/google.csv"
-           anchor="ICANN_GEO">
+           anchor="GEO_ICANN">
   <front>
     <title>ICANN Meeting Geolocation Data</title>
     <author>
