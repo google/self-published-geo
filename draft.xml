@@ -91,7 +91,7 @@
     <abstract>
 <t>TODO(ek): proper IPR selection</t>
 <t>TODO(ek): add Krzysztof's code</t>
-<t>TODO(ek): document DNS solution incompleteness</t>
+<t>TODO(ek): spell check!</t>
       <t>
 This document records a format whereby a network operator can publish a
 mapping of IP address ranges to simplified geolocation information,
@@ -202,7 +202,7 @@ Feeds MUST be in comma separated values format as described in
           </figure>
         </t>
         <t>
-IP range fields are mandatory, all others are optional (can be empty),
+IP range fields are REQUIRED, all others are OPTIONAL (can be empty),
 though the requisite minimum number of commas SHOULD be present.
         </t>
 
@@ -225,7 +225,7 @@ expressed in form "192.0.2.3-192.0.2.25".
 
           <section title="Country">
             <t>
-Optional.  The country field SHOULD be a 2 letter ISO country code conforming
+OPTIONAL.  The country field SHOULD be a 2 letter ISO country code conforming
 to ISO 3166-1 alpha 2 <xref target="ISO.3166.1"/>.  Parsers should treat this
 field case-insensitively.
             </t>
@@ -243,7 +243,7 @@ Poland.
 
           <section title="Region">
             <t>
-Optional.  The region field should be a ISO region code conforming to
+OPTIONAL.  The region field should be a ISO region code conforming to
 ISO 3166-2 <xref target="ISO.3166.2"/>.  Parsers should treat this field
 case-insensitively.
             </t>
@@ -255,7 +255,7 @@ the Rivers province in Nigeria.
 
           <section title="City">
             <t>
-Optional.  The city field should be free text, excluding comma (',').
+OPTIONAL.  The city field should be free text, excluding comma (',').
             </t>
             <t>
 Examples include "Dublin", "New York", and "São Paulo", specifically
@@ -265,7 +265,7 @@ Examples include "Dublin", "New York", and "São Paulo", specifically
 
           <section title="Postal code">
             <t>
-Optional.  The postal code field should be free text, excluding comma (',').
+OPTIONAL.  The postal code field should be free text, excluding comma (',').
             </t>
             <t>
 Examples include "106-6126" (in Minato ward, Tokyo, Japan).
@@ -358,7 +358,7 @@ parser implementations.
 
         <section title="Delegation size">
           <t>
-Optional.  A publisher may optionally communicate the average delegated
+OPTIONAL.  A publisher may optionally communicate the average delegated
 prefix size for subnetworks within the IP prefix of this entry.  For a network
 operator this can be used to help consumers distinguish IP prefixes among
 various use types such as residential prefixes, allocations to businesses,
@@ -379,7 +379,7 @@ Examples include "/48", "/56", "/60", and "/64".
 
         <section title="IPv4 hyphenated range format">
           <t>
-Optional.  Due to the density of some IPv4 allocations in some networks it
+OPTIONAL.  Due to the density of some IPv4 allocations in some networks it
 may be more convenient to list IP ranges in an alternate, hyphenated form.
 IPv4 ranges, and only IPv4 ranges, MAY be formatted as
 "start_address-end_address", indicating that all IPv4 addresses from the
@@ -499,7 +499,9 @@ way.  CIDR prefixes may be verified by constructing a query for any single
 address (at random) within the prefix and proceeding as above.  While not
 strictly provably correct (in cases where a publisher has delegated some
 portion of the advertised prefix but not excluded it from its feed), it may
-nevertheless suffice for operational purposes.
+nevertheless suffice for operational purposes, especially if a low-impact
+on-going verification of observed client IP addresses is implemented, to
+(eventually) catch any oversights.
         </t>
         <t>
 This mode is untested and may prove impractical.  However, the operational

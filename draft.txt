@@ -18,7 +18,7 @@ Abstract
 
    TODO(ek): add Krzysztof's code
 
-   TODO(ek): document DNS solution incompleteness
+   TODO(ek): spell check!
 
    This document records a format whereby a network operator can publish
    a mapping of IP address ranges to simplified geolocation information,
@@ -89,7 +89,7 @@ Table of Contents
      3.1.  Ad hoc 'well known' URIs . . . . . . . . . . . . . . . . .  8
      3.2.  Using public databases of network authority  . . . . . . .  8
      3.3.  Using 'reverse' DNS  . . . . . . . . . . . . . . . . . . .  9
-   4.  Consuming self-published IP geolocation feeds  . . . . . . . .  9
+   4.  Consuming self-published IP geolocation feeds  . . . . . . . . 10
      4.1.  Feed integrity . . . . . . . . . . . . . . . . . . . . . . 10
      4.2.  Verification of authority  . . . . . . . . . . . . . . . . 10
      4.3.  Verification of accuracy . . . . . . . . . . . . . . . . . 10
@@ -200,9 +200,8 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
        ip_range,country,region,city,postal_code
 
-   IP range fields are mandatory, all others are optional (can be
-   empty), though the requisite minimum number of commas SHOULD be
-   present.
+   IP range fields are REQUIRED, all others are OPTIONAL (can be empty),
+   though the requisite minimum number of commas SHOULD be present.
 
 2.1.1.  Geolocation feed individual entry fields
 
@@ -220,6 +219,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
 
+
 Kline, et al.             Expires May 10, 2013                  [Page 4]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
@@ -227,7 +227,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 2.1.1.2.  Country
 
-   Optional.  The country field SHOULD be a 2 letter ISO country code
+   OPTIONAL.  The country field SHOULD be a 2 letter ISO country code
    conforming to ISO 3166-1 alpha 2 [ISO.3166.1].  Parsers should treat
    this field case-insensitively.
 
@@ -242,7 +242,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 2.1.1.3.  Region
 
-   Optional.  The region field should be a ISO region code conforming to
+   OPTIONAL.  The region field should be a ISO region code conforming to
    ISO 3166-2 [ISO.3166.2].  Parsers should treat this field case-
    insensitively.
 
@@ -251,14 +251,14 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 2.1.1.4.  City
 
-   Optional.  The city field should be free text, excluding comma (',').
+   OPTIONAL.  The city field should be free text, excluding comma (',').
 
    Examples include "Dublin", "New York", and "Sao Paulo", specifically
    "S" followed by 0xc3, 0xa3, and "o Paulo".
 
 2.1.1.5.  Postal code
 
-   Optional.  The postal code field should be free text, excluding comma
+   OPTIONAL.  The postal code field should be free text, excluding comma
    (',').
 
    Examples include "106-6126" (in Minato ward, Tokyo, Japan).
@@ -349,7 +349,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 2.3.1.  Delegation size
 
-   Optional.  A publisher may optionally communicate the average
+   OPTIONAL.  A publisher may optionally communicate the average
    delegated prefix size for subnetworks within the IP prefix of this
    entry.  For a network operator this can be used to help consumers
    distinguish IP prefixes among various use types such as residential
@@ -368,7 +368,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 2.3.2.  IPv4 hyphenated range format
 
-   Optional.  Due to the density of some IPv4 allocations in some
+   OPTIONAL.  Due to the density of some IPv4 allocations in some
    networks it may be more convenient to list IP ranges in an alternate,
    hyphenated form.  IPv4 ranges, and only IPv4 ranges, MAY be formatted
    as "start_address-end_address", indicating that all IPv4 addresses
@@ -484,7 +484,9 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    as above.  While not strictly provably correct (in cases where a
    publisher has delegated some portion of the advertised prefix but not
    excluded it from its feed), it may nevertheless suffice for
-   operational purposes.
+   operational purposes, especially if a low-impact on-going
+   verification of observed client IP addresses is implemented, to
+   (eventually) catch any oversights.
 
    This mode is untested and may prove impractical.  However, the
    operational burden is more closely located with those wishing and
@@ -493,10 +495,8 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    authority.
 
 
-4.  Consuming self-published IP geolocation feeds
 
-   While consumers MAY treat published feed data as a hint only and MAY
-   choose to prefer other sources of geolocation information for any
+
 
 
 
@@ -505,6 +505,10 @@ Kline, et al.             Expires May 10, 2013                  [Page 9]
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
+4.  Consuming self-published IP geolocation feeds
+
+   While consumers MAY treat published feed data as a hint only and MAY
+   choose to prefer other sources of geolocation information for any
    given IP range there are some guidelines for sensibly and effectively
    consuming published feeds.
 
@@ -549,10 +553,6 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    notification consumers SHOULD implement mechanisms to periodically
    refresh local copies of feed data.  If the feed discovery mechanism
    offers hints about data validity time (e.g. the TTL field of the DNS
-   Resource Record which identified a feed (section 3.2.1 of
-   [RFC1035])), then the given feed SHOULD be refreshed before the
-   expiration of this validity timer.
-
 
 
 
@@ -560,6 +560,10 @@ Kline, et al.             Expires May 10, 2013                 [Page 10]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
+
+   Resource Record which identified a feed (section 3.2.1 of
+   [RFC1035])), then the given feed SHOULD be refreshed before the
+   expiration of this validity timer.
 
    For feeds available via HTTPS (or HTTP), the publisher MAY
    communicate refresh timing information by means of the standard HTTP
@@ -606,10 +610,6 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
               3166-1 decoding table", <http://www.iso.org/iso/home/
               standards/country_codes/iso-3166-1_decoding_table.htm>.
 
-   [ISO.3166.2]
-              International Organization for Standardization, "ISO 3166-
-              2:2007", <http://www.iso.org/iso/home/standards/
-
 
 
 Kline, et al.             Expires May 10, 2013                 [Page 11]
@@ -617,6 +617,9 @@ Kline, et al.             Expires May 10, 2013                 [Page 11]
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
+   [ISO.3166.2]
+              International Organization for Standardization, "ISO 3166-
+              2:2007", <http://www.iso.org/iso/home/standards/
               country_codes.htm#2012_iso3166-2>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
@@ -662,15 +665,16 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
               for Authorizing Use of Domains in E-Mail, Version 1",
               RFC 4408, April 2006.
 
-   [RFC5952]  Kawamura, S. and M. Kawashima, "A Recommendation for IPv6
-              Address Text Representation", RFC 5952, August 2010.
-
 
 
 
 Kline, et al.             Expires May 10, 2013                 [Page 12]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
+
+
+   [RFC5952]  Kawamura, S. and M. Kawashima, "A Recommendation for IPv6
+              Address Text Representation", RFC 5952, August 2010.
 
 
 Appendix A.  Sample Python validation code
@@ -706,10 +710,6 @@ Authors' Addresses
    Switzerland
 
    Email: zszami@google.com
-
-
-
-
 
 
 
