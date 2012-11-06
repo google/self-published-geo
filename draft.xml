@@ -553,7 +553,7 @@ Errors and inaccuracies may occur at many levels, and publication and
 consumption of geolocation data are no exceptions.  To the extent practical
 consumers SHOULD take steps to verify the accuracy of published locality.
 Verification methodology, resolution of discrepancies, and preference for
-alternative sources of data are left to the descretion of the consumer.
+alternative sources of data are left to the discretion of the consumer.
         </t>
         <t>
 Consumers SHOULD decide on discrepancy thresholds and SHOULD flag for
@@ -612,8 +612,8 @@ errors.
       <t>
 The authors would like to express their gratitude to reviewers and early
 implementers, including but not limited to Mikael Abrahamsson,
-Richard L. Barnes, Andras Erdei, Marco Hogewoning, Menno Schepers,
-Justyna Sidorska, and Bjoern A. Zeeb.
+Richard L. Barnes, Andras Erdei, Marco Hogewoning, Warren Kumari,
+Menno Schepers, Justyna Sidorska, and Bjoern A. Zeeb.
       </t>
     </section>
   </middle>

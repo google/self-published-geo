@@ -542,7 +542,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    practical consumers SHOULD take steps to verify the accuracy of
    published locality.  Verification methodology, resolution of
    discrepancies, and preference for alternative sources of data are
-   left to the descretion of the consumer.
+   left to the discretion of the consumer.
 
    Consumers SHOULD decide on discrepancy thresholds and SHOULD flag for
    administrative review feed entries which exceed set thresholds.
@@ -597,8 +597,8 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
    The authors would like to express their gratitude to reviewers and
    early implementers, including but not limited to Mikael Abrahamsson,
-   Richard L. Barnes, Andras Erdei, Marco Hogewoning, Menno Schepers,
-   Justyna Sidorska, and Bjoern A. Zeeb.
+   Richard L. Barnes, Andras Erdei, Marco Hogewoning, Warren Kumari,
+   Menno Schepers, Justyna Sidorska, and Bjoern A. Zeeb.
 
 
 7.  References
