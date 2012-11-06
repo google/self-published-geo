@@ -26,7 +26,7 @@
 
 <rfc category="exp"
      ipr="trust200902"
-     docName="draft-self-published-geo-00.txt">
+     docName="draft-self-published-geo-00">
 
 <?xml-stylesheet type="text/xsl" href="rfc2629.xslt" ?>
 
@@ -89,6 +89,9 @@
     <date/>
 
     <abstract>
+<t>TODO(ek): proper IPR selection</t>
+<t>TODO(ek): add Krzysztof's code</t>
+<t>TODO(ek): document DNS solution incompleteness</t>
       <t>
 This document records a format whereby a network operator can publish a
 mapping of IP address ranges to simplified geolocation information,
@@ -213,17 +216,6 @@ of <xref target="RFC4632"/> for IPv4 or
 <eref target="http://tools.ietf.org/html/rfc4291#section-2.3">section 2.3</eref>
 of <xref target="RFC4291"/> for IPv6.
             </t>
-
-            <t>
-Due to the density of some IPv4 allocations in some networks it can be more
-convenient to list IP ranges in an alternate, hyphenated form.  IPv4 ranges,
-and only IPv4 ranges, MAY be formatted as "start_address-end_address",
-indicating that all IPv4 addresses from the start address incrementing
-numerically through the end address inclusive constitute the IP range for
-the given entry.  Publishers MUST prefer CIDR notation over this hyphenated
-altnerative if the expressed IP ranges are equivalent.
-            </t>
-
             <t>
 Examples include "192.0.2.1" and "192.0.2.0/24" for IPv4 and "2001:db8::1"
 and "2001:db8::/32" for IPv6.  Additionally, IPv4 ranges (only) may be
@@ -284,7 +276,8 @@ Examples include "106-6126" (in Minato ward, Tokyo, Japan).
         <section title="Parsing and matching">
           <t>
 Entries with expected fields which fail to parse, either in part or in full,
-SHOULD be discarded.  It is RECOMMENDED that they also be logged for further administrative review.  For compatibility with future additional fields a
+SHOULD be discarded.  It is RECOMMENDED that they also be logged for further
+administrative review.  For compatibility with future additional fields a
 parser MUST ignore any fields beyond those it expects.  The data from
 fields which are expected and which parse successfully MUST still be
 considered valid.
@@ -320,7 +313,6 @@ at country, region, city and postal code granularity level, respectively:
             <artwork>
     192.0.2.0/25,US,US-AL,,
     192.0.2.5,US,US-AL,Alabaster,
-    192.0.2.50-192.0.2.63,US,US-CA,Santa Monica,
     192.0.2.128/25,PL,PL-MZ,,02-784
     2001:db8::/32,PL,,,
     2001:db8:cafe::/48,PL,PL-MZ,,02-784
@@ -382,6 +374,39 @@ assumptions about delegation size are left to the consumer's implementation.
           </t>
           <t>
 Examples include "/48", "/56", "/60", and "/64".
+          </t>
+        </section>
+
+        <section title="IPv4 hyphenated range format">
+          <t>
+Optional.  Due to the density of some IPv4 allocations in some networks it
+may be more convenient to list IP ranges in an alternate, hyphenated form.
+IPv4 ranges, and only IPv4 ranges, MAY be formatted as
+"start_address-end_address", indicating that all IPv4 addresses from the
+start address incrementing numerically through the end address inclusive
+constitute the IP range for the given entry.
+          </t>
+          <t>
+Publishers MUST prefer CIDR notation over this hyphenated alternative if a
+collection of CIDR IP ranges can reasonably be constructed that expresses
+the equivalent of the hyphenated range.
+          </t>
+          <t>
+Due of the complexity of constructing a valid IP range and address mapping
+to geolocation entries, this hyphenated form has some additional restrictions:
+            <list style="symbols">
+              <t>
+All IPv4 hyphenated ranges MUST be disjoint with each other (no overlapping
+ranges).
+              </t>
+              <t>
+All IPv4 hyphenated ranges MUST be a proper subset of any covering IPv4 CIDR
+prefix (no cutting across CIDR boundaries).
+              </t>
+            </list>
+          </t>
+          <t>
+Examples include expressions of the form "192.0.2.3-192.0.2.25".
           </t>
         </section>
       </section>

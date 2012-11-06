@@ -8,10 +8,7 @@ SRCXML := $(SRC).xml
 all:	text
 
 text:	$(SRCXML)
-	xml2rfc $(SRCXML) $(SRC).txt
-
-html:	$(SRCXML)
-	xml2rfc $(SRCXML) $(SRC).html
+	xml2rfc text $(SRCXML) $(SRC).txt
 
 # Pull and update this repository.
 update:
