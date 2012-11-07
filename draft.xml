@@ -25,7 +25,7 @@
 ]>
 
 <rfc category="exp"
-     ipr="trust200902"
+     ipr="noModificationTrust200902"
      docName="draft-self-published-geo-00">
 
 <?xml-stylesheet type="text/xsl" href="rfc2629.xslt" ?>
@@ -89,9 +89,9 @@
     <date/>
 
     <abstract>
-<t>TODO(ek): proper IPR selection?</t>
 <t>TODO(ek): add Krzysztof's code</t>
 <t>TODO(ek): add rbarnes' geopriv comments</t>
+<t>TODO(ek): add kk's comments</t>
       <t>
 This document records a format whereby a network operator can publish a
 mapping of IP address ranges to simplified geolocation information,
@@ -243,7 +243,7 @@ Poland.
 
           <section title="Region">
             <t>
-OPTIONAL.  The region field should be a ISO region code conforming to
+OPTIONAL.  The region field SHOULD be a ISO region code conforming to
 ISO 3166-2 <xref target="ISO.3166.2"/>.  Parsers should treat this field
 case-insensitively.
             </t>
@@ -255,7 +255,7 @@ the Rivers province in Nigeria.
 
           <section title="City">
             <t>
-OPTIONAL.  The city field should be free text, excluding comma (',').
+OPTIONAL.  The city field SHOULD be free UTF-8 text, excluding comma (',').
             </t>
             <t>
 Examples include "Dublin", "New York", and "São Paulo", specifically
@@ -265,7 +265,8 @@ Examples include "Dublin", "New York", and "São Paulo", specifically
 
           <section title="Postal code">
             <t>
-OPTIONAL.  The postal code field should be free text, excluding comma (',').
+OPTIONAL.  The postal code field SHOULD be free UTF-8 text,
+excluding comma (',').
             </t>
             <t>
 Examples include "106-6126" (in Minato ward, Tokyo, Japan).
@@ -354,6 +355,10 @@ attributes" in a similar manner.  One such network attribute, "delegation
 size", is not currently implemented but the state of the proposed
 extension is recorded here to demonstrate the flexibility required of
 parser implementations.
+        </t>
+        <t>
+The following have been only informally discussed and are not in use at the
+time of writing.
         </t>
 
         <section title="Delegation size">
@@ -608,7 +613,7 @@ errors.
       </t>
     </section>
 
-    <section title="Relation other work">
+    <section title="Relation to other work">
       <t>
 Quoting rbarnes:
         <figure>
@@ -736,11 +741,337 @@ Internet Corporation For Assigned Names and Numbers
     </author>
   </front>
 </reference>
+
+<reference target="http://code.google.com/p/ipaddr-py/"
+           anchor="IPADDR_PY">
+  <front>
+    <title>Python IP address manipulation library</title>
+    <author fullname="Mike Shields" initials="M." surname="Shields">
+      <organization abbrev="Google">
+Google Inc.
+      </organization>
+    </author>
+    <author fullname="Peter Moody" initials="P." surname="Moody">
+      <organization abbrev="Google">
+Google Inc.
+      </organization>
+    </author>
+  </front>
+</reference>
       </references>
 
       <section title="Sample Python validation code">
         <t>
-TODO(kduleba).
+Included here is a simple format validator in Python for self-published ipgeo
+feeds.  This tool reads CSV data in the self-published ipgeo feed format from
+the standard input and performs basic validation.  It is intended for
+use by feed publishers before launching a feed.
+        </t>
+        <t>
+The main source file "ipgeo_feed_validator.py" follows.  It requires use of the
+open source ipaddr Python library for IP address and CIDR parsing and
+validation <xref target="IPADDR_PY"/>.
+        </t>
+        <t>
+          <figure>
+            <artwork><![CDATA[
+#!/usr/bin/python
+#
+# Copyright (c) 2012 IETF Trust and the persons identified as authors of
+# the code.  All rights reserved.  Redistribution and use in source and
+# binary forms, with or without modification, is permitted pursuant to,
+# and subject to the license terms contained in, the Simplified BSD
+# License set forth in Section 4.c of the IETF Trust's Legal Provisions
+# Relating to IETF Documents (http://trustee.ietf.org/license-info).
+
+
+"""Simple format validator for self-published ipgeo feeds.
+
+This tool reads CSV data in the self-published ipgeo feed format from
+the standard input and performs basic validation.  It is intended for
+use by feed publishers before launching a feed.
+"""
+
+import csv
+import ipaddr
+import re
+import sys
+
+
+class IPGeoFeedValidator(object):
+  def __init__(self):
+    self.ranges = {}
+    self.line_number = 0
+    self.output_log = {}
+    self.SetOutputStream(sys.stderr)
+
+  def Validate(self, feed):
+    """Check validity of an IPGeo feed.
+
+    Args:
+      feed: iterable with feed lines
+    """
+
+    for line in feed:
+      self._ValidateLine(line)
+
+  def SetOutputStream(self, logfile):
+    """Controls where the output messages go do (STDERR by default).
+
+    Use None to disable logging.
+
+    Args:
+      logfile: a file object (e.g., sys.stdout or sys.stderr) or None.
+    """
+    self.output_stream = logfile
+
+  def CountErrors(self, severity):
+    """How many ERRORs or WARNINGs were generated."""
+    return len(self.output_log.get(severity, []))
+
+  ############################################################
+  def _ValidateLine(self, line):
+    line = line.rstrip('\r\n')
+    self.line_number += 1
+    self.line = line
+    self.is_correct_line = True
+
+    if self._ShouldIgnoreLine(line):
+      return
+
+    fields = [field for field in csv.reader([line])][0]
+
+    self._ValidateFields(fields)
+    self._FlushOutputStream()
+
+  def _ShouldIgnoreLine(self, line):
+    line = line.strip()
+    return len(line) == 0 or line.startswith('#')
+
+  ############################################################
+  def _ValidateFields(self, fields):
+    assert(len(fields) > 0)
+
+    is_correct = self._IsIPAddressOrRangeCorrect(fields[0])
+
+    if len(fields) > 1:
+      if not self._IsCountryCode2Correct(fields[1]):
+        is_correct = False
+
+    if len(fields) > 2 and not self._IsRegionCodeCorrect(fields[2]):
+      is_correct = False
+
+    if len(fields) != 5:
+      self._ReportWarning('5 fields were expected (got %d).'
+                          % len(fields))
+
+  ############################################################
+  def _IsIPAddressOrRangeCorrect(self, field):
+    if '/' in field:
+      return self._IsCIDRCorrect(field)
+    return self._IsIPAddressCorrect(field)
+
+  def _IsCIDRCorrect(self, cidr):
+    try:
+      iprange = ipaddr.IPNetwork(cidr)
+      if iprange.network._ip != iprange._ip:
+        self._ReportError('Incorrect IP Network.')
+        return False
+      if iprange.is_private:
+        self._ReportError('IP Address must not be private.')
+        return False
+    except:
+      self._ReportError('Incorrect IP Network.')
+      return False
+    return True
+
+  def _IsIPAddressCorrect(self, ipaddress):
+    try:
+      ip = ipaddr.IPAddress(ipaddress)
+    except:
+      self._ReportError('Incorrect IP Address.')
+      return False
+    if ip.is_private:
+      self._ReportError('IP Address must not be private.')
+      return False
+    return True
+
+  ############################################################
+  def _IsCountryCode2Correct(self, country_code_2):
+    if len(country_code_2) == 0:
+      return True
+    if len(country_code_2) != 2 or not country_code_2.isalpha():
+      self._ReportError(
+          'Country code must be in the ISO 3166-1 alpha 2 format.')
+      return False
+    return True
+
+  def _IsRegionCodeCorrect(self, region_code):
+    if len(region_code) == 0:
+      return True
+    if '-' not in region_code:
+      self._ReportError('Region code must be in the ISO 3166-2 format.')
+      return False
+
+    parts = region_code.split('-')
+    if not self._IsCountryCode2Correct(parts[0]):
+      return False
+    return True
+
+  ############################################################
+  def _ReportError(self, message):
+    self._ReportWithSeverity('ERROR', message)
+
+  def _ReportWarning(self, message):
+    self._ReportWithSeverity('WARNING', message)
+
+  def _ReportWithSeverity(self, severity, message):
+    self.is_correct_line = False
+    output_line = '%s: %s\n' % (severity, message)
+
+    if severity not in self.output_log:
+      self.output_log[severity] = []
+    self.output_log[severity].append(output_line)
+
+    if self.output_stream is not None:
+      self.output_stream.write(output_line)
+
+  def _FlushOutputStream(self):
+    if self.is_correct_line: return
+    if self.output_stream is None: return
+
+    self.output_stream.write('line %d: %s\n\n'
+                             % (self.line_number, self.line))
+
+
+############################################################
+def main():
+   feed_validator = IPGeoFeedValidator()
+   feed_validator.Validate(sys.stdin)
+
+   if feed_validator.CountErrors('ERROR'):
+     sys.exit(1)
+
+if __name__ == '__main__':
+  main()
+            ]]></artwork>
+          </figure>
+        </t>
+        <t>
+A unittest file, "ipgeo_feed_validator_test.py" is provided as well.  It
+provides basic test coverage of the code above, though does not test correct
+handling of non-ASCII UTF-8 strings.
+        </t>
+        <t>
+          <figure>
+            <artwork><![CDATA[
+#!/usr/bin/python
+#
+# Copyright (c) 2012 IETF Trust and the persons identified as authors of
+# the code.  All rights reserved.  Redistribution and use in source and
+# binary forms, with or without modification, is permitted pursuant to,
+# and subject to the license terms contained in, the Simplified BSD
+# License set forth in Section 4.c of the IETF Trust's Legal Provisions
+# Relating to IETF Documents (http://trustee.ietf.org/license-info).
+
+import sys
+from ipgeo_feed_validator import IPGeoFeedValidator
+
+class IPGeoFeedValidatorTest(object):
+  def __init__(self):
+    self.validator = IPGeoFeedValidator()
+    self.validator.SetOutputStream(None)
+    self.successes = 0
+    self.failures = 0
+
+  def Run(self):
+    self.TestFeedLine('# asdf', 0, 0)
+    self.TestFeedLine('   ', 0, 0)
+    self.TestFeedLine('', 0, 0)
+
+    self.TestFeedLine('asdf', 1, 1)
+    self.TestFeedLine('asdf,US,,,', 1, 0)
+    self.TestFeedLine('aaaa::,US,,,', 0, 0)
+    self.TestFeedLine('zzzz::,US', 1, 1)
+    self.TestFeedLine(',US,,,', 1, 0)
+    self.TestFeedLine('55.66.77', 1, 1)
+    self.TestFeedLine('55.66.77.888', 1, 1)
+    self.TestFeedLine('55.66.77.asdf', 1, 1)
+
+    self.TestFeedLine('2001:db8:cafe::/48,PL,PL-MZ,,02-784', 0, 0)
+    self.TestFeedLine('2001:db8:cafe::/48', 0, 1)
+
+    self.TestFeedLine('55.66.77.88,PL', 0, 1)
+    self.TestFeedLine('55.66.77.88,PL,,,', 0, 0)
+    self.TestFeedLine('55.66.77.88,,,,', 0, 0)
+    self.TestFeedLine('55.66.77.88,ZZ,,,', 0, 0)
+    self.TestFeedLine('55.66.77.88,US,,,', 0, 0)
+    self.TestFeedLine('55.66.77.88,USA,,,', 1, 0)
+    self.TestFeedLine('55.66.77.88,99,,,', 1, 0)
+
+    self.TestFeedLine('55.66.77.88,US,US-CA,,', 0, 0)
+    self.TestFeedLine('55.66.77.88,US,USA-CA,,', 1, 0)
+    self.TestFeedLine('55.66.77.88,USA,USA-CA,,', 2, 0)
+
+    self.TestFeedLine('55.66.77.88,US,US-CA,Mountain View,', 0, 0)
+    self.TestFeedLine('55.66.77.88,US,US-CA,Mountain View,94043', 0, 0)
+    self.TestFeedLine('55.66.77.88,US,US-CA,Mountain View,94043,'
+                      '1600 Ampthitheatre Parkway', 0, 1)
+
+    self.TestFeedLine('55.66.77.0/24,US,,,', 0, 0)
+    self.TestFeedLine('55.66.77.88/24,US,,,', 1, 0)
+    self.TestFeedLine('55.66.77.88/32,US,,,', 0, 0)
+    self.TestFeedLine('55.66.77/24,US,,,', 1, 0)
+    self.TestFeedLine('55.66.77.0/35,US,,,', 1, 0)
+
+    self.TestFeedLine('172.15.30.1,US,,,', 0, 0)
+    self.TestFeedLine('172.28.30.1,US,,,', 1, 0)
+    self.TestFeedLine('192.167.100.1,US,,,', 0, 0)
+    self.TestFeedLine('192.168.100.1,US,,,', 1, 0)
+    self.TestFeedLine('10.0.5.9,US,,,', 1, 0)
+    self.TestFeedLine('10.0.5.0/24,US,,,', 1, 0)
+    self.TestFeedLine('fc00::/48,PL,,,', 1, 0)
+    self.TestFeedLine('fe00::/48,PL,,,', 0, 0)
+
+    print '%d tests passed, %d failed' % (self.successes, self.failures)
+
+  def IsOutputLogCorrectAtSeverity(self, severity, expected_msg_count):
+    msg_count = self.validator.CountErrors(severity)
+
+    if msg_count != expected_msg_count:
+      print 'TEST FAILED: %s\nexpected %d %s[s], observed %d\n%s\n' % (
+          self.validator.line, expected_sg_count, severity, msg_count,
+          str(self.validator.output_log[severity]))
+      return False
+    return True
+
+  def IsOutputLogCorrect(self, new_errors, new_warnings):
+    retval = True
+
+    if not self.IsOutputLogCorrectAtSeverity('ERROR', new_errors):
+      retval = False
+    if not self.IsOutputLogCorrectAtSeverity('WARNING', new_warnings):
+      retval = False
+
+    return retval
+
+  def TestFeedLine(self, line, warning_count, error_count):
+    self.validator.output_log['WARNING'] = []
+    self.validator.output_log['ERROR'] = []
+    self.validator._ValidateLine(line)
+
+    if not self.IsOutputLogCorrect(warning_count, error_count):
+      self.failures += 1
+      return False
+
+    self.successes += 1
+    return True
+
+
+if __name__ == '__main__':
+  IPGeoFeedValidatorTest().Run()
+            ]]></artwork>
+          </figure>
         </t>
       </section>
   </back>
