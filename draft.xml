@@ -89,9 +89,9 @@
     <date/>
 
     <abstract>
-<t>TODO(ek): proper IPR selection</t>
+<t>TODO(ek): proper IPR selection?</t>
 <t>TODO(ek): add Krzysztof's code</t>
-<t>TODO(ek): spell check!</t>
+<t>TODO(ek): add rbarnes' geopriv comments</t>
       <t>
 This document records a format whereby a network operator can publish a
 mapping of IP address ranges to simplified geolocation information,
@@ -589,7 +589,7 @@ consumers SHOULD refresh feeds no less often than weekly.
       </section>
     </section>
 
-    <section title="Security Considerations">
+    <section anchor="Security" title="Security Considerations">
       <t>
 As there is no true security in the obscurity of the location of any given
 IP address, self-publication of this data fundamentally opens no new attack
@@ -605,6 +605,48 @@ input validation and defense measures MUST be taken.
 Similarly, consumers who do not perform sufficient verification of published
 data bear the same risks as from other forms of geolocation configuration
 errors.
+      </t>
+    </section>
+
+    <section title="Relation other work">
+      <t>
+Quoting rbarnes:
+        <figure>
+          <artwork><![CDATA[
+"""
+One time for this audience: You might want to note that this is
+consistent with what GEOPRIV has defined, both for address format
+and for privacy.  The data elements you've got are equivalent to
+the following XML structure [RFC5139]:
+
+    <civicAddress>
+      <country>country</country>
+      <A1>region</A1>
+      <A2>city</A2>
+      <PC>postal_code<PC>
+    <civicAddress>
+
+Providing location to this granularity (less postal_code) is equivalent
+to the following privacy policy:
+
+    <ruleset>
+      <rule>
+        <conditions/>
+        <actions/>
+        <transformations>
+          <provide-location profile="civic-transformation">
+            <provide-civic>building</provide-civic>
+          </provide-location>
+        </transformations>
+      </rule>
+    </ruleset>
+
+(Witness the awesome verbosity of this fully operational XML!)
+
+http://tools.ietf.org/html/draft-ietf-geopriv-policy-27#section-6.5.1
+"""
+          ]]></artwork>
+        </figure>
       </t>
     </section>
 

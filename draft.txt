@@ -4,9 +4,9 @@
 Network Working Group                                           E. Kline
 Internet-Draft                                              Google Japan
 Intended status: Experimental                                  K. Duleba
-Expires: May 10, 2013                                        Z. Szamonek
+Expires: May 11, 2013                                        Z. Szamonek
                                                  Google Switzerland GmbH
-                                                        November 6, 2012
+                                                        November 7, 2012
 
 
                    Self-published IP Geolocation Data
@@ -14,11 +14,11 @@ Expires: May 10, 2013                                        Z. Szamonek
 
 Abstract
 
-   TODO(ek): proper IPR selection
+   TODO(ek): proper IPR selection?
 
    TODO(ek): add Krzysztof's code
 
-   TODO(ek): spell check!
+   TODO(ek): add rbarnes' geopriv comments
 
    This document records a format whereby a network operator can publish
    a mapping of IP address ranges to simplified geolocation information,
@@ -46,13 +46,13 @@ Status of this Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 10, 2013.
+   This Internet-Draft will expire on May 11, 2013.
 
 Copyright Notice
 
 
 
-Kline, et al.             Expires May 10, 2013                  [Page 1]
+Kline, et al.             Expires May 11, 2013                  [Page 1]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
@@ -95,20 +95,20 @@ Table of Contents
      4.3.  Verification of accuracy . . . . . . . . . . . . . . . . . 10
      4.4.  Refreshing feed information  . . . . . . . . . . . . . . . 10
    5.  Security Considerations  . . . . . . . . . . . . . . . . . . . 11
-   6.  Acknowledgements . . . . . . . . . . . . . . . . . . . . . . . 11
-   7.  References . . . . . . . . . . . . . . . . . . . . . . . . . . 11
-     7.1.  Normative References . . . . . . . . . . . . . . . . . . . 11
-     7.2.  Informative References . . . . . . . . . . . . . . . . . . 12
-   Appendix A.  Sample Python validation code . . . . . . . . . . . . 13
-   Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 13
+   6.  Relation other work  . . . . . . . . . . . . . . . . . . . . . 11
+   7.  Acknowledgements . . . . . . . . . . . . . . . . . . . . . . . 12
+   8.  References . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+     8.1.  Normative References . . . . . . . . . . . . . . . . . . . 12
+     8.2.  Informative References . . . . . . . . . . . . . . . . . . 13
+   Appendix A.  Sample Python validation code . . . . . . . . . . . . 14
+   Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 14
 
 
 
 
 
 
-
-Kline, et al.             Expires May 10, 2013                  [Page 2]
+Kline, et al.             Expires May 11, 2013                  [Page 2]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
@@ -164,7 +164,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
 
-Kline, et al.             Expires May 10, 2013                  [Page 3]
+Kline, et al.             Expires May 11, 2013                  [Page 3]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
@@ -220,7 +220,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
 
-Kline, et al.             Expires May 10, 2013                  [Page 4]
+Kline, et al.             Expires May 11, 2013                  [Page 4]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
@@ -276,7 +276,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
 
-Kline, et al.             Expires May 10, 2013                  [Page 5]
+Kline, et al.             Expires May 11, 2013                  [Page 5]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
@@ -332,7 +332,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
 
-Kline, et al.             Expires May 10, 2013                  [Page 6]
+Kline, et al.             Expires May 11, 2013                  [Page 6]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
@@ -388,7 +388,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
 
-Kline, et al.             Expires May 10, 2013                  [Page 7]
+Kline, et al.             Expires May 11, 2013                  [Page 7]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
@@ -444,7 +444,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
 
-Kline, et al.             Expires May 10, 2013                  [Page 8]
+Kline, et al.             Expires May 11, 2013                  [Page 8]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
@@ -500,7 +500,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
 
-Kline, et al.             Expires May 10, 2013                  [Page 9]
+Kline, et al.             Expires May 11, 2013                  [Page 9]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
@@ -556,7 +556,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
 
-Kline, et al.             Expires May 10, 2013                 [Page 10]
+Kline, et al.             Expires May 11, 2013                 [Page 10]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
@@ -593,7 +593,65 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    configuration errors.
 
 
-6.  Acknowledgements
+6.  Relation other work
+
+   Quoting rbarnes:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kline, et al.             Expires May 11, 2013                 [Page 11]
+
+Internet-Draft     Self-published IP Geolocation Data      November 2012
+
+
+ """
+ One time for this audience: You might want to note that this is
+ consistent with what GEOPRIV has defined, both for address format
+ and for privacy.  The data elements you've got are equivalent to
+ the following XML structure [RFC5139]:
+
+     <civicAddress>
+       <country>country</country>
+       <A1>region</A1>
+       <A2>city</A2>
+       <PC>postal_code<PC>
+     <civicAddress>
+
+ Providing location to this granularity (less postal_code) is equivalent
+ to the following privacy policy:
+
+     <ruleset>
+       <rule>
+         <conditions/>
+         <actions/>
+         <transformations>
+           <provide-location profile="civic-transformation">
+             <provide-civic>building</provide-civic>
+           </provide-location>
+         </transformations>
+       </rule>
+     </ruleset>
+
+ (Witness the awesome verbosity of this fully operational XML!)
+
+ http://tools.ietf.org/html/draft-ietf-geopriv-policy-27#section-6.5.1
+ """
+
+
+7.  Acknowledgements
 
    The authors would like to express their gratitude to reviewers and
    early implementers, including but not limited to Mikael Abrahamsson,
@@ -601,21 +659,22 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    Menno Schepers, Justyna Sidorska, and Bjoern A. Zeeb.
 
 
-7.  References
+8.  References
 
-7.1.  Normative References
+8.1.  Normative References
 
    [ISO.3166.1]
               International Organization for Standardization, "ISO
-              3166-1 decoding table", <http://www.iso.org/iso/home/
-              standards/country_codes/iso-3166-1_decoding_table.htm>.
 
 
 
-Kline, et al.             Expires May 10, 2013                 [Page 11]
+Kline, et al.             Expires May 11, 2013                 [Page 12]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
+
+              3166-1 decoding table", <http://www.iso.org/iso/home/
+              standards/country_codes/iso-3166-1_decoding_table.htm>.
 
    [ISO.3166.2]
               International Organization for Standardization, "ISO 3166-
@@ -642,7 +701,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
               (CIDR): The Internet Address Assignment and Aggregation
               Plan", BCP 122, RFC 4632, August 2006.
 
-7.2.  Informative References
+8.2.  Informative References
 
    [GEO_ICANN]
               Internet Corporation For Assigned Names and Numbers,
@@ -662,16 +721,16 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
               September 2004.
 
    [RFC4408]  Wong, M. and W. Schlitt, "Sender Policy Framework (SPF)
-              for Authorizing Use of Domains in E-Mail, Version 1",
-              RFC 4408, April 2006.
 
 
 
-
-Kline, et al.             Expires May 10, 2013                 [Page 12]
+Kline, et al.             Expires May 11, 2013                 [Page 13]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
+
+              for Authorizing Use of Domains in E-Mail, Version 1",
+              RFC 4408, April 2006.
 
    [RFC5952]  Kawamura, S. and M. Kawashima, "A Recommendation for IPv6
               Address Text Representation", RFC 5952, August 2010.
@@ -721,8 +780,5 @@ Authors' Addresses
 
 
 
-
-
-
-Kline, et al.             Expires May 10, 2013                 [Page 13]
+Kline, et al.             Expires May 11, 2013                 [Page 14]
 
