@@ -91,7 +91,6 @@
     <date/>
 
     <abstract>
-<t>TODO(ek): add kk's comments</t>
       <t>
 This document records a format whereby a network operator can publish a
 mapping of IP address ranges to simplified geolocation information,
@@ -120,11 +119,11 @@ search queries.
         </t>
         <t>
 When an ISP, for example, changes the location of an IP prefix, services which
-make use of geolocation information may begin to suffer worse performance.
-This can lead to customer complaints, possibly to the ISP directly.  Resolution
-of incorrect geolocation data is complicated by the lack of any centralized
-means to coordinate and communicate geolocation information to all interested
-consumers of the data.
+make use of geolocation information may begin to suffer degraded performance.
+This can lead to customer complaints, possibly to the ISP directly.
+Dissemination of correct geolocation data is complicated by the lack of any
+centralized means to coordinate and communicate geolocation information to all
+interested consumers of the data.
         </t>
         <t>
 This document records a format whereby a network operator (an ISP, an
@@ -155,7 +154,7 @@ interpreted as described in <xref target="RFC2119"/>.
 This proposal does not incorporate a mechanism to communicate acceptable
 use policies for self-published data.  Publication itself is inferred as
 a desire by the publisher for the data to be usefully consumed, similar
-to the publication of information like hostnames, cryptographic keys, and
+to the publication of information like host names, cryptographic keys, and
 SPF records <xref target="RFC4408"/> in the DNS.
         </t>
       </section>
@@ -167,10 +166,10 @@ The format described here was developed to address the need of network
 operators to rapidly and usefully share geolocation information changes.
 Originally, there arose a specific case where regional operators found it
 desirable to publish location changes rather than wait for geolocation
-algorithms to "learn" about them.  Later on technical conferences, which
-frequently use the same network prefixes advertised from different meeting
-locations, experimented by publishing geolocation changes in advance
-of need in order to better serve conference attendees.
+algorithms to "learn" about them.  Later, technical conferences which
+frequently use the same network prefixes advertised from different conference
+locations experimented by publishing geolocation feeds, updated in advance
+of network location changes, in order to better serve conference attendees.
       </t>
       <t>
 At its simplest, the mechanism consists of a network operator publishing a
@@ -219,8 +218,7 @@ of <xref target="RFC4291"/> for IPv6.
             </t>
             <t>
 Examples include "192.0.2.1" and "192.0.2.0/24" for IPv4 and "2001:db8::1"
-and "2001:db8::/32" for IPv6.  Additionally, IPv4 ranges (only) may be
-expressed in form "192.0.2.3-192.0.2.25".
+and "2001:db8::/32" for IPv6.
             </t>
           </section>
 
@@ -256,18 +254,19 @@ the Rivers province in Nigeria.
 
           <section title="City">
             <t>
-OPTIONAL.  The city field SHOULD be free UTF-8 text, excluding comma (',').
+OPTIONAL.  The city field SHOULD be free UTF-8 text, excluding the comma (',')
+character.
             </t>
             <t>
-Examples include "Dublin", "New York", and "São Paulo", specifically
-"S" followed by 0xc3, 0xa3, and "o Paulo".
+Examples include "Dublin", "New York", and "São Paulo" (specifically
+"S" followed by 0xc3, 0xa3, and "o Paulo").
             </t>
           </section>
 
           <section title="Postal code">
             <t>
-OPTIONAL.  The postal code field SHOULD be free UTF-8 text,
-excluding comma (',').
+OPTIONAL.  The postal code field SHOULD be free UTF-8 text, excluding the
+comma (',') character.
             </t>
             <t>
 Examples include "106-6126" (in Minato ward, Tokyo, Japan).
@@ -294,7 +293,7 @@ addresses, consumers MUST nevertheless accept all valid string representations.
           <t>
 Multiple entries which constitute nested prefixes are permitted.  Consumers
 SHOULD consider the entry with the longest matching prefix (i.e. the
-"most specific") to be the best matching entry for any given IP address.
+"most specific") to be the best matching entry for a given IP address.
           </t>
           <t>
 Duplicate IP address or prefix entries SHOULD be considered an error, and
@@ -323,8 +322,8 @@ at country, region, city and postal code granularity level, respectively:
         </t>
 
         <t>
-Experimentally, RIPE has published geolocation information for their meeting
-network prefixes, which change location in accordance with each new meeting.
+Experimentally, RIPE has published geolocation information for their conference
+network prefixes, which change location in accordance with each new event.
 <xref target="GEO_RIPE_NCC"/> at the time of writing contains:
           <figure>
             <artwork>
@@ -336,7 +335,7 @@ network prefixes, which change location in accordance with each new meeting.
 
         <t>
 Similarly, ICANN has published geolocation information for their portable
-meeting network prefixes.  <xref target="GEO_ICANN"/> at the time of writing
+conference network prefixes.  <xref target="GEO_ICANN"/> at the time of writing
 contains:
           <figure>
             <artwork>
@@ -379,7 +378,7 @@ a prefix ranging from /24 to /32 in IPv4 and /48 to /64 in IPv6.  Default
 assumptions about delegation size are left to the consumer's implementation.
           </t>
           <t>
-Examples include "/48", "/56", "/60", and "/64".
+Examples for IPv6 include "/48", "/56", "/60", and "/64".
           </t>
         </section>
 
@@ -421,15 +420,15 @@ Examples include expressions of the form "192.0.2.3-192.0.2.25".
     <section title="Finding self-published IP geolocation feeds">
       <t>
 The issue of finding, and later verifying, geolocation feeds is not
-specifically addressed in this document.  At this time, only ad hoc feed
-location and verification has a modicum of established practice (see below).
+formally specified in this document.  At this time, only ad hoc feed
+discovery and verification has a modicum of established practice (see below).
 Regardless, both the ad hoc mechanics and a few proposed but not yet
 implemented alternatives are discussed.
       </t>
 
       <section title="Ad hoc 'well known' URIs">
         <t>
-To date, geolocation feeds have been shared informally in the form of HTTP
+To date, geolocation feeds have been shared informally in the form of HTTPS
 URIs exchanged in email threads.  The two example URIs documented above
 describe networks that change locations periodically, the operators and
 operational practices of which are well known within their respective
@@ -452,7 +451,7 @@ of Autonomous System Numbers known to be operated by the publishers.
 Ad hoc mechanisms, while useful for early experimentation by producers and
 consumers, are unlikely to be adequate for long-term, widespread use by
 multiple parties.  Future versions of any such self-published geolocation
-feed mechanism SHOULD address scalability concerns by incorporating a means
+feed mechanism SHOULD address scalability concerns by defining a means
 for automated discovery and verification of operational authority of
 advertised prefixes.
         </t>
@@ -464,22 +463,22 @@ One possibility for enabling automation would be publication of feed URIs as
 a well-known attribute in public databases of network authority, e.g. the
 whois service (<xref target="RFC3912"/>) operated by RIRs.  Verification
 may be performed if the same or similarly authoritative service provides the
-identical feed URI for queries for each entry's CIDR prefix.
+identical feed URI for queries for each CIDR prefix in the geolocation feed.
         </t>
         <t>
 The burden of serving this data to all interested consumers, especially the
 load imposed by any verification process, is not yet known.  The anticipation
-of additional operational burden on the public resource of record is noted
-however.
+of additional operational burden on the public resource of record (the
+database of network authority) is however a noted concern.
         </t>
       </section>
 
       <section title="Using 'reverse' DNS">
         <t>
-Another possibility for automating the location and verification of a feed
-is to incorporate feed URIs into the DNS, specifically the in-addr.arpa and
-ip6.arpa portions of the DNS hierarchy.  A suitably formatted query for a
-TXT record that would return an answer in a well-known format, e.g.
+Another possibility for automating the location and verification of a
+geolocation feed is to incorporate feed URIs into the DNS, specifically the
+in-addr.arpa and ip6.arpa portions of the DNS hierarchy.  A suitably formatted
+query for a TXT record that would return an answer in a well-known format, e.g.
 "v=1 https://example.net/ipgeo/v1.csv", could suffice.
         </t>
         <t>
@@ -491,13 +490,13 @@ TXT record request to be issued for "_geo.4.2.0.192.in-addr.arpa" and
 respectively.
         </t>
         <t>
-If no such record exists one further query for the fully qualified domainname
+If no such record exists one further query for the fully qualified domain name
 of the SOA record in the authority section of the response to the previous
 query, similarly prefixed with "_geo.", would be performed
 ("_geo.2.0.192.in-addr.arpa" and "_geo.d.0.1.0.0.2.ip6.arpa" in the examples
 above).  Successfully located feed URIs could then be processed as outlined by
-this document, possibly taking in to the consider the TTL of the successful
-response for refresh timing information.
+this document, possibly taking in to consideration the TTL of the successful
+DNS response for refresh timing information.
         </t>
         <t>
 Verification of the contents of a feed would proceed in essentially the same
@@ -542,8 +541,8 @@ Consumers of self-published IP geolocation feeds SHOULD perform some form
 of verification that the publisher is in fact authoritative for the
 addresses in the feed.  The actual means of verification is dependent
 upon the way in which the feed is discovered.  Ad hoc shared URIs, for example,
-will likely require an ad hoc verification process.  Automated means of feed
-discovery SHOULD have an accompanying automated means of verification.
+will likely require an ad hoc verification process.  Future automated means of
+feed discovery SHOULD have an accompanying automated means of verification.
         </t>
         <t>
 A consumer MUST only trust geolocation information for IP addresses or ranges
@@ -559,7 +558,7 @@ Errors and inaccuracies may occur at many levels, and publication and
 consumption of geolocation data are no exceptions.  To the extent practical
 consumers SHOULD take steps to verify the accuracy of published locality.
 Verification methodology, resolution of discrepancies, and preference for
-alternative sources of data are left to the discretion of the consumer.
+alternative sources of data are left to the discretion of the feed consumer.
         </t>
         <t>
 Consumers SHOULD decide on discrepancy thresholds and SHOULD flag for
@@ -618,8 +617,8 @@ errors.
       <t>
 While not originally done in conjunction with the <xref target="GEOPRIV"/>
 working group, Richard Barnes observed that this work is nevertheless
-consistent with what the group has defined, both for address format and for
-privacy.  The data elements in geolocation feeds are equivalent to the
+consistent with that which the group has defined, both for address format and
+for privacy.  The data elements in geolocation feeds are equivalent to the
 following XML structure (vis. <xref target="RFC5139"/>):
         <figure>
           <artwork><![CDATA[
@@ -780,7 +779,10 @@ Google Inc.
 Included here is a simple format validator in Python for self-published ipgeo
 feeds.  This tool reads CSV data in the self-published ipgeo feed format from
 the standard input and performs basic validation.  It is intended for
-use by feed publishers before launching a feed.
+use by feed publishers before launching a feed.  Note that this validator does
+not verify the uniqueness of every IP prefix entry within the feed as a whole,
+but only verifies the syntax of each single line from within the feed.  A
+complete validator MUST also ensure IP prefix uniqueness.
         </t>
         <t>
 The main source file "ipgeo_feed_validator.py" follows.  It requires use of the

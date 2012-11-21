@@ -14,8 +14,6 @@ Expires: May 24, 2013                                        Z. Szamonek
 
 Abstract
 
-   TODO(ek): add kk's comments
-
    This document records a format whereby a network operator can publish
    a mapping of IP address ranges to simplified geolocation information,
    colloquially termed a geolocation "feed".  Interested parties can
@@ -49,6 +47,8 @@ Status of this Memo
 
 Copyright Notice
 
+   Copyright (c) 2012 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
 
 
 
@@ -56,9 +56,6 @@ Kline, et al.             Expires May 24, 2013                  [Page 1]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
-
-   Copyright (c) 2012 IETF Trust and the persons identified as the
-   document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
@@ -108,6 +105,9 @@ Table of Contents
 
 
 
+
+
+
 Kline, et al.             Expires May 24, 2013                  [Page 2]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
@@ -125,8 +125,8 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
    When an ISP, for example, changes the location of an IP prefix,
    services which make use of geolocation information may begin to
-   suffer worse performance.  This can lead to customer complaints,
-   possibly to the ISP directly.  Resolution of incorrect geolocation
+   suffer degraded performance.  This can lead to customer complaints,
+   possibly to the ISP directly.  Dissemination of correct geolocation
    data is complicated by the lack of any centralized means to
    coordinate and communicate geolocation information to all interested
    consumers of the data.
@@ -155,7 +155,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    This proposal does not incorporate a mechanism to communicate
    acceptable use policies for self-published data.  Publication itself
    is inferred as a desire by the publisher for the data to be usefully
-   consumed, similar to the publication of information like hostnames,
+   consumed, similar to the publication of information like host names,
    cryptographic keys, and SPF records [RFC4408] in the DNS.
 
 
@@ -176,10 +176,10 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    information changes.  Originally, there arose a specific case where
    regional operators found it desirable to publish location changes
    rather than wait for geolocation algorithms to "learn" about them.
-   Later on technical conferences, which frequently use the same network
-   prefixes advertised from different meeting locations, experimented by
-   publishing geolocation changes in advance of need in order to better
-   serve conference attendees.
+   Later, technical conferences which frequently use the same network
+   prefixes advertised from different conference locations experimented
+   by publishing geolocation feeds, updated in advance of network
+   location changes, in order to better serve conference attendees.
 
    At its simplest, the mechanism consists of a network operator
    publishing a file (the "geolocation feed"), which contains several
@@ -225,8 +225,7 @@ Kline, et al.             Expires May 24, 2013                  [Page 4]
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
-   db8::1" and "2001:db8::/32" for IPv6.  Additionally, IPv4 ranges
-   (only) may be expressed in form "192.0.2.3-192.0.2.25".
+   db8::1" and "2001:db8::/32" for IPv6.
 
 2.1.1.2.  Country
 
@@ -254,16 +253,16 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 2.1.1.4.  City
 
-   OPTIONAL.  The city field SHOULD be free UTF-8 text, excluding comma
-   (',').
+   OPTIONAL.  The city field SHOULD be free UTF-8 text, excluding the
+   comma (',') character.
 
-   Examples include "Dublin", "New York", and "Sao Paulo", specifically
-   "S" followed by 0xc3, 0xa3, and "o Paulo".
+   Examples include "Dublin", "New York", and "Sao Paulo" (specifically
+   "S" followed by 0xc3, 0xa3, and "o Paulo").
 
 2.1.1.5.  Postal code
 
    OPTIONAL.  The postal code field SHOULD be free UTF-8 text, excluding
-   comma (',').
+   the comma (',') character.
 
    Examples include "106-6126" (in Minato ward, Tokyo, Japan).
 
@@ -273,6 +272,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    in full, SHOULD be discarded.  It is RECOMMENDED that they also be
    logged for further administrative review.  For compatibility with
    future additional fields a parser MUST ignore any fields beyond those
+   it expects.  The data from fields which are expected and which parse
 
 
 
@@ -281,7 +281,6 @@ Kline, et al.             Expires May 24, 2013                  [Page 5]
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
-   it expects.  The data from fields which are expected and which parse
    successfully MUST still be considered valid.
 
    When parsing and matching, consumers MUST NOT attempt to use simple
@@ -293,8 +292,8 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
    Multiple entries which constitute nested prefixes are permitted.
    Consumers SHOULD consider the entry with the longest matching prefix
-   (i.e. the "most specific") to be the best matching entry for any
-   given IP address.
+   (i.e. the "most specific") to be the best matching entry for a given
+   IP address.
 
    Duplicate IP address or prefix entries SHOULD be considered an error,
    and consumer implementations SHOULD log the repeated entries for
@@ -317,18 +316,19 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
        2001:db8:cafe::/48,PL,PL-MZ,,02-784
 
    Experimentally, RIPE has published geolocation information for their
-   meeting network prefixes, which change location in accordance with
-   each new meeting.  [GEO_RIPE_NCC] at the time of writing contains:
+   conference network prefixes, which change location in accordance with
+   each new event.  [GEO_RIPE_NCC] at the time of writing contains:
 
        193.0.24.0/21,IE,IE-D,Dublin,
        2001:67c:64::/48,IE,IE-D,Dublin,
 
    Similarly, ICANN has published geolocation information for their
-   portable meeting network prefixes.  [GEO_ICANN] at the time of
+   portable conference network prefixes.  [GEO_ICANN] at the time of
    writing contains:
 
        199.91.192.0/21,US,US-CA,Los Angeles,
        2620:f:8000::/48,US,US-CA,Los Angeles,
+
 
 
 
@@ -367,7 +367,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    to /32 in IPv4 and /48 to /64 in IPv6.  Default assumptions about
    delegation size are left to the consumer's implementation.
 
-   Examples include "/48", "/56", "/60", and "/64".
+   Examples for IPv6 include "/48", "/56", "/60", and "/64".
 
 2.3.2.  IPv4 hyphenated range format
 
@@ -405,15 +405,15 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 3.  Finding self-published IP geolocation feeds
 
    The issue of finding, and later verifying, geolocation feeds is not
-   specifically addressed in this document.  At this time, only ad hoc
-   feed location and verification has a modicum of established practice
-   (see below).  Regardless, both the ad hoc mechanics and a few
-   proposed but not yet implemented alternatives are discussed.
+   formally specified in this document.  At this time, only ad hoc feed
+   discovery and verification has a modicum of established practice (see
+   below).  Regardless, both the ad hoc mechanics and a few proposed but
+   not yet implemented alternatives are discussed.
 
 3.1.  Ad hoc 'well known' URIs
 
    To date, geolocation feeds have been shared informally in the form of
-   HTTP URIs exchanged in email threads.  The two example URIs
+   HTTPS URIs exchanged in email threads.  The two example URIs
    documented above describe networks that change locations
    periodically, the operators and operational practices of which are
    well known within their respective technical communities.
@@ -431,8 +431,8 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    producers and consumers, are unlikely to be adequate for long-term,
    widespread use by multiple parties.  Future versions of any such
    self-published geolocation feed mechanism SHOULD address scalability
-   concerns by incorporating a means for automated discovery and
-   verification of operational authority of advertised prefixes.
+   concerns by defining a means for automated discovery and verification
+   of operational authority of advertised prefixes.
 
 3.2.  Using public databases of network authority
 
@@ -440,7 +440,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    URIs as a well-known attribute in public databases of network
    authority, e.g. the whois service ([RFC3912]) operated by RIRs.
    Verification may be performed if the same or similarly authoritative
-   service provides the identical feed URI for queries for each entry's
+   service provides the identical feed URI for queries for each CIDR
 
 
 
@@ -449,21 +449,22 @@ Kline, et al.             Expires May 24, 2013                  [Page 8]
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
-   CIDR prefix.
+   prefix in the geolocation feed.
 
    The burden of serving this data to all interested consumers,
    especially the load imposed by any verification process, is not yet
    known.  The anticipation of additional operational burden on the
-   public resource of record is noted however.
+   public resource of record (the database of network authority) is
+   however a noted concern.
 
 3.3.  Using 'reverse' DNS
 
    Another possibility for automating the location and verification of a
-   feed is to incorporate feed URIs into the DNS, specifically the in-
-   addr.arpa and ip6.arpa portions of the DNS hierarchy.  A suitably
-   formatted query for a TXT record that would return an answer in a
-   well-known format, e.g. "v=1 https://example.net/ipgeo/v1.csv", could
-   suffice.
+   geolocation feed is to incorporate feed URIs into the DNS,
+   specifically the in-addr.arpa and ip6.arpa portions of the DNS
+   hierarchy.  A suitably formatted query for a TXT record that would
+   return an answer in a well-known format, e.g. "v=1
+   https://example.net/ipgeo/v1.csv", could suffice.
 
    Attempts to locate the geolocation feed for a given IP address would
    begin by querying directly for a TXT record associated with the PTR-
@@ -473,13 +474,13 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    .0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa", respectively.
 
    If no such record exists one further query for the fully qualified
-   domainname of the SOA record in the authority section of the response
-   to the previous query, similarly prefixed with "_geo.", would be
-   performed ("_geo.2.0.192.in-addr.arpa" and
+   domain name of the SOA record in the authority section of the
+   response to the previous query, similarly prefixed with "_geo.",
+   would be performed ("_geo.2.0.192.in-addr.arpa" and
    "_geo.d.0.1.0.0.2.ip6.arpa" in the examples above).  Successfully
    located feed URIs could then be processed as outlined by this
-   document, possibly taking in to the consider the TTL of the
-   successful response for refresh timing information.
+   document, possibly taking in to consideration the TTL of the
+   successful DNS response for refresh timing information.
 
    Verification of the contents of a feed would proceed in essentially
    the same way.  CIDR prefixes may be verified by constructing a query
@@ -496,7 +497,6 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    willing to bear it, i.e. the publishers who would likely handle
    serving in-addr.arpa and ip6.arpa for the IP prefixes under their
    authority.
-
 
 
 
@@ -526,7 +526,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    the addresses in the feed.  The actual means of verification is
    dependent upon the way in which the feed is discovered.  Ad hoc
    shared URIs, for example, will likely require an ad hoc verification
-   process.  Automated means of feed discovery SHOULD have an
+   process.  Future automated means of feed discovery SHOULD have an
    accompanying automated means of verification.
 
    A consumer MUST only trust geolocation information for IP addresses
@@ -542,7 +542,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    practical consumers SHOULD take steps to verify the accuracy of
    published locality.  Verification methodology, resolution of
    discrepancies, and preference for alternative sources of data are
-   left to the discretion of the consumer.
+   left to the discretion of the feed consumer.
 
    Consumers SHOULD decide on discrepancy thresholds and SHOULD flag for
    administrative review feed entries which exceed set thresholds.
@@ -597,8 +597,8 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
    While not originally done in conjunction with the [GEOPRIV] working
    group, Richard Barnes observed that this work is nevertheless
-   consistent with what the group has defined, both for address format
-   and for privacy.  The data elements in geolocation feeds are
+   consistent with that which the group has defined, both for address
+   format and for privacy.  The data elements in geolocation feeds are
    equivalent to the following XML structure (vis.  [RFC5139]):
 
        <civicAddress>
@@ -735,7 +735,10 @@ Appendix A.  Sample Python validation code
    published ipgeo feeds.  This tool reads CSV data in the self-
    published ipgeo feed format from the standard input and performs
    basic validation.  It is intended for use by feed publishers before
-   launching a feed.
+   launching a feed.  Note that this validator does not verify the
+   uniqueness of every IP prefix entry within the feed as a whole, but
+   only verifies the syntax of each single line from within the feed.  A
+   complete validator MUST also ensure IP prefix uniqueness.
 
    The main source file "ipgeo_feed_validator.py" follows.  It requires
    use of the open source ipaddr Python library for IP address and CIDR
@@ -775,9 +778,6 @@ class IPGeoFeedValidator(object):
   def Validate(self, feed):
     """Check validity of an IPGeo feed.
 
-    Args:
-      feed: iterable with feed lines
-
 
 
 Kline, et al.             Expires May 24, 2013                 [Page 14]
@@ -785,6 +785,8 @@ Kline, et al.             Expires May 24, 2013                 [Page 14]
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
+    Args:
+      feed: iterable with feed lines
     """
 
     for line in feed:
@@ -831,8 +833,6 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
     if len(fields) > 1:
       if not self._IsCountryCode2Correct(fields[1]):
-        is_correct = False
-
 
 
 
@@ -840,6 +840,8 @@ Kline, et al.             Expires May 24, 2013                 [Page 15]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
+
+        is_correct = False
 
     if len(fields) > 2 and not self._IsRegionCodeCorrect(fields[2]):
       is_correct = False
@@ -887,8 +889,6 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
       self._ReportError(
           'Country code must be in the ISO 3166-1 alpha 2 format.')
       return False
-    return True
-
 
 
 
@@ -896,6 +896,8 @@ Kline, et al.             Expires May 24, 2013                 [Page 16]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
+
+    return True
 
   def _IsRegionCodeCorrect(self, region_code):
     if len(region_code) == 0:
@@ -943,8 +945,6 @@ def main():
    if feed_validator.CountErrors('ERROR'):
      sys.exit(1)
 
-if __name__ == '__main__':
-  main()
 
 
 
@@ -952,6 +952,9 @@ Kline, et al.             Expires May 24, 2013                 [Page 17]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
+
+if __name__ == '__main__':
+  main()
 
    A unit test file, "ipgeo_feed_validator_test.py" is provided as well.
    It provides basic test coverage of the code above, though does not
@@ -998,9 +1001,6 @@ class IPGeoFeedValidatorTest(object):
     self.TestFeedLine('55.66.77.88,PL,,,', 0, 0)
     self.TestFeedLine('55.66.77.88,,,,', 0, 0)
     self.TestFeedLine('55.66.77.88,ZZ,,,', 0, 0)
-    self.TestFeedLine('55.66.77.88,US,,,', 0, 0)
-    self.TestFeedLine('55.66.77.88,USA,,,', 1, 0)
-    self.TestFeedLine('55.66.77.88,99,,,', 1, 0)
 
 
 
@@ -1008,6 +1008,10 @@ Kline, et al.             Expires May 24, 2013                 [Page 18]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
+
+    self.TestFeedLine('55.66.77.88,US,,,', 0, 0)
+    self.TestFeedLine('55.66.77.88,USA,,,', 1, 0)
+    self.TestFeedLine('55.66.77.88,99,,,', 1, 0)
 
     self.TestFeedLine('55.66.77.88,US,US-CA,,', 0, 0)
     self.TestFeedLine('55.66.77.88,US,USA-CA,,', 1, 0)
@@ -1053,10 +1057,6 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
     if not self.IsOutputLogCorrectAtSeverity('WARNING', new_warnings):
       retval = False
 
-    return retval
-
-  def TestFeedLine(self, line, warning_count, error_count):
-    self.validator.output_log['WARNING'] = []
 
 
 
@@ -1065,6 +1065,10 @@ Kline, et al.             Expires May 24, 2013                 [Page 19]
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
+    return retval
+
+  def TestFeedLine(self, line, warning_count, error_count):
+    self.validator.output_log['WARNING'] = []
     self.validator.output_log['ERROR'] = []
     self.validator._ValidateLine(line)
 
@@ -1108,10 +1112,6 @@ Authors' Addresses
    Switzerland
 
    Email: zszami@google.com
-
-
-
-
 
 
 
