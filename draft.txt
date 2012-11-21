@@ -14,10 +14,6 @@ Expires: May 24, 2013                                        Z. Szamonek
 
 Abstract
 
-   TODO(ek): add Krzysztof's code
-
-   TODO(ek): add rbarnes' geopriv comments
-
    TODO(ek): add kk's comments
 
    This document records a format whereby a network operator can publish
@@ -27,7 +23,7 @@ Abstract
    data sources and procedures.
 
    Some technical organizations operating networks that move from one
-   meeting location to the next have already experimentally published
+   conference location to the next have already experimentally published
    small geolocation feeds.  At least one consumer (Google) has
    incorporated these ad hoc feeds into a geolocation data pipeline.
 
@@ -49,6 +45,10 @@ Status of this Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
+   This Internet-Draft will expire on May 24, 2013.
+
+Copyright Notice
+
 
 
 
@@ -56,10 +56,6 @@ Kline, et al.             Expires May 24, 2013                  [Page 1]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
-
-   This Internet-Draft will expire on May 24, 2013.
-
-Copyright Notice
 
    Copyright (c) 2012 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
@@ -75,33 +71,37 @@ Copyright Notice
    described in the Simplified BSD License.
 
 
+Table of Contents
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+   1.  Introduction . . . . . . . . . . . . . . . . . . . . . . . . .  3
+     1.1.  Motivation . . . . . . . . . . . . . . . . . . . . . . . .  3
+     1.2.  Requirements notation  . . . . . . . . . . . . . . . . . .  3
+     1.3.  Acceptable use implied . . . . . . . . . . . . . . . . . .  3
+   2.  Self-published IP geolocation feeds  . . . . . . . . . . . . .  4
+     2.1.  Specification  . . . . . . . . . . . . . . . . . . . . . .  4
+       2.1.1.  Geolocation feed individual entry fields . . . . . . .  4
+       2.1.2.  Parsing and matching . . . . . . . . . . . . . . . . .  5
+     2.2.  Examples . . . . . . . . . . . . . . . . . . . . . . . . .  6
+     2.3.  Proposed extensions  . . . . . . . . . . . . . . . . . . .  7
+       2.3.1.  Delegation size  . . . . . . . . . . . . . . . . . . .  7
+       2.3.2.  IPv4 hyphenated range format . . . . . . . . . . . . .  7
+   3.  Finding self-published IP geolocation feeds  . . . . . . . . .  8
+     3.1.  Ad hoc 'well known' URIs . . . . . . . . . . . . . . . . .  8
+     3.2.  Using public databases of network authority  . . . . . . .  8
+     3.3.  Using 'reverse' DNS  . . . . . . . . . . . . . . . . . . .  9
+   4.  Consuming self-published IP geolocation feeds  . . . . . . . . 10
+     4.1.  Feed integrity . . . . . . . . . . . . . . . . . . . . . . 10
+     4.2.  Verification of authority  . . . . . . . . . . . . . . . . 10
+     4.3.  Verification of accuracy . . . . . . . . . . . . . . . . . 10
+     4.4.  Refreshing feed information  . . . . . . . . . . . . . . . 10
+   5.  Security Considerations  . . . . . . . . . . . . . . . . . . . 11
+   6.  Relation to other work . . . . . . . . . . . . . . . . . . . . 11
+   7.  Acknowledgements . . . . . . . . . . . . . . . . . . . . . . . 12
+   8.  References . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+     8.1.  Normative References . . . . . . . . . . . . . . . . . . . 12
+     8.2.  Informative References . . . . . . . . . . . . . . . . . . 13
+   Appendix A.  Sample Python validation code . . . . . . . . . . . . 14
+   Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 20
 
 
 
@@ -109,62 +109,6 @@ Copyright Notice
 
 
 Kline, et al.             Expires May 24, 2013                  [Page 2]
-
-Internet-Draft     Self-published IP Geolocation Data      November 2012
-
-
-Table of Contents
-
-   1.  Introduction . . . . . . . . . . . . . . . . . . . . . . . . .  4
-     1.1.  Motivation . . . . . . . . . . . . . . . . . . . . . . . .  4
-     1.2.  Requirements notation  . . . . . . . . . . . . . . . . . .  4
-     1.3.  Acceptable use implied . . . . . . . . . . . . . . . . . .  4
-   2.  Self-published IP geolocation feeds  . . . . . . . . . . . . .  4
-     2.1.  Specification  . . . . . . . . . . . . . . . . . . . . . .  5
-       2.1.1.  Geolocation feed individual entry fields . . . . . . .  5
-       2.1.2.  Parsing and matching . . . . . . . . . . . . . . . . .  6
-     2.2.  Examples . . . . . . . . . . . . . . . . . . . . . . . . .  7
-     2.3.  Proposed extensions  . . . . . . . . . . . . . . . . . . .  8
-       2.3.1.  Delegation size  . . . . . . . . . . . . . . . . . . .  8
-       2.3.2.  IPv4 hyphenated range format . . . . . . . . . . . . .  8
-   3.  Finding self-published IP geolocation feeds  . . . . . . . . .  9
-     3.1.  Ad hoc 'well known' URIs . . . . . . . . . . . . . . . . .  9
-     3.2.  Using public databases of network authority  . . . . . . .  9
-     3.3.  Using 'reverse' DNS  . . . . . . . . . . . . . . . . . . . 10
-   4.  Consuming self-published IP geolocation feeds  . . . . . . . . 11
-     4.1.  Feed integrity . . . . . . . . . . . . . . . . . . . . . . 11
-     4.2.  Verification of authority  . . . . . . . . . . . . . . . . 11
-     4.3.  Verification of accuracy . . . . . . . . . . . . . . . . . 11
-     4.4.  Refreshing feed information  . . . . . . . . . . . . . . . 11
-   5.  Security Considerations  . . . . . . . . . . . . . . . . . . . 12
-   6.  Relation to other work . . . . . . . . . . . . . . . . . . . . 12
-   7.  Acknowledgements . . . . . . . . . . . . . . . . . . . . . . . 13
-   8.  References . . . . . . . . . . . . . . . . . . . . . . . . . . 13
-     8.1.  Normative References . . . . . . . . . . . . . . . . . . . 13
-     8.2.  Informative References . . . . . . . . . . . . . . . . . . 14
-   Appendix A.  Sample Python validation code . . . . . . . . . . . . 15
-   Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 21
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Kline, et al.             Expires May 24, 2013                  [Page 3]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
@@ -179,22 +123,24 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    serving location, inferring likely native language, and providing
    additional context for services involving search queries.
 
-   When a network provider changes the location of an IP prefix,
-   services which may use of geolocation information may begin to suffer
-   worse performance.  This can lead to customer complaints, possibly to
-   the network provider directly.  Resolution of incorrect geolocation
+   When an ISP, for example, changes the location of an IP prefix,
+   services which make use of geolocation information may begin to
+   suffer worse performance.  This can lead to customer complaints,
+   possibly to the ISP directly.  Resolution of incorrect geolocation
    data is complicated by the lack of any centralized means to
-   coordinate and communicate location information to all interested
+   coordinate and communicate geolocation information to all interested
    consumers of the data.
 
-   This document records a format whereby a network operator can publish
-   a mapping of IP address ranges to simplified geolocation information,
-   colloquially termed a "geolocation feed".  Interested parties can
-   poll and parse these feeds to update or merge with other geolocation
-   data sources and procedures.
+   This document records a format whereby a network operator (an ISP, an
+   enterprise, or any organization which deems the geolocation of its IP
+   prefixes to be of concern) can publish a mapping of IP address ranges
+   to simplified geolocation information, colloquially termed a
+   "geolocation feed".  Interested parties can poll and parse these
+   feeds to update or merge with other geolocation data sources and
+   procedures.
 
    Some technical organizations operating networks that move from one
-   meeting location to the next have already experimentally published
+   conference location to the next have already experimentally published
    small geolocation feeds.  At least one consumer (Google) has
    incorporated these ad hoc feeds into a geolocation data pipeline.
 
@@ -213,18 +159,20 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    cryptographic keys, and SPF records [RFC4408] in the DNS.
 
 
-2.  Self-published IP geolocation feeds
-
-   The format described here was developed to address the need of
-   network operators to rapidly and usefully share geolocation
 
 
 
-Kline, et al.             Expires May 24, 2013                  [Page 4]
+
+
+Kline, et al.             Expires May 24, 2013                  [Page 3]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
+2.  Self-published IP geolocation feeds
+
+   The format described here was developed to address the need of
+   network operators to rapidly and usefully share geolocation
    information changes.  Originally, there arose a specific case where
    regional operators found it desirable to publish location changes
    rather than wait for geolocation algorithms to "learn" about them.
@@ -233,7 +181,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    publishing geolocation changes in advance of need in order to better
    serve conference attendees.
 
-   At its simplest, the mechanism consists of a network provider
+   At its simplest, the mechanism consists of a network operator
    publishing a file (the "geolocation feed"), which contains several
    text entries, one per line.  Each entry is keyed by a unique (within
    the feed) IP prefix (or single IP address) followed by a sequence of
@@ -256,8 +204,9 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
        ip_range,country,region,city,postal_code
 
-   IP range fields are REQUIRED, all others are OPTIONAL (can be empty),
-   though the requisite minimum number of commas SHOULD be present.
+   The IP range field is REQUIRED, all others are OPTIONAL (can be
+   empty), though the requisite minimum number of commas SHOULD be
+   present.
 
 2.1.1.  Geolocation feed individual entry fields
 
@@ -268,23 +217,21 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    [RFC4632] for IPv4 or section 2.3 of [RFC4291] for IPv6.
 
    Examples include "192.0.2.1" and "192.0.2.0/24" for IPv4 and "2001:
-   db8::1" and "2001:db8::/32" for IPv6.  Additionally, IPv4 ranges
-   (only) may be expressed in form "192.0.2.3-192.0.2.25".
 
 
 
-
-
-
-Kline, et al.             Expires May 24, 2013                  [Page 5]
+Kline, et al.             Expires May 24, 2013                  [Page 4]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
+   db8::1" and "2001:db8::/32" for IPv6.  Additionally, IPv4 ranges
+   (only) may be expressed in form "192.0.2.3-192.0.2.25".
+
 2.1.1.2.  Country
 
    OPTIONAL.  The country field SHOULD be a 2 letter ISO country code
-   conforming to ISO 3166-1 alpha 2 [ISO.3166.1].  Parsers should treat
+   conforming to ISO 3166-1 alpha 2 [ISO.3166.1].  Parsers SHOULD treat
    this field case-insensitively.
 
    Empty country fields or a country identifier of "ZZ" indicate either
@@ -299,7 +246,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 2.1.1.3.  Region
 
    OPTIONAL.  The region field SHOULD be a ISO region code conforming to
-   ISO 3166-2 [ISO.3166.2].  Parsers should treat this field case-
+   ISO 3166-2 [ISO.3166.2].  Parsers SHOULD treat this field case-
    insensitively.
 
    Examples include "ID-RI" for the Riau province of Indonesia and
@@ -326,16 +273,16 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    in full, SHOULD be discarded.  It is RECOMMENDED that they also be
    logged for further administrative review.  For compatibility with
    future additional fields a parser MUST ignore any fields beyond those
-   it expects.  The data from fields which are expected and which parse
-   successfully MUST still be considered valid.
 
 
 
-
-Kline, et al.             Expires May 24, 2013                  [Page 6]
+Kline, et al.             Expires May 24, 2013                  [Page 5]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
+
+   it expects.  The data from fields which are expected and which parse
+   successfully MUST still be considered valid.
 
    When parsing and matching, consumers MUST NOT attempt to use simple
    string matching or regular expressions but instead MUST parse IP
@@ -385,10 +332,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
 
-
-
-
-Kline, et al.             Expires May 24, 2013                  [Page 7]
+Kline, et al.             Expires May 24, 2013                  [Page 6]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
@@ -444,7 +388,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
 
-Kline, et al.             Expires May 24, 2013                  [Page 8]
+Kline, et al.             Expires May 24, 2013                  [Page 7]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
@@ -500,7 +444,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
 
-Kline, et al.             Expires May 24, 2013                  [Page 9]
+Kline, et al.             Expires May 24, 2013                  [Page 8]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
@@ -556,7 +500,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
 
-Kline, et al.             Expires May 24, 2013                 [Page 10]
+Kline, et al.             Expires May 24, 2013                  [Page 9]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
@@ -612,7 +556,7 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
 
-Kline, et al.             Expires May 24, 2013                 [Page 11]
+Kline, et al.             Expires May 24, 2013                 [Page 10]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
@@ -651,60 +595,42 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 6.  Relation to other work
 
-   Quoting rbarnes:
+   While not originally done in conjunction with the [GEOPRIV] working
+   group, Richard Barnes observed that this work is nevertheless
+   consistent with what the group has defined, both for address format
+   and for privacy.  The data elements in geolocation feeds are
+   equivalent to the following XML structure (vis.  [RFC5139]):
+
+       <civicAddress>
+         <country>country</country>
+         <A1>region</A1>
+         <A2>city</A2>
+         <PC>postal_code</PC>
+       </civicAddress>
+
+   Providing geolocation information to this granularity is equivalent
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-Kline, et al.             Expires May 24, 2013                 [Page 12]
+Kline, et al.             Expires May 24, 2013                 [Page 11]
 
 Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
- """
- One time for this audience: You might want to note that this is
- consistent with what GEOPRIV has defined, both for address format
- and for privacy.  The data elements you've got are equivalent to
- the following XML structure [RFC5139]:
+   to the following privacy policy (vis. the definition of the
+   'building' level of disclosure):
 
-     <civicAddress>
-       <country>country</country>
-       <A1>region</A1>
-       <A2>city</A2>
-       <PC>postal_code<PC>
-     <civicAddress>
-
- Providing location to this granularity (less postal_code) is equivalent
- to the following privacy policy:
-
-     <ruleset>
-       <rule>
-         <conditions/>
-         <actions/>
-         <transformations>
-           <provide-location profile="civic-transformation">
-             <provide-civic>building</provide-civic>
-           </provide-location>
-         </transformations>
-       </rule>
-     </ruleset>
-
- (Witness the awesome verbosity of this fully operational XML!)
-
- http://tools.ietf.org/html/draft-ietf-geopriv-policy-27#section-6.5.1
- """
+       <ruleset>
+         <rule>
+           <conditions/>
+           <actions/>
+           <transformations>
+             <provide-location profile="civic-transformation">
+               <provide-civic>building</provide-civic>
+             </provide-location>
+           </transformations>
+         </rule>
+       </ruleset>
 
 
 7.  Acknowledgements
@@ -721,14 +647,6 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
    [ISO.3166.1]
               International Organization for Standardization, "ISO
-
-
-
-Kline, et al.             Expires May 24, 2013                 [Page 13]
-
-Internet-Draft     Self-published IP Geolocation Data      November 2012
-
-
               3166-1 decoding table", <http://www.iso.org/iso/home/
               standards/country_codes/iso-3166-1_decoding_table.htm>.
 
@@ -747,6 +665,14 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
    [RFC3629]  Yergeau, F., "UTF-8, a transformation format of ISO
               10646", STD 63, RFC 3629, November 2003.
 
+
+
+
+Kline, et al.             Expires May 24, 2013                 [Page 12]
+
+Internet-Draft     Self-published IP Geolocation Data      November 2012
+
+
    [RFC4180]  Shafranovich, Y., "Common Format and MIME Type for Comma-
               Separated Values (CSV) Files", RFC 4180, October 2005.
 
@@ -758,6 +684,9 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
               Plan", BCP 122, RFC 4632, August 2006.
 
 8.2.  Informative References
+
+   [GEOPRIV]  Internet Engineering Task Force, "IETF geopriv Working
+              Group", <http://datatracker.ietf.org/wg/geopriv/>.
 
    [GEO_ICANN]
               Internet Corporation For Assigned Names and Numbers,
@@ -777,14 +706,6 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
    [RFC2818]  Rescorla, E., "HTTP Over TLS", RFC 2818, May 2000.
 
-
-
-
-Kline, et al.             Expires May 24, 2013                 [Page 14]
-
-Internet-Draft     Self-published IP Geolocation Data      November 2012
-
-
    [RFC3912]  Daigle, L., "WHOIS Protocol Specification", RFC 3912,
               September 2004.
 
@@ -792,8 +713,20 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
               for Authorizing Use of Domains in E-Mail, Version 1",
               RFC 4408, April 2006.
 
+   [RFC5139]  Thomson, M. and J. Winterbottom, "Revised Civic Location
+              Format for Presence Information Data Format Location
+              Object (PIDF-LO)", RFC 5139, February 2008.
+
    [RFC5952]  Kawamura, S. and M. Kawashima, "A Recommendation for IPv6
               Address Text Representation", RFC 5952, August 2010.
+
+
+
+
+
+Kline, et al.             Expires May 24, 2013                 [Page 13]
+
+Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
 Appendix A.  Sample Python validation code
@@ -833,14 +766,6 @@ import sys
 
 
 class IPGeoFeedValidator(object):
-
-
-
-Kline, et al.             Expires May 24, 2013                 [Page 15]
-
-Internet-Draft     Self-published IP Geolocation Data      November 2012
-
-
   def __init__(self):
     self.ranges = {}
     self.line_number = 0
@@ -852,6 +777,14 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
     Args:
       feed: iterable with feed lines
+
+
+
+Kline, et al.             Expires May 24, 2013                 [Page 14]
+
+Internet-Draft     Self-published IP Geolocation Data      November 2012
+
+
     """
 
     for line in feed:
@@ -890,13 +823,6 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
     line = line.strip()
     return len(line) == 0 or line.startswith('#')
 
-
-
-Kline, et al.             Expires May 24, 2013                 [Page 16]
-
-Internet-Draft     Self-published IP Geolocation Data      November 2012
-
-
   ############################################################
   def _ValidateFields(self, fields):
     assert(len(fields) > 0)
@@ -906,6 +832,14 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
     if len(fields) > 1:
       if not self._IsCountryCode2Correct(fields[1]):
         is_correct = False
+
+
+
+
+Kline, et al.             Expires May 24, 2013                 [Page 15]
+
+Internet-Draft     Self-published IP Geolocation Data      November 2012
+
 
     if len(fields) > 2 and not self._IsRegionCodeCorrect(fields[2]):
       is_correct = False
@@ -945,14 +879,6 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
       return False
     return True
 
-
-
-
-Kline, et al.             Expires May 24, 2013                 [Page 17]
-
-Internet-Draft     Self-published IP Geolocation Data      November 2012
-
-
   ############################################################
   def _IsCountryCode2Correct(self, country_code_2):
     if len(country_code_2) == 0:
@@ -962,6 +888,14 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
           'Country code must be in the ISO 3166-1 alpha 2 format.')
       return False
     return True
+
+
+
+
+Kline, et al.             Expires May 24, 2013                 [Page 16]
+
+Internet-Draft     Self-published IP Geolocation Data      November 2012
+
 
   def _IsRegionCodeCorrect(self, region_code):
     if len(region_code) == 0:
@@ -1001,14 +935,6 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
                              % (self.line_number, self.line))
 
 
-
-
-
-Kline, et al.             Expires May 24, 2013                 [Page 18]
-
-Internet-Draft     Self-published IP Geolocation Data      November 2012
-
-
 ############################################################
 def main():
    feed_validator = IPGeoFeedValidator()
@@ -1020,7 +946,14 @@ def main():
 if __name__ == '__main__':
   main()
 
-   A unittest file, "ipgeo_feed_validator_test.py" is provided as well.
+
+
+Kline, et al.             Expires May 24, 2013                 [Page 17]
+
+Internet-Draft     Self-published IP Geolocation Data      November 2012
+
+
+   A unit test file, "ipgeo_feed_validator_test.py" is provided as well.
    It provides basic test coverage of the code above, though does not
    test correct handling of non-ASCII UTF-8 strings.
 
@@ -1058,13 +991,6 @@ class IPGeoFeedValidatorTest(object):
     self.TestFeedLine('55.66.77.888', 1, 1)
     self.TestFeedLine('55.66.77.asdf', 1, 1)
 
-
-
-Kline, et al.             Expires May 24, 2013                 [Page 19]
-
-Internet-Draft     Self-published IP Geolocation Data      November 2012
-
-
     self.TestFeedLine('2001:db8:cafe::/48,PL,PL-MZ,,02-784', 0, 0)
     self.TestFeedLine('2001:db8:cafe::/48', 0, 1)
 
@@ -1075,6 +1001,13 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
     self.TestFeedLine('55.66.77.88,US,,,', 0, 0)
     self.TestFeedLine('55.66.77.88,USA,,,', 1, 0)
     self.TestFeedLine('55.66.77.88,99,,,', 1, 0)
+
+
+
+Kline, et al.             Expires May 24, 2013                 [Page 18]
+
+Internet-Draft     Self-published IP Geolocation Data      November 2012
+
 
     self.TestFeedLine('55.66.77.88,US,US-CA,,', 0, 0)
     self.TestFeedLine('55.66.77.88,US,USA-CA,,', 1, 0)
@@ -1113,14 +1046,6 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
     return True
 
   def IsOutputLogCorrect(self, new_errors, new_warnings):
-
-
-
-Kline, et al.             Expires May 24, 2013                 [Page 20]
-
-Internet-Draft     Self-published IP Geolocation Data      November 2012
-
-
     retval = True
 
     if not self.IsOutputLogCorrectAtSeverity('ERROR', new_errors):
@@ -1132,6 +1057,14 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
   def TestFeedLine(self, line, warning_count, error_count):
     self.validator.output_log['WARNING'] = []
+
+
+
+Kline, et al.             Expires May 24, 2013                 [Page 19]
+
+Internet-Draft     Self-published IP Geolocation Data      November 2012
+
+
     self.validator.output_log['ERROR'] = []
     self.validator._ValidateLine(line)
 
@@ -1168,15 +1101,6 @@ Authors' Addresses
    Email: kduleba@google.com
 
 
-
-
-
-
-Kline, et al.             Expires May 24, 2013                 [Page 21]
-
-Internet-Draft     Self-published IP Geolocation Data      November 2012
-
-
    Zoltan Szamonek
    Google Switzerland GmbH
    Brandschenkestrasse 110
@@ -1192,41 +1116,5 @@ Internet-Draft     Self-published IP Geolocation Data      November 2012
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Kline, et al.             Expires May 24, 2013                 [Page 22]
+Kline, et al.             Expires May 24, 2013                 [Page 20]
 

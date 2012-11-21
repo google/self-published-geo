@@ -20,6 +20,8 @@
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4408.xml">
     <!ENTITY rfc4632 PUBLIC ""
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4632.xml">
+    <!ENTITY rfc5139 PUBLIC ""
+      "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5139.xml">
     <!ENTITY rfc5952 PUBLIC ""
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5952.xml">
 ]>
@@ -89,8 +91,6 @@
     <date/>
 
     <abstract>
-<t>TODO(ek): add Krzysztof's code</t>
-<t>TODO(ek): add rbarnes' geopriv comments</t>
 <t>TODO(ek): add kk's comments</t>
       <t>
 This document records a format whereby a network operator can publish a
@@ -100,7 +100,7 @@ parse these feeds to update or merge with other geolocation data sources and
 procedures.
       </t>
       <t>
-Some technical organizations operating networks that move from one meeting
+Some technical organizations operating networks that move from one conference
 location to the next have already experimentally published small geolocation
 feeds.  At least one consumer (Google) has incorporated these ad hoc feeds
 into a geolocation data pipeline.
@@ -119,22 +119,23 @@ native language, and providing additional context for services involving
 search queries.
         </t>
         <t>
-When a network provider changes the location of an IP prefix, services which
-may use of geolocation information may begin to suffer worse performance.
-This can lead to customer complaints, possibly to the network provider
-directly.  Resolution of incorrect geolocation data is complicated by the
-lack of any centralized means to coordinate and communicate location
-information to all interested consumers of the data.
+When an ISP, for example, changes the location of an IP prefix, services which
+make use of geolocation information may begin to suffer worse performance.
+This can lead to customer complaints, possibly to the ISP directly.  Resolution
+of incorrect geolocation data is complicated by the lack of any centralized
+means to coordinate and communicate geolocation information to all interested
+consumers of the data.
         </t>
         <t>
-This document records a format whereby a network operator can publish a
-mapping of IP address ranges to simplified geolocation information,
-colloquially termed a "geolocation feed".  Interested parties can poll and
-parse these feeds to update or merge with other geolocation data sources and
-procedures.
+This document records a format whereby a network operator (an ISP, an
+enterprise, or any organization which deems the geolocation of its IP prefixes
+to be of concern) can publish a mapping of IP address ranges to simplified
+geolocation information, colloquially termed a "geolocation feed".  Interested
+parties can poll and parse these feeds to update or merge with other
+geolocation data sources and procedures.
         </t>
         <t>
-Some technical organizations operating networks that move from one meeting
+Some technical organizations operating networks that move from one conference
 location to the next have already experimentally published small geolocation
 feeds.  At least one consumer (Google) has incorporated these ad hoc feeds
 into a geolocation data pipeline.
@@ -172,7 +173,7 @@ locations, experimented by publishing geolocation changes in advance
 of need in order to better serve conference attendees.
       </t>
       <t>
-At its simplest, the mechanism consists of a network provider publishing a
+At its simplest, the mechanism consists of a network operator publishing a
 file (the "geolocation feed"), which contains several text entries, one per
 line.  Each entry is keyed by a unique (within the feed) IP prefix (or single
 IP address) followed by a sequence of network locality attributes to be
@@ -202,7 +203,7 @@ Feeds MUST be in comma separated values format as described in
           </figure>
         </t>
         <t>
-IP range fields are REQUIRED, all others are OPTIONAL (can be empty),
+The IP range field is REQUIRED, all others are OPTIONAL (can be empty),
 though the requisite minimum number of commas SHOULD be present.
         </t>
 
@@ -226,7 +227,7 @@ expressed in form "192.0.2.3-192.0.2.25".
           <section title="Country">
             <t>
 OPTIONAL.  The country field SHOULD be a 2 letter ISO country code conforming
-to ISO 3166-1 alpha 2 <xref target="ISO.3166.1"/>.  Parsers should treat this
+to ISO 3166-1 alpha 2 <xref target="ISO.3166.1"/>.  Parsers SHOULD treat this
 field case-insensitively.
             </t>
             <t>
@@ -244,7 +245,7 @@ Poland.
           <section title="Region">
             <t>
 OPTIONAL.  The region field SHOULD be a ISO region code conforming to
-ISO 3166-2 <xref target="ISO.3166.2"/>.  Parsers should treat this field
+ISO 3166-2 <xref target="ISO.3166.2"/>.  Parsers SHOULD treat this field
 case-insensitively.
             </t>
             <t>
@@ -615,25 +616,30 @@ errors.
 
     <section title="Relation to other work">
       <t>
-Quoting rbarnes:
+While not originally done in conjunction with the <xref target="GEOPRIV"/>
+working group, Richard Barnes observed that this work is nevertheless
+consistent with what the group has defined, both for address format and for
+privacy.  The data elements in geolocation feeds are equivalent to the
+following XML structure (vis. <xref target="RFC5139"/>):
         <figure>
           <artwork><![CDATA[
-"""
-One time for this audience: You might want to note that this is
-consistent with what GEOPRIV has defined, both for address format
-and for privacy.  The data elements you've got are equivalent to
-the following XML structure [RFC5139]:
-
     <civicAddress>
       <country>country</country>
       <A1>region</A1>
       <A2>city</A2>
-      <PC>postal_code<PC>
-    <civicAddress>
-
-Providing location to this granularity (less postal_code) is equivalent
-to the following privacy policy:
-
+      <PC>postal_code</PC>
+    </civicAddress>
+          ]]></artwork>
+        </figure>
+      </t>
+      <t>
+Providing geolocation information to this granularity is equivalent to the
+following privacy policy (vis. the definition of the
+<eref
+ target="http://tools.ietf.org/html/draft-ietf-geopriv-policy#section-6.5.1">
+'building'</eref> level of disclosure):
+        <figure>
+          <artwork><![CDATA[
     <ruleset>
       <rule>
         <conditions/>
@@ -645,11 +651,6 @@ to the following privacy policy:
         </transformations>
       </rule>
     </ruleset>
-
-(Witness the awesome verbosity of this fully operational XML!)
-
-http://tools.ietf.org/html/draft-ietf-geopriv-policy-27#section-6.5.1
-"""
           ]]></artwork>
         </figure>
       </t>
@@ -716,6 +717,8 @@ International Organization for Standardization
 
 &rfc4408;
 
+&rfc5139;
+
 &rfc5952;
 
 <reference target="https://meetings.ripe.net/geo/google.csv"
@@ -737,6 +740,18 @@ Réseaux IP Européens Network Coordination Centre
     <author>
       <organization abbrev="ICANN">
 Internet Corporation For Assigned Names and Numbers
+      </organization>
+    </author>
+  </front>
+</reference>
+
+<reference target="http://datatracker.ietf.org/wg/geopriv/"
+           anchor="GEOPRIV">
+  <front>
+    <title>IETF geopriv Working Group</title>
+    <author>
+      <organization abbrev="IETF">
+Internet Engineering Task Force
       </organization>
     </author>
   </front>
@@ -958,7 +973,7 @@ if __name__ == '__main__':
           </figure>
         </t>
         <t>
-A unittest file, "ipgeo_feed_validator_test.py" is provided as well.  It
+A unit test file, "ipgeo_feed_validator_test.py" is provided as well.  It
 provides basic test coverage of the code above, though does not test correct
 handling of non-ASCII UTF-8 strings.
         </t>
