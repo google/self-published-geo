@@ -91,6 +91,10 @@
     <date/>
 
     <abstract>
+      <t>TODO(ek): U-NAPTR, 4848</t>
+      <t>TODO(ek): http://tools.ietf.org/html/draft-ietf-geopriv-res-gw-lis-discovery</t>
+      <t>TODO(ek): JSON encoding</t>
+      <t>TODO(ek): format, publishing, finding, validating</t>
       <t>
 This document records a format whereby a network operator can publish a
 mapping of IP address ranges to simplified geolocation information,
@@ -118,12 +122,13 @@ native language, and providing additional context for services involving
 search queries.
         </t>
         <t>
-When an ISP, for example, changes the location of an IP prefix, services which
-make use of geolocation information may begin to suffer degraded performance.
-This can lead to customer complaints, possibly to the ISP directly.
-Dissemination of correct geolocation data is complicated by the lack of any
-centralized means to coordinate and communicate geolocation information to all
-interested consumers of the data.
+When an ISP, for example, changes the location where an IP prefix is
+deployed, services which make use of geolocation information may begin
+to suffer degraded performance. This can lead to customer complaints,
+possibly to the ISP directly. Dissemination of correct geolocation data
+is complicated by the lack of any centralized means to coordinate and
+communicate geolocation information to all interested consumers of the
+data.
         </t>
         <t>
 This document records a format whereby a network operator (an ISP, an
@@ -149,10 +154,18 @@ interpreted as described in <xref target="RFC2119"/>.
         </t>
       </section>
 
-      <section title="Acceptable use implied">
+      <section title="Implications of publication">
+        <t>
+This document describes both a format and a mechanism for publishing data,
+with the implication that the owner of the data wishes it to be public.
+Any privacy risk is bounded by the format, and data publishers MAY omit
+certain fields to further protect privacy (see <xref target="spec"/>
+for details about which fields exactly may be omitted).  Feed publishers
+assume the responsibility of determining which data should be made public.
+        </t>
         <t>
 This proposal does not incorporate a mechanism to communicate acceptable
-use policies for self-published data.  Publication itself is inferred as
+use policies for self-published data. Publication itself is inferred as
 a desire by the publisher for the data to be usefully consumed, similar
 to the publication of information like host names, cryptographic keys, and
 SPF records <xref target="RFC4408"/> in the DNS.
@@ -179,7 +192,7 @@ IP address) followed by a sequence of network locality attributes to be
 ascribed to the given prefix.
       </t>
 
-      <section title="Specification">
+      <section anchor="spec" title="Specification">
         <t>
 For operational simplicity, every feed should contain data about all IP
 addresses the provider wants to publish.  Alternatives, like publishing
@@ -225,14 +238,8 @@ and "2001:db8::/32" for IPv6.
           <section title="Country">
             <t>
 OPTIONAL.  The country field SHOULD be a 2 letter ISO country code conforming
-to ISO 3166-1 alpha 2 <xref target="ISO.3166.1"/>.  Parsers SHOULD treat this
-field case-insensitively.
-            </t>
-            <t>
-Empty country fields or a country identifier of "ZZ" indicate either
-unassigned reserved IP ranges or IP ranges for which existing geolocation
-information can, from the perspective of the publisher, safely be discarded.
-<xref target="consumers"/> contains advice to consumers of this data.
+to ISO 3166-1 alpha 2 <xref target="ISO.3166.1alpha2"/>.  Parsers SHOULD
+treat this field case-insensitively.
             </t>
             <t>
 Examples include "US" for the United States, "JP" for Japan, and "PL" for
@@ -274,34 +281,69 @@ Examples include "106-6126" (in Minato ward, Tokyo, Japan).
           </section>
         </section>
 
-        <section title="Parsing and matching">
+        <section title="Prefixes with no geolocation information">
           <t>
-Entries with expected fields which fail to parse, either in part or in full,
-SHOULD be discarded.  It is RECOMMENDED that they also be logged for further
-administrative review.  For compatibility with future additional fields a
-parser MUST ignore any fields beyond those it expects.  The data from
-fields which are expected and which parse successfully MUST still be
-considered valid.
+Feed publishers may indicate that some IP prefixes should not have any
+associated geolocation information.  It may be that some prefixes under
+their administrative control are reserved, not yet allocated or deployed,
+or are in the process of being redeployed elsewhere and existing
+geolocation information can, from the perspective of the publisher,
+safely be discarded.  (See <xref target="consumers"/> for advice to
+consumers of this data.)
           </t>
           <t>
-When parsing and matching, consumers MUST NOT attempt to use simple string
-matching or regular expressions but instead MUST parse IP address and CIDR
-string representations into IP prefixes and perform set membership tests.
+This special case can be indicated by explicitly leaving blank all
+fields with any geolocation information.  For example:
+          <figure>
+            <artwork>
+    127.0.0.0/8,,,,
+    224.0.0.0/4,,,,
+    240.0.0.0/4,,,,
+            </artwork>
+          </figure>
+          </t>
+          <t>
+Historically, the user-assigned country identifier of "ZZ" had be used
+for this same purpose.  This is not necessarily preferred, and no specific
+interpretation of any of the other user-assigned country codes is
+currently defined.
+          </t>
+        </section>
+
+        <section title="Additional parsing requirements">
+          <t>
+Feed entries missing required fields, or having a required field which
+fails to parse correctly MUST be discarded.  It is RECOMMENDED that such
+entries also be logged for further administrative review.
+          </t>
+          <t>
 While publishers SHOULD follow <xref target="RFC5952"/> style for IPv6
-addresses, consumers MUST nevertheless accept all valid string representations.
+prefix fields, consumers MUST nevertheless accept all valid string
+representations.
           </t>
+          <t>
+Duplicate IP address or prefix entries MUST be considered an error, and
+consumer implementations SHOULD log the repeated entries for further
+administrative review.  Publishers SHOULD take measures to ensure there is
+one and only one entry per IP address and prefix.
+          </t>
+          <t>
+Feed entries with non-empty optional fields which fail to parse,
+either in part or in full, SHOULD be discarded.  It is RECOMMENDED
+that they also be logged for further administrative review.
+          </t>
+          <t>
+For compatibility with future additional fields a parser MUST ignore any
+fields beyond those it expects.  The data from fields which are expected
+and which parse successfully MUST still be considered valid.
+          </t>
+        </section>
+
+        <section title="Looking up an IP address">
           <t>
 Multiple entries which constitute nested prefixes are permitted.  Consumers
 SHOULD consider the entry with the longest matching prefix (i.e. the
 "most specific") to be the best matching entry for a given IP address.
-          </t>
-          <t>
-Duplicate IP address or prefix entries SHOULD be considered an error, and
-consumer implementations SHOULD log the repeated entries for further
-administrative review and MAY either discard or overwrite prior duplicate
-entries with subsequent data.  Publishers MUST NOT rely upon any individual
-implementation's behavior and instead SHOULD take measures to ensure there is
-one and only one entry per IP address and per prefix.
           </t>
         </section>
       </section>
@@ -379,39 +421,6 @@ assumptions about delegation size are left to the consumer's implementation.
           </t>
           <t>
 Examples for IPv6 include "/48", "/56", "/60", and "/64".
-          </t>
-        </section>
-
-        <section title="IPv4 hyphenated range format">
-          <t>
-OPTIONAL.  Due to the density of some IPv4 allocations in some networks it
-may be more convenient to list IP ranges in an alternate, hyphenated form.
-IPv4 ranges, and only IPv4 ranges, MAY be formatted as
-"start_address-end_address", indicating that all IPv4 addresses from the
-start address incrementing numerically through the end address inclusive
-constitute the IP range for the given entry.
-          </t>
-          <t>
-Publishers MUST prefer CIDR notation over this hyphenated alternative if a
-collection of CIDR IP ranges can reasonably be constructed that expresses
-the equivalent of the hyphenated range.
-          </t>
-          <t>
-Due of the complexity of constructing a valid IP range and address mapping
-to geolocation entries, this hyphenated form has some additional restrictions:
-            <list style="symbols">
-              <t>
-All IPv4 hyphenated ranges MUST be disjoint with each other (no overlapping
-ranges).
-              </t>
-              <t>
-All IPv4 hyphenated ranges MUST be a proper subset of any covering IPv4 CIDR
-prefix (no cutting across CIDR boundaries).
-              </t>
-            </list>
-          </t>
-          <t>
-Examples include expressions of the form "192.0.2.3-192.0.2.25".
           </t>
         </section>
       </section>
@@ -570,10 +579,9 @@ administrative review feed entries which exceed set thresholds.
         <t>
 As a publisher can change geolocation data at any time and without
 notification consumers SHOULD implement mechanisms to periodically refresh
-local copies of feed data.  If the feed discovery mechanism offers hints
-about data validity time (e.g. the TTL field of the DNS Resource Record which
-identified a feed (section 3.2.1 of <xref target="RFC1035"/>)), then the given
-feed SHOULD be refreshed before the expiration of this validity timer.
+local copies of feed data.  In the absence of any other refresh timing
+information it is recommended that consumers SHOULD refresh feeds no less
+often than weekly.
         </t>
         <t>
 For feeds available via HTTPS (or HTTP), the publisher MAY communicate
@@ -586,10 +594,6 @@ header</eref> or a
 <eref target="http://tools.ietf.org/html/rfc2616#section-14.9">Cache-Control
 header</eref> specifying the max-age.  Where practical, consumers SHOULD
 refresh feed information before the expiry time is reached.
-        </t>
-        <t>
-In the absence of any other refresh timing information it is recommended that
-consumers SHOULD refresh feeds no less often than weekly.
         </t>
       </section>
     </section>
@@ -659,8 +663,8 @@ following privacy policy (vis. the definition of the
       <t>
 The authors would like to express their gratitude to reviewers and early
 implementers, including but not limited to Mikael Abrahamsson,
-Richard L. Barnes, Andras Erdei, Marco Hogewoning, Warren Kumari,
-Menno Schepers, Justyna Sidorska, and Bjoern A. Zeeb.
+Richard L. Barnes, Andras Erdei, Marco Hogewoning, Mike Joseph,
+Warren Kumari, Menno Schepers, Justyna Sidorska, and Bjoern A. Zeeb.
       </t>
     </section>
   </middle>
@@ -680,7 +684,7 @@ Menno Schepers, Justyna Sidorska, and Bjoern A. Zeeb.
 &rfc4632;
 
 <reference
- anchor="ISO.3166.1"
+ anchor="ISO.3166.1alpha2"
  target="http://www.iso.org/iso/home/standards/country_codes/iso-3166-1_decoding_table.htm">
   <front>
     <title>ISO 3166-1 decoding table</title>
