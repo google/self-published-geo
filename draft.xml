@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
-    <!ENTITY rfc1035 PUBLIC ""
-      "http://xml.resource.org/public/rfc/bibxml/reference.RFC.1035.xml">
     <!ENTITY rfc2119 PUBLIC ""
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
     <!ENTITY rfc2616 PUBLIC ""
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2616.xml">
     <!ENTITY rfc2818 PUBLIC ""
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2818.xml">
+    <!ENTITY rfc3403 PUBLIC ""
+      "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3403.xml">
     <!ENTITY rfc3629 PUBLIC ""
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3629.xml">
     <!ENTITY rfc3912 PUBLIC ""
@@ -18,8 +18,12 @@
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4291.xml">
     <!ENTITY rfc4408 PUBLIC ""
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4408.xml">
+    <!ENTITY rfc4627 PUBLIC ""
+      "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4627.xml">
     <!ENTITY rfc4632 PUBLIC ""
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4632.xml">
+    <!ENTITY rfc4848 PUBLIC ""
+      "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4848.xml">
     <!ENTITY rfc5139 PUBLIC ""
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5139.xml">
     <!ENTITY rfc5952 PUBLIC ""
@@ -28,7 +32,7 @@
 
 <rfc category="exp"
      ipr="noModificationTrust200902"
-     docName="draft-self-published-geo-00">
+     docName="draft-self-published-geo-01">
 
 <?xml-stylesheet type="text/xsl" href="rfc2629.xslt" ?>
 
@@ -91,10 +95,6 @@
     <date/>
 
     <abstract>
-      <t>TODO(ek): U-NAPTR, 4848</t>
-      <t>TODO(ek): http://tools.ietf.org/html/draft-ietf-geopriv-res-gw-lis-discovery</t>
-      <t>TODO(ek): JSON encoding</t>
-      <t>TODO(ek): format, publishing, finding, validating</t>
       <t>
 This document records a format whereby a network operator can publish a
 mapping of IP address ranges to simplified geolocation information,
@@ -288,12 +288,12 @@ associated geolocation information.  It may be that some prefixes under
 their administrative control are reserved, not yet allocated or deployed,
 or are in the process of being redeployed elsewhere and existing
 geolocation information can, from the perspective of the publisher,
-safely be discarded.  (See <xref target="consumers"/> for advice to
-consumers of this data.)
+safely be discarded.
           </t>
           <t>
 This special case can be indicated by explicitly leaving blank all
-fields with any geolocation information.  For example:
+fields which specify any degree of geolocation information.  For
+example:
           <figure>
             <artwork>
     127.0.0.0/8,,,,
@@ -423,6 +423,16 @@ assumptions about delegation size are left to the consumer's implementation.
 Examples for IPv6 include "/48", "/56", "/60", and "/64".
           </t>
         </section>
+        <section title="Alternate format">
+          <t>
+In order to more flexibly support future extensions, use of a more
+expressive feed format has been suggested.  Use of JavaScript Object
+Notation (JSON, <xref target="RFC4627"/>), specifically, has been
+discussed.  However, at this time no such specification nor implementation
+exists.  Consequently, no attempt has been made to persuade existing
+publishers to use an alternate format.
+          </t>
+        </section>
       </section>
     </section>
 
@@ -470,7 +480,7 @@ advertised prefixes.
         <t>
 One possibility for enabling automation would be publication of feed URIs as
 a well-known attribute in public databases of network authority, e.g. the
-whois service (<xref target="RFC3912"/>) operated by RIRs.  Verification
+WHOIS service (<xref target="RFC3912"/>) operated by RIRs.  Verification
 may be performed if the same or similarly authoritative service provides the
 identical feed URI for queries for each CIDR prefix in the geolocation feed.
         </t>
@@ -482,30 +492,43 @@ database of network authority) is however a noted concern.
         </t>
       </section>
 
-      <section title="Using 'reverse' DNS">
+      <section title="Using 'reverse' DNS with NAPTR records">
         <t>
 Another possibility for automating the location and verification of a
 geolocation feed is to incorporate feed URIs into the DNS, specifically the
 in-addr.arpa and ip6.arpa portions of the DNS hierarchy.  A suitably formatted
-query for a TXT record that would return an answer in a well-known format, e.g.
-"v=1 https://example.net/ipgeo/v1.csv", could suffice.
+query for a NAPTR (<xref target="RFC3403"/>) record, or more specifically a
+U-NAPTR (<xref target="RFC4848"/>) record, could yield a transformation to
+a geolocation feed URI.
+        </t>
+        <t>
+For example, assuming a purely theoretical service name of "x-geofeed",
+a 'reverse' DNS zone might contain a record of the form:
+          <figure>
+            <artwork>
+    ;;       order pref flags
+    IN NAPTR 200   10   "u"    "x-geofeed"        ( ; service
+                                                    ; regexp
+                               "!.*!https://example.com/ipgeo.csv!"
+                               ""                   ; replacement
+                               )
+            </artwork>
+          </figure>
         </t>
         <t>
 Attempts to locate the geolocation feed for a given IP address would begin by
-querying directly for a TXT record associated with the PTR-style name
-prefixed by "_geo.". For example, 192.0.2.4 and 2001:db8::6 would cause a
-TXT record request to be issued for "_geo.4.2.0.192.in-addr.arpa" and
-"_geo.6.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa",
+querying directly for a NAPTR record associated with the address's PTR-style
+name. For example, 192.0.2.4 and 2001:db8::6 would cause a NAPTR record
+request to be issued for "4.2.0.192.in-addr.arpa" and
+"6.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa",
 respectively.
         </t>
         <t>
-If no such record exists one further query for the fully qualified domain name
-of the SOA record in the authority section of the response to the previous
-query, similarly prefixed with "_geo.", would be performed
-("_geo.2.0.192.in-addr.arpa" and "_geo.d.0.1.0.0.2.ip6.arpa" in the examples
-above).  Successfully located feed URIs could then be processed as outlined by
-this document, possibly taking in to consideration the TTL of the successful
-DNS response for refresh timing information.
+If no such record exists one further query for the fully qualified domain
+name of the SOA record in the authority section of the response to the
+previous query would be performed ("2.0.192.in-addr.arpa" and
+"d.0.1.0.0.2.ip6.arpa" in the examples above).  Successfully located feed
+URIs could then be processed as outlined by this document.
         </t>
         <t>
 Verification of the contents of a feed would proceed in essentially the same
@@ -519,9 +542,9 @@ on-going verification of observed client IP addresses is implemented, to
         </t>
         <t>
 This mode is untested and may prove impractical.  However, the operational
-burden is more closely located with those wishing and willing to bear it, i.e.
-the publishers who would likely handle serving in-addr.arpa and ip6.arpa for
-the IP prefixes under their authority.
+burden is more closely located with those wishing and willing to bear it,
+i.e. the publishers who would likely handle serving in-addr.arpa and
+ip6.arpa for the IP prefixes under their authority.
         </t>
       </section>
     </section>
@@ -529,10 +552,11 @@ the IP prefixes under their authority.
     <section anchor="consumers"
              title="Consuming self-published IP geolocation feeds">
       <t>
-While consumers MAY treat published feed data as a hint only and MAY choose
-to prefer other sources of geolocation information for any given IP range
-there are some guidelines for sensibly and effectively consuming published
-feeds.
+Consumers MAY treat published feed data as a hint only and MAY choose
+to prefer other sources of geolocation information for any given IP range.
+Regardless of a consumer's stance with respect to a given published feed,
+there are some points of note for sensibly and effectively consuming
+published feeds.
       </t>
 
       <section title="Feed integrity">
@@ -662,9 +686,10 @@ following privacy policy (vis. the definition of the
     <section title="Acknowledgements">
       <t>
 The authors would like to express their gratitude to reviewers and early
-implementers, including but not limited to Mikael Abrahamsson,
-Richard L. Barnes, Andras Erdei, Marco Hogewoning, Mike Joseph,
-Warren Kumari, Menno Schepers, Justyna Sidorska, and Bjoern A. Zeeb.
+implementers, including but not limited to Mikael Abrahamsson, Andras Erdei,
+Marco Hogewoning, Mike Joseph, Warren Kumari, Menno Schepers,
+Justyna Sidorska, and Bjoern A. Zeeb.  Richard L. Barnes in particular
+contributed substantial review, text, and advice.
       </t>
     </section>
   </middle>
@@ -712,13 +737,17 @@ International Organization for Standardization
       </references>
 
       <references title="Informative References">
-&rfc1035;
-
 &rfc2818;
+
+&rfc3403;
 
 &rfc3912;
 
 &rfc4408;
+
+&rfc4627;
+
+&rfc4848;
 
 &rfc5139;
 
