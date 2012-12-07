@@ -222,7 +222,7 @@ though the requisite minimum number of commas SHOULD be present.
         <section title="Geolocation feed individual entry fields">
           <section title="IP Range">
             <t>
-Mandatory.  Each IP range field MUST be either a single IP address or an
+REQUIRED.  Each IP range field MUST be either a single IP address or an
 IP prefix in CIDR notation in conformance with
 <eref target="http://tools.ietf.org/html/rfc4632#section-3.1">section 3.1</eref>
 of <xref target="RFC4632"/> for IPv4 or
@@ -237,9 +237,9 @@ and "2001:db8::/32" for IPv6.
 
           <section title="Country">
             <t>
-OPTIONAL.  The country field SHOULD be a 2 letter ISO country code conforming
-to ISO 3166-1 alpha 2 <xref target="ISO.3166.1alpha2"/>.  Parsers SHOULD
-treat this field case-insensitively.
+OPTIONAL.  The country field, if non-empty, MUST be a 2 letter ISO country
+code conforming to ISO 3166-1 alpha 2 <xref target="ISO.3166.1alpha2"/>.
+Parsers SHOULD treat this field case-insensitively.
             </t>
             <t>
 Examples include "US" for the United States, "JP" for Japan, and "PL" for
@@ -249,9 +249,9 @@ Poland.
 
           <section title="Region">
             <t>
-OPTIONAL.  The region field SHOULD be a ISO region code conforming to
-ISO 3166-2 <xref target="ISO.3166.2"/>.  Parsers SHOULD treat this field
-case-insensitively.
+OPTIONAL.  The region field, if non-empty, MUST be a ISO region code
+conforming to ISO 3166-2 <xref target="ISO.3166.2"/>.  Parsers SHOULD
+treat this field case-insensitively.
             </t>
             <t>
 Examples include "ID-RI" for the Riau province of Indonesia and "NG-RI" for
@@ -261,8 +261,8 @@ the Rivers province in Nigeria.
 
           <section title="City">
             <t>
-OPTIONAL.  The city field SHOULD be free UTF-8 text, excluding the comma (',')
-character.
+OPTIONAL.  The city field, if non-empty, SHOULD be free UTF-8 text,
+excluding the comma (',') character.
             </t>
             <t>
 Examples include "Dublin", "New York", and "São Paulo" (specifically
@@ -272,8 +272,8 @@ Examples include "Dublin", "New York", and "São Paulo" (specifically
 
           <section title="Postal code">
             <t>
-OPTIONAL.  The postal code field SHOULD be free UTF-8 text, excluding the
-comma (',') character.
+OPTIONAL.  The postal code field, if non-empty, SHOULD be free UTF-8 text,
+excluding the comma (',') character.
             </t>
             <t>
 Examples include "106-6126" (in Minato ward, Tokyo, Japan).
@@ -428,9 +428,8 @@ Examples for IPv6 include "/48", "/56", "/60", and "/64".
 In order to more flexibly support future extensions, use of a more
 expressive feed format has been suggested.  Use of JavaScript Object
 Notation (JSON, <xref target="RFC4627"/>), specifically, has been
-discussed.  However, at this time no such specification nor implementation
-exists.  Consequently, no attempt has been made to persuade existing
-publishers to use an alternate format.
+discussed.  However, at the time of writing no such specification nor
+implementation exists.
           </t>
         </section>
       </section>
@@ -572,7 +571,7 @@ retrieving geolocation feeds in a manner that guarantees integrity of the feed.
         <t>
 Consumers of self-published IP geolocation feeds SHOULD perform some form
 of verification that the publisher is in fact authoritative for the
-addresses in the feed.  The actual means of verification is dependent
+addresses in the feed.  The actual means of verification is likely dependent
 upon the way in which the feed is discovered.  Ad hoc shared URIs, for example,
 will likely require an ad hoc verification process.  Future automated means of
 feed discovery SHOULD have an accompanying automated means of verification.

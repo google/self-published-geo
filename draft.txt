@@ -229,7 +229,7 @@ Internet-Draft     Self-published IP Geolocation Data      December 2012
 
 2.1.1.1.  IP Range
 
-   Mandatory.  Each IP range field MUST be either a single IP address or
+   REQUIRED.  Each IP range field MUST be either a single IP address or
    an IP prefix in CIDR notation in conformance with section 3.1 of
    [RFC4632] for IPv4 or section 2.3 of [RFC4291] for IPv6.
 
@@ -238,34 +238,34 @@ Internet-Draft     Self-published IP Geolocation Data      December 2012
 
 2.1.1.2.  Country
 
-   OPTIONAL.  The country field SHOULD be a 2 letter ISO country code
-   conforming to ISO 3166-1 alpha 2 [ISO.3166.1alpha2].  Parsers SHOULD
-   treat this field case-insensitively.
+   OPTIONAL.  The country field, if non-empty, MUST be a 2 letter ISO
+   country code conforming to ISO 3166-1 alpha 2 [ISO.3166.1alpha2].
+   Parsers SHOULD treat this field case-insensitively.
 
    Examples include "US" for the United States, "JP" for Japan, and "PL"
    for Poland.
 
 2.1.1.3.  Region
 
-   OPTIONAL.  The region field SHOULD be a ISO region code conforming to
-   ISO 3166-2 [ISO.3166.2].  Parsers SHOULD treat this field case-
-   insensitively.
+   OPTIONAL.  The region field, if non-empty, MUST be a ISO region code
+   conforming to ISO 3166-2 [ISO.3166.2].  Parsers SHOULD treat this
+   field case-insensitively.
 
    Examples include "ID-RI" for the Riau province of Indonesia and
    "NG-RI" for the Rivers province in Nigeria.
 
 2.1.1.4.  City
 
-   OPTIONAL.  The city field SHOULD be free UTF-8 text, excluding the
-   comma (',') character.
+   OPTIONAL.  The city field, if non-empty, SHOULD be free UTF-8 text,
+   excluding the comma (',') character.
 
    Examples include "Dublin", "New York", and "Sao Paulo" (specifically
    "S" followed by 0xc3, 0xa3, and "o Paulo").
 
 2.1.1.5.  Postal code
 
-   OPTIONAL.  The postal code field SHOULD be free UTF-8 text, excluding
-   the comma (',') character.
+   OPTIONAL.  The postal code field, if non-empty, SHOULD be free UTF-8
+   text, excluding the comma (',') character.
 
    Examples include "106-6126" (in Minato ward, Tokyo, Japan).
 
@@ -408,9 +408,8 @@ Internet-Draft     Self-published IP Geolocation Data      December 2012
    In order to more flexibly support future extensions, use of a more
    expressive feed format has been suggested.  Use of JavaScript Object
    Notation (JSON, [RFC4627]), specifically, has been discussed.
-   However, at this time no such specification nor implementation
-   exists.  Consequently, no attempt has been made to persuade existing
-   publishers to use an alternate format.
+   However, at the time of writing no such specification nor
+   implementation exists.
 
 
 3.  Finding self-published IP geolocation feeds
@@ -441,6 +440,7 @@ Internet-Draft     Self-published IP Geolocation Data      December 2012
    Ad hoc mechanisms, while useful for early experimentation by
    producers and consumers, are unlikely to be adequate for long-term,
    widespread use by multiple parties.  Future versions of any such
+   self-published geolocation feed mechanism SHOULD address scalability
 
 
 
@@ -449,7 +449,6 @@ Kline, et al.             Expires June 10, 2013                 [Page 8]
 Internet-Draft     Self-published IP Geolocation Data      December 2012
 
 
-   self-published geolocation feed mechanism SHOULD address scalability
    concerns by defining a means for automated discovery and verification
    of operational authority of advertised prefixes.
 
@@ -497,6 +496,7 @@ Internet-Draft     Self-published IP Geolocation Data      December 2012
    If no such record exists one further query for the fully qualified
    domain name of the SOA record in the authority section of the
    response to the previous query would be performed ("2.0.192.in-
+   addr.arpa" and "d.0.1.0.0.2.ip6.arpa" in the examples above).
 
 
 
@@ -505,7 +505,6 @@ Kline, et al.             Expires June 10, 2013                 [Page 9]
 Internet-Draft     Self-published IP Geolocation Data      December 2012
 
 
-   addr.arpa" and "d.0.1.0.0.2.ip6.arpa" in the examples above).
    Successfully located feed URIs could then be processed as outlined by
    this document.
 
@@ -546,13 +545,14 @@ Internet-Draft     Self-published IP Geolocation Data      December 2012
    Consumers of self-published IP geolocation feeds SHOULD perform some
    form of verification that the publisher is in fact authoritative for
    the addresses in the feed.  The actual means of verification is
-   dependent upon the way in which the feed is discovered.  Ad hoc
-   shared URIs, for example, will likely require an ad hoc verification
-   process.  Future automated means of feed discovery SHOULD have an
-   accompanying automated means of verification.
+   likely dependent upon the way in which the feed is discovered.  Ad
+   hoc shared URIs, for example, will likely require an ad hoc
+   verification process.  Future automated means of feed discovery
+   SHOULD have an accompanying automated means of verification.
 
    A consumer MUST only trust geolocation information for IP addresses
    or ranges for which the publisher has been verified as
+   administratively authoritative.  All other geolocation feed entries
 
 
 
@@ -561,7 +561,6 @@ Kline, et al.             Expires June 10, 2013                [Page 10]
 Internet-Draft     Self-published IP Geolocation Data      December 2012
 
 
-   administratively authoritative.  All other geolocation feed entries
    MUST be ignored and SHOULD be logged for further administrative
    review.
 
@@ -607,6 +606,7 @@ Internet-Draft     Self-published IP Geolocation Data      December 2012
    Similarly, consumers who do not perform sufficient verification of
    published data bear the same risks as from other forms of geolocation
    configuration errors.
+
 
 
 
