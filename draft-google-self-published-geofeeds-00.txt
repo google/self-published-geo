@@ -10,7 +10,7 @@ Expires: July 6, 2013                                        Z. Szamonek
 
 
                    Self-published IP Geolocation Data
-                  draft-google-self-published-geofeeds
+                draft-google-self-published-geofeeds-00
 
 Abstract
 
