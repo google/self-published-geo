@@ -4,13 +4,13 @@
 Network Working Group                                           E. Kline
 Internet-Draft                                              Google Japan
 Intended status: Informational                                 K. Duleba
-Expires: July 6, 2013                                        Z. Szamonek
+Expires: October 25, 2013                                    Z. Szamonek
                                                  Google Switzerland GmbH
-                                                         January 2, 2013
+                                                          April 23, 2013
 
 
                    Self-published IP Geolocation Data
-                draft-google-self-published-geofeeds-00
+                draft-google-self-published-geofeeds-01
 
 Abstract
 
@@ -43,7 +43,7 @@ Status of this Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 6, 2013.
+   This Internet-Draft will expire on October 25, 2013.
 
 Copyright Notice
 
@@ -52,9 +52,9 @@ Copyright Notice
 
 
 
-Kline, et al.             Expires July 6, 2013                  [Page 1]
+Kline, et al.           Expires October 25, 2013                [Page 1]
 
-Internet-Draft     Self-published IP Geolocation Data       January 2013
+Internet-Draft     Self-published IP Geolocation Data         April 2013
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -94,23 +94,23 @@ Table of Contents
      4.3.  Verification of accuracy . . . . . . . . . . . . . . . . . 11
      4.4.  Refreshing feed information  . . . . . . . . . . . . . . . 11
    5.  Security Considerations  . . . . . . . . . . . . . . . . . . . 11
-   6.  Relation to other work . . . . . . . . . . . . . . . . . . . . 12
-   7.  Acknowledgements . . . . . . . . . . . . . . . . . . . . . . . 12
-   8.  References . . . . . . . . . . . . . . . . . . . . . . . . . . 12
-     8.1.  Normative References . . . . . . . . . . . . . . . . . . . 12
-     8.2.  Informative References . . . . . . . . . . . . . . . . . . 13
+   6.  Privacy Considerations . . . . . . . . . . . . . . . . . . . . 12
+   7.  Relation to other work . . . . . . . . . . . . . . . . . . . . 12
+   8.  Acknowledgements . . . . . . . . . . . . . . . . . . . . . . . 13
+   9.  References . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+     9.1.  Normative References . . . . . . . . . . . . . . . . . . . 13
+     9.2.  Informative References . . . . . . . . . . . . . . . . . . 13
    Appendix A.  Sample Python validation code . . . . . . . . . . . . 14
-   Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 20
+   Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 21
 
 
 
 
 
 
-
-Kline, et al.             Expires July 6, 2013                  [Page 2]
+Kline, et al.           Expires October 25, 2013                [Page 2]
 
-Internet-Draft     Self-published IP Geolocation Data       January 2013
+Internet-Draft     Self-published IP Geolocation Data         April 2013
 
 
 1.  Introduction
@@ -164,9 +164,9 @@ Internet-Draft     Self-published IP Geolocation Data       January 2013
 
 
 
-Kline, et al.             Expires July 6, 2013                  [Page 3]
+Kline, et al.           Expires October 25, 2013                [Page 3]
 
-Internet-Draft     Self-published IP Geolocation Data       January 2013
+Internet-Draft     Self-published IP Geolocation Data         April 2013
 
 
    acceptable use policies for self-published data.  Publication itself
@@ -220,9 +220,9 @@ Internet-Draft     Self-published IP Geolocation Data       January 2013
 
 
 
-Kline, et al.             Expires July 6, 2013                  [Page 4]
+Kline, et al.           Expires October 25, 2013                [Page 4]
 
-Internet-Draft     Self-published IP Geolocation Data       January 2013
+Internet-Draft     Self-published IP Geolocation Data         April 2013
 
 
 2.1.1.  Geolocation feed individual entry fields
@@ -276,9 +276,9 @@ Internet-Draft     Self-published IP Geolocation Data       January 2013
 
 
 
-Kline, et al.             Expires July 6, 2013                  [Page 5]
+Kline, et al.           Expires October 25, 2013                [Page 5]
 
-Internet-Draft     Self-published IP Geolocation Data       January 2013
+Internet-Draft     Self-published IP Geolocation Data         April 2013
 
 
    under their administrative control are reserved, not yet allocated or
@@ -332,9 +332,9 @@ Internet-Draft     Self-published IP Geolocation Data       January 2013
 
 
 
-Kline, et al.             Expires July 6, 2013                  [Page 6]
+Kline, et al.           Expires October 25, 2013                [Page 6]
 
-Internet-Draft     Self-published IP Geolocation Data       January 2013
+Internet-Draft     Self-published IP Geolocation Data         April 2013
 
 
 2.2.  Examples
@@ -388,9 +388,9 @@ Internet-Draft     Self-published IP Geolocation Data       January 2013
 
 
 
-Kline, et al.             Expires July 6, 2013                  [Page 7]
+Kline, et al.           Expires October 25, 2013                [Page 7]
 
-Internet-Draft     Self-published IP Geolocation Data       January 2013
+Internet-Draft     Self-published IP Geolocation Data         April 2013
 
 
    Non-empty strings MUST be of the form required for CIDR notation
@@ -444,9 +444,9 @@ Internet-Draft     Self-published IP Geolocation Data       January 2013
 
 
 
-Kline, et al.             Expires July 6, 2013                  [Page 8]
+Kline, et al.           Expires October 25, 2013                [Page 8]
 
-Internet-Draft     Self-published IP Geolocation Data       January 2013
+Internet-Draft     Self-published IP Geolocation Data         April 2013
 
 
    concerns by defining a means for automated discovery and verification
@@ -500,9 +500,9 @@ Internet-Draft     Self-published IP Geolocation Data       January 2013
 
 
 
-Kline, et al.             Expires July 6, 2013                  [Page 9]
+Kline, et al.           Expires October 25, 2013                [Page 9]
 
-Internet-Draft     Self-published IP Geolocation Data       January 2013
+Internet-Draft     Self-published IP Geolocation Data         April 2013
 
 
    Successfully located feed URIs could then be processed as outlined by
@@ -556,9 +556,9 @@ Internet-Draft     Self-published IP Geolocation Data       January 2013
 
 
 
-Kline, et al.             Expires July 6, 2013                 [Page 10]
+Kline, et al.           Expires October 25, 2013               [Page 10]
 
-Internet-Draft     Self-published IP Geolocation Data       January 2013
+Internet-Draft     Self-published IP Geolocation Data         April 2013
 
 
    MUST be ignored and SHOULD be logged for further administrative
@@ -612,12 +612,28 @@ Internet-Draft     Self-published IP Geolocation Data       January 2013
 
 
 
-Kline, et al.             Expires July 6, 2013                 [Page 11]
+Kline, et al.           Expires October 25, 2013               [Page 11]
 
-Internet-Draft     Self-published IP Geolocation Data       January 2013
+Internet-Draft     Self-published IP Geolocation Data         April 2013
 
 
-6.  Relation to other work
+6.  Privacy Considerations
+
+   Publishers of geolocation feeds are advised to have fully considered
+   any and all privacy implications of the disclosure of such
+   information for the users of the described networks prior to
+   publication.
+
+   As noted in Section 2.1, each location field in an entry is optional,
+   in order to support expressing only the level of specificity which
+   the publisher has deemed acceptable.  There is no requirement that
+   the level of specificity be consistent across all entries within a
+   feed.  This means, for instance, that some entries may have a blank
+   Postal Code (Section 2.1.1.5), e.g. for privacy reasons, while other
+   entries within the same feed may include them.
+
+
+7.  Relation to other work
 
    While not originally done in conjunction with the [GEOPRIV] working
    group, Richard Barnes observed that this work is nevertheless
@@ -649,30 +665,31 @@ Internet-Draft     Self-published IP Geolocation Data       January 2013
        </ruleset>
 
 
-7.  Acknowledgements
+
+
+
+Kline, et al.           Expires October 25, 2013               [Page 12]
+
+Internet-Draft     Self-published IP Geolocation Data         April 2013
+
+
+8.  Acknowledgements
 
    The authors would like to express their gratitude to reviewers and
    early implementers, including but not limited to Mikael Abrahamsson,
-   Andras Erdei, Marco Hogewoning, Mike Joseph, Warren Kumari, Menno
-   Schepers, Justyna Sidorska, and Bjoern A. Zeeb.  Richard L. Barnes in
-   particular contributed substantial review, text, and advice.
+   John Bond, Alissa Cooper, Andras Erdei, Marco Hogewoning, Mike
+   Joseph, Warren Kumari, Menno Schepers, Justyna Sidorska, and Bjoern
+   A. Zeeb.  Richard L. Barnes in particular contributed substantial
+   review, text, and advice.
 
 
-8.  References
+9.  References
 
-8.1.  Normative References
+9.1.  Normative References
 
    [ISO.3166.1alpha2]
               International Organization for Standardization, "ISO
               3166-1 decoding table", <http://www.iso.org/iso/home/
-
-
-
-Kline, et al.             Expires July 6, 2013                 [Page 12]
-
-Internet-Draft     Self-published IP Geolocation Data       January 2013
-
-
               standards/country_codes/iso-3166-1_decoding_table.htm>.
 
    [ISO.3166.2]
@@ -700,10 +717,17 @@ Internet-Draft     Self-published IP Geolocation Data       January 2013
               (CIDR): The Internet Address Assignment and Aggregation
               Plan", BCP 122, RFC 4632, August 2006.
 
-8.2.  Informative References
+9.2.  Informative References
 
    [GEOPRIV]  Internet Engineering Task Force, "IETF geopriv Working
               Group", <http://datatracker.ietf.org/wg/geopriv/>.
+
+
+
+Kline, et al.           Expires October 25, 2013               [Page 13]
+
+Internet-Draft     Self-published IP Geolocation Data         April 2013
+
 
    [GEO_ICANN]
               Internet Corporation For Assigned Names and Numbers,
@@ -721,14 +745,6 @@ Internet-Draft     Self-published IP Geolocation Data       January 2013
    [RFC2818]  Rescorla, E., "HTTP Over TLS", RFC 2818, May 2000.
 
    [RFC3403]  Mealling, M., "Dynamic Delegation Discovery System (DDDS)
-
-
-
-Kline, et al.             Expires July 6, 2013                 [Page 13]
-
-Internet-Draft     Self-published IP Geolocation Data       January 2013
-
-
               Part Three: The Domain Name System (DNS) Database",
               RFC 3403, October 2002.
 
@@ -761,6 +777,14 @@ Appendix A.  Sample Python validation code
    published ipgeo feed format from the standard input and performs
    basic validation.  It is intended for use by feed publishers before
    launching a feed.  Note that this validator does not verify the
+
+
+
+Kline, et al.           Expires October 25, 2013               [Page 14]
+
+Internet-Draft     Self-published IP Geolocation Data         April 2013
+
+
    uniqueness of every IP prefix entry within the feed as a whole, but
    only verifies the syntax of each single line from within the feed.  A
    complete validator MUST also ensure IP prefix uniqueness.
@@ -777,14 +801,6 @@ Appendix A.  Sample Python validation code
 # binary forms, with or without modification, is permitted pursuant to,
 # and subject to the license terms contained in, the Simplified BSD
 # License set forth in Section 4.c of the IETF Trust's Legal Provisions
-
-
-
-Kline, et al.             Expires July 6, 2013                 [Page 14]
-
-Internet-Draft     Self-published IP Geolocation Data       January 2013
-
-
 # Relating to IETF Documents (http://trustee.ietf.org/license-info).
 
 
@@ -818,6 +834,13 @@ class IPGeoFeedValidator(object):
     for line in feed:
       self._ValidateLine(line)
 
+
+
+Kline, et al.           Expires October 25, 2013               [Page 15]
+
+Internet-Draft     Self-published IP Geolocation Data         April 2013
+
+
   def SetOutputStream(self, logfile):
     """Controls where the output messages go do (STDERR by default).
 
@@ -833,14 +856,6 @@ class IPGeoFeedValidator(object):
     return len(self.output_log.get(severity, []))
 
   ############################################################
-
-
-
-Kline, et al.             Expires July 6, 2013                 [Page 15]
-
-Internet-Draft     Self-published IP Geolocation Data       January 2013
-
-
   def _ValidateLine(self, line):
     line = line.rstrip('\r\n')
     self.line_number += 1
@@ -874,6 +889,14 @@ Internet-Draft     Self-published IP Geolocation Data       January 2013
 
     if len(fields) != 5:
       self._ReportWarning('5 fields were expected (got %d).'
+
+
+
+Kline, et al.           Expires October 25, 2013               [Page 16]
+
+Internet-Draft     Self-published IP Geolocation Data         April 2013
+
+
                           % len(fields))
 
   ############################################################
@@ -889,14 +912,6 @@ Internet-Draft     Self-published IP Geolocation Data       January 2013
         self._ReportError('Incorrect IP Network.')
         return False
       if iprange.is_private:
-
-
-
-Kline, et al.             Expires July 6, 2013                 [Page 16]
-
-Internet-Draft     Self-published IP Geolocation Data       January 2013
-
-
         self._ReportError('IP Address must not be private.')
         return False
     except:
@@ -930,6 +945,14 @@ Internet-Draft     Self-published IP Geolocation Data       January 2013
       return True
     if '-' not in region_code:
       self._ReportError('Region code must be in the ISO 3166-2 format.')
+
+
+
+Kline, et al.           Expires October 25, 2013               [Page 17]
+
+Internet-Draft     Self-published IP Geolocation Data         April 2013
+
+
       return False
 
     parts = region_code.split('-')
@@ -945,14 +968,6 @@ Internet-Draft     Self-published IP Geolocation Data       January 2013
     self._ReportWithSeverity('WARNING', message)
 
   def _ReportWithSeverity(self, severity, message):
-
-
-
-Kline, et al.             Expires July 6, 2013                 [Page 17]
-
-Internet-Draft     Self-published IP Geolocation Data       January 2013
-
-
     self.is_correct_line = False
     output_line = '%s: %s\n' % (severity, message)
 
@@ -987,6 +1002,13 @@ if __name__ == '__main__':
    test correct handling of non-ASCII UTF-8 strings.
 
 
+
+
+Kline, et al.           Expires October 25, 2013               [Page 18]
+
+Internet-Draft     Self-published IP Geolocation Data         April 2013
+
+
 #!/usr/bin/python
 #
 # Copyright (c) 2012 IETF Trust and the persons identified as authors of
@@ -1001,14 +1023,6 @@ from ipgeo_feed_validator import IPGeoFeedValidator
 
 class IPGeoFeedValidatorTest(object):
   def __init__(self):
-
-
-
-Kline, et al.             Expires July 6, 2013                 [Page 18]
-
-Internet-Draft     Self-published IP Geolocation Data       January 2013
-
-
     self.validator = IPGeoFeedValidator()
     self.validator.SetOutputStream(None)
     self.successes = 0
@@ -1043,6 +1057,14 @@ Internet-Draft     Self-published IP Geolocation Data       January 2013
     self.TestFeedLine('55.66.77.88,US,USA-CA,,', 1, 0)
     self.TestFeedLine('55.66.77.88,USA,USA-CA,,', 2, 0)
 
+
+
+
+Kline, et al.           Expires October 25, 2013               [Page 19]
+
+Internet-Draft     Self-published IP Geolocation Data         April 2013
+
+
     self.TestFeedLine('55.66.77.88,US,US-CA,Mountain View,', 0, 0)
     self.TestFeedLine('55.66.77.88,US,US-CA,Mountain View,94043', 0, 0)
     self.TestFeedLine('55.66.77.88,US,US-CA,Mountain View,94043,'
@@ -1057,14 +1079,6 @@ Internet-Draft     Self-published IP Geolocation Data       January 2013
     self.TestFeedLine('172.15.30.1,US,,,', 0, 0)
     self.TestFeedLine('172.28.30.1,US,,,', 1, 0)
     self.TestFeedLine('192.167.100.1,US,,,', 0, 0)
-
-
-
-Kline, et al.             Expires July 6, 2013                 [Page 19]
-
-Internet-Draft     Self-published IP Geolocation Data       January 2013
-
-
     self.TestFeedLine('192.168.100.1,US,,,', 1, 0)
     self.TestFeedLine('10.0.5.9,US,,,', 1, 0)
     self.TestFeedLine('10.0.5.0/24,US,,,', 1, 0)
@@ -1099,6 +1113,14 @@ Internet-Draft     Self-published IP Geolocation Data       January 2013
     self.validator._ValidateLine(line)
 
     if not self.IsOutputLogCorrect(warning_count, error_count):
+
+
+
+Kline, et al.           Expires October 25, 2013               [Page 20]
+
+Internet-Draft     Self-published IP Geolocation Data         April 2013
+
+
       self.failures += 1
       return False
 
@@ -1108,17 +1130,6 @@ Internet-Draft     Self-published IP Geolocation Data       January 2013
 
 if __name__ == '__main__':
   IPGeoFeedValidatorTest().Run()
-
-
-
-
-
-
-
-
-Kline, et al.             Expires July 6, 2013                 [Page 20]
-
-Internet-Draft     Self-published IP Geolocation Data       January 2013
 
 
 Authors' Addresses
@@ -1161,16 +1172,5 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-Kline, et al.             Expires July 6, 2013                 [Page 21]
+Kline, et al.           Expires October 25, 2013               [Page 21]
 

@@ -32,7 +32,7 @@
 
 <rfc category="info"
      ipr="noModificationTrust200902"
-     docName="draft-google-self-published-geofeeds-00">
+     docName="draft-google-self-published-geofeeds-01">
 
 <?xml-stylesheet type="text/xsl" href="rfc2629.xslt" ?>
 
@@ -270,7 +270,7 @@ Examples include "Dublin", "New York", and "São Paulo" (specifically
             </t>
           </section>
 
-          <section title="Postal code">
+          <section anchor="postal" title="Postal code">
             <t>
 OPTIONAL.  The postal code field, if non-empty, SHOULD be free UTF-8 text,
 excluding the comma (',') character.
@@ -637,6 +637,23 @@ input validation and defense measures MUST be taken.
 Similarly, consumers who do not perform sufficient verification of published
 data bear the same risks as from other forms of geolocation configuration
 errors.
+     </t>
+    </section>
+
+    <section anchor="Privacy" title="Privacy Considerations">
+      <t>
+Publishers of geolocation feeds are advised to have fully considered any
+and all privacy implications of the disclosure of such information for the
+users of the described networks prior to publication.
+      </t>
+      <t>
+As noted in <xref target="spec"/>, each location field in an entry is
+optional, in order to support expressing only the level of specificity which
+the publisher has deemed acceptable.  There is no requirement that the level
+of specificity be consistent across all entries within a feed.
+This means, for instance, that some entries may have a blank Postal Code
+(<xref target="postal"/>), e.g. for privacy reasons, while other entries
+within the same feed may include them.
       </t>
     </section>
 
@@ -685,10 +702,10 @@ following privacy policy (vis. the definition of the
     <section title="Acknowledgements">
       <t>
 The authors would like to express their gratitude to reviewers and early
-implementers, including but not limited to Mikael Abrahamsson, Andras Erdei,
-Marco Hogewoning, Mike Joseph, Warren Kumari, Menno Schepers,
-Justyna Sidorska, and Bjoern A. Zeeb.  Richard L. Barnes in particular
-contributed substantial review, text, and advice.
+implementers, including but not limited to Mikael Abrahamsson, John Bond,
+Alissa Cooper, Andras Erdei, Marco Hogewoning, Mike Joseph, Warren Kumari,
+Menno Schepers, Justyna Sidorska, and Bjoern A. Zeeb.  Richard L. Barnes
+in particular contributed substantial review, text, and advice.
       </t>
     </section>
   </middle>
