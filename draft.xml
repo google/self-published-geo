@@ -28,6 +28,8 @@
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5139.xml">
     <!ENTITY rfc5952 PUBLIC ""
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5952.xml">
+    <!ENTITY rfc6772 PUBLIC ""
+      "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6772.xml">
 ]>
 
 <rfc category="info"
@@ -273,7 +275,8 @@ Examples include "Dublin", "New York", and "São Paulo" (specifically
           <section anchor="postal" title="Postal code">
             <t>
 OPTIONAL.  The postal code field, if non-empty, SHOULD be free UTF-8 text,
-excluding the comma (',') character.
+excluding the comma (',') character.  See <xref target="Privacy"/> for some
+discussion of when this field must not be populated.
             </t>
             <t>
 Examples include "106-6126" (in Minato ward, Tokyo, Japan).
@@ -644,16 +647,22 @@ errors.
       <t>
 Publishers of geolocation feeds are advised to have fully considered any
 and all privacy implications of the disclosure of such information for the
-users of the described networks prior to publication.
+users of the described networks prior to publication.  A thorough
+comprehension of the
+<eref target="http://tools.ietf.org/html/rfc6772#section-13">security
+considerations</eref> of a chosen geolocation policy is highly recommended,
+including an understanding of some of the
+<eref target="http://tools.ietf.org/html/rfc6772#section-13.5">limitations
+of information obscurity</eref>.
       </t>
       <t>
 As noted in <xref target="spec"/>, each location field in an entry is
 optional, in order to support expressing only the level of specificity which
 the publisher has deemed acceptable.  There is no requirement that the level
-of specificity be consistent across all entries within a feed.
-This means, for instance, that some entries may have a blank Postal Code
-(<xref target="postal"/>), e.g. for privacy reasons, while other entries
-within the same feed may include them.
+of specificity be consistent across all entries within a feed. Indeed, for
+privacy reasons, feed publishers MUST NOT populate the Postal Code
+(<xref target="postal"/>) field unless they are confident that it cannot be
+used to identify or physically locate individuals.
       </t>
     </section>
 
@@ -768,6 +777,8 @@ International Organization for Standardization
 &rfc5139;
 
 &rfc5952;
+
+&rfc6772;
 
 <reference target="https://meetings.ripe.net/geo/google.csv"
            anchor="GEO_RIPE_NCC">
