@@ -659,10 +659,11 @@ of information obscurity</eref>.
 As noted in <xref target="spec"/>, each location field in an entry is
 optional, in order to support expressing only the level of specificity which
 the publisher has deemed acceptable.  There is no requirement that the level
-of specificity be consistent across all entries within a feed. Indeed, for
-privacy reasons, feed publishers MUST NOT populate the Postal Code
-(<xref target="postal"/>) field unless they are confident that it cannot be
-used to identify or physically locate individuals.
+of specificity be consistent across all entries within a feed.
+In particular, the Postal Code field (<xref target="postal"/>) can provide
+very specific geolocation, sometimes within a building.  Such specific
+Postal Code values MUST NOT be published in geo feeds without the consent
+of the parties being located.
       </t>
     </section>
 
