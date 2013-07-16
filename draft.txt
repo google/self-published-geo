@@ -519,10 +519,10 @@ Internet-Draft     Self-published IP Geolocation Data          July 2013
    If one or more NAPTR records exist for the full PTR-style name but
    none of them are for the required service name (e.g. "x-geofeed"),
    then likely no SOA will be returned as a hint for subsequent queries.
-   In these cases implementations would need to explicitly query for an
-   SOA record for the full PTR-style name, and query for a NAPTR record
-   of the SOA in the response (assuming it differs from the previously
-   queried name).
+   In this case implementations would need to first explicitly query for
+   an SOA record for the full PTR-style name, and then query for a NAPTR
+   record of the SOA in the response (assuming it differs from the
+   previously queried name).
 
    Any successfully located feed URIs could then be processed as
    outlined by this document.
