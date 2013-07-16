@@ -526,11 +526,22 @@ request to be issued for "4.2.0.192.in-addr.arpa" and
 respectively.
         </t>
         <t>
-If no such record exists one further query for the fully qualified domain
-name of the SOA record in the authority section of the response to the
+If no such record exists one further NAPTR query for the fully qualified
+domain name of the SOA record in the authority section of the response to the
 previous query would be performed ("2.0.192.in-addr.arpa" and
-"d.0.1.0.0.2.ip6.arpa" in the examples above).  Successfully located feed
-URIs could then be processed as outlined by this document.
+"d.0.1.0.0.2.ip6.arpa" in the examples above).
+        </t>
+        <t>
+If one or more NAPTR records exist for the full PTR-style name but none of
+them are for the required service name (e.g. "x-geofeed"), then likely no SOA
+will be returned as a hint for subsequent queries.  In these cases
+implementations would need to explicitly query for an SOA record for the full
+PTR-style name, and query for a NAPTR record of the SOA in the response
+(assuming it differs from the previously queried name).
+        </t>
+        <t>
+Any successfully located feed URIs could then be processed as outlined by this
+document.
         </t>
         <t>
 Verification of the contents of a feed would proceed in essentially the same
@@ -653,7 +664,7 @@ comprehension of the
 considerations</eref> of a chosen geolocation policy is highly recommended,
 including an understanding of some of the
 <eref target="http://tools.ietf.org/html/rfc6772#section-13.5">limitations
-of information obscurity</eref>.
+of information obscurity</eref> (see also <xref target="RFC6772"/>).
       </t>
       <t>
 As noted in <xref target="spec"/>, each location field in an entry is
@@ -712,10 +723,23 @@ following privacy policy (vis. the definition of the
     <section title="Acknowledgements">
       <t>
 The authors would like to express their gratitude to reviewers and early
-implementers, including but not limited to Mikael Abrahamsson, John Bond,
-Alissa Cooper, Andras Erdei, Marco Hogewoning, Mike Joseph, Warren Kumari,
-Menno Schepers, Justyna Sidorska, and Bjoern A. Zeeb.  Richard L. Barnes
-in particular contributed substantial review, text, and advice.
+implementers, including but not limited to
+
+    Mikael Abrahamsson,
+    Ray Bellis,
+    John Bond,
+    Alissa Cooper,
+    Andras Erdei,
+    Marco Hogewoning,
+    Mike Joseph,
+    Warren Kumari,
+    Menno Schepers,
+    Justyna Sidorska,
+and
+    Bjoern A. Zeeb.
+
+Richard L. Barnes in particular contributed substantial review, text, and
+advice.
       </t>
     </section>
   </middle>
