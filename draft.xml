@@ -6,6 +6,8 @@
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2616.xml">
     <!ENTITY rfc2818 PUBLIC ""
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2818.xml">
+    <!ENTITY rfc3053 PUBLIC ""
+      "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3053.xml">
     <!ENTITY rfc3403 PUBLIC ""
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3403.xml">
     <!ENTITY rfc3629 PUBLIC ""
@@ -389,6 +391,24 @@ contains:
             </artwork>
           </figure>
         </t>
+
+        <t>
+Furthermore, it is worth noting that the geolocation data of SixXS users,
+already available at whois.sixxs.net, is now also accessible in the format
+described here (see <xref target="GEO_SIXXS"/>).  This can be particularly
+useful where tunnel broker networks <xref target="RFC3053"/> are concerned as:
+          <list style="symbols">
+            <t>
+the geolocation attributes of users with neighboring prefixes can be quite
+different and therefore not easily aggregated, and
+            </t>
+            <t>
+attempting to learn this data by statistical analysis can be complicated by
+the likely low number of samples for any given user, making satisfactory
+statistical confidence difficult to achieve.
+            </t>
+          </list>
+        </t>
       </section>
 
       <section title="Proposed extensions">
@@ -735,6 +755,7 @@ implementers, including but not limited to
     Warren Kumari,
     Menno Schepers,
     Justyna Sidorska,
+    Pim van Pelt,
 and
     Bjoern A. Zeeb.
 
@@ -789,6 +810,8 @@ International Organization for Standardization
       <references title="Informative References">
 &rfc2818;
 
+&rfc3053;
+
 &rfc3403;
 
 &rfc3912;
@@ -824,6 +847,18 @@ Réseaux IP Européens Network Coordination Centre
     <author>
       <organization abbrev="ICANN">
 Internet Corporation For Assigned Names and Numbers
+      </organization>
+    </author>
+  </front>
+</reference>
+
+<reference target="https://www.sixxs.net/export/google/"
+           anchor="GEO_SIXXS">
+  <front>
+    <title>SixXS Geolocation Data</title>
+    <author fullname="Pim van Pelt" initials="P." surname="van Pelt">
+      <organization abbrev="SixXS">
+SixXS IPv6 Deployment and Tunnel Broker
       </organization>
     </author>
   </front>
