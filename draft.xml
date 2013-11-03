@@ -36,7 +36,7 @@
 
 <rfc category="info"
      ipr="noModificationTrust200902"
-     docName="draft-google-self-published-geofeeds-02">
+     docName="draft-google-self-published-geofeeds-03">
 
 <?xml-stylesheet type="text/xsl" href="rfc2629.xslt" ?>
 
@@ -49,7 +49,7 @@
 <?rfc subcompact="no" ?>
 
   <front>
-    <title>Self-published IP Geolocation Data</title>
+    <title>A Format for Self-published IP Geolocation Feeds</title>
 
     <author initials="E." surname="Kline" fullname="Erik Kline">
       <organization>Google Japan</organization>
@@ -101,7 +101,7 @@
     <abstract>
       <t>
 This document records a format whereby a network operator can publish a
-mapping of IP address ranges to simplified geolocation information,
+mapping of IP address prefixes to simplified geolocation information,
 colloquially termed a geolocation "feed".  Interested parties can poll and
 parse these feeds to update or merge with other geolocation data sources and
 procedures.
@@ -111,6 +111,26 @@ Some technical organizations operating networks that move from one conference
 location to the next have already experimentally published small geolocation
 feeds.  At least one consumer (Google) has incorporated these ad hoc feeds
 into a geolocation data pipeline.
+      </t>
+      <t>
+XXX NOTES TODO
+update geofeed contents (RIPE)
+6280 - 4.1.1 network-based positioning system
+
+implicit use policy for LRs
+draft-ietf-geopriv-policy => 6772
+andy newton's feedback (whois/rdap, dns, ...)
+consumer => Location Recipient
+
+privacy and other work into new #3 section about RM, LG, and LS
+then transmitted LR policy and LR section (current #4)
+
+move finding feeds to last
+
+A1-A4
+Look at PIDF-LO
+specify a media type (application/csv)
+allow repeated fields for multiple regions
       </t>
     </abstract>
   </front>
@@ -137,7 +157,7 @@ data.
         <t>
 This document records a format whereby a network operator (an ISP, an
 enterprise, or any organization which deems the geolocation of its IP prefixes
-to be of concern) can publish a mapping of IP address ranges to simplified
+to be of concern) can publish a mapping of IP address prefixes to simplified
 geolocation information, colloquially termed a "geolocation feed".  Interested
 parties can poll and parse these feeds to update or merge with other
 geolocation data sources and procedures.
@@ -162,8 +182,8 @@ interpreted as described in <xref target="RFC2119"/>.
         <t>
 This document describes both a format and a mechanism for publishing data,
 with the implication that the owner of the data wishes it to be public.
-Any privacy risk is bounded by the format, and data publishers MAY omit
-certain fields to further protect privacy (see <xref target="spec"/>
+Any privacy risk is bounded by the format, and feed publishers MAY omit
+any location field to further protect privacy (see <xref target="spec"/>
 for details about which fields exactly may be omitted).  Feed publishers
 assume the responsibility of determining which data should be made public.
         </t>
@@ -214,19 +234,19 @@ Feeds MUST be in comma separated values format as described in
 <xref target="RFC4180"/>.  Each feed entry is a text line of the form:
           <figure>
             <artwork>
-    ip_range,country,region,city,postal_code
+    ip_prefix,country,region,city,postal_code
             </artwork>
           </figure>
         </t>
         <t>
-The IP range field is REQUIRED, all others are OPTIONAL (can be empty),
+The IP prefix field is REQUIRED, all others are OPTIONAL (can be empty),
 though the requisite minimum number of commas SHOULD be present.
         </t>
 
         <section title="Geolocation feed individual entry fields">
-          <section title="IP Range">
+          <section title="IP Prefix">
             <t>
-REQUIRED.  Each IP range field MUST be either a single IP address or an
+REQUIRED.  Each IP prefix field MUST be either a single IP address or an
 IP prefix in CIDR notation in conformance with
 <eref target="http://tools.ietf.org/html/rfc4632#section-3.1">section 3.1</eref>
 of <xref target="RFC4632"/> for IPv4 or
@@ -458,6 +478,164 @@ implementation exists.
       </section>
     </section>
 
+    <section anchor="consumers"
+             title="Consuming self-published IP geolocation feeds">
+      <t>
+Consumers MAY treat published feed data as a hint only and MAY choose
+to prefer other sources of geolocation information for any given IP prefix.
+Regardless of a consumer's stance with respect to a given published feed,
+there are some points of note for sensibly and effectively consuming
+published feeds.
+      </t>
+
+      <section title="Feed integrity">
+        <t>
+The integrity of published information SHOULD be protected by securing the
+means of publication, for example by using HTTP over TLS
+<xref target="RFC2818"/>.  Whenever possible, consumers SHOULD prefer
+retrieving geolocation feeds in a manner that guarantees integrity of the feed.
+        </t>
+      </section>
+
+      <section title="Verification of authority">
+        <t>
+Consumers of self-published IP geolocation feeds SHOULD perform some form
+of verification that the publisher is in fact authoritative for the
+addresses in the feed.  The actual means of verification is likely dependent
+upon the way in which the feed is discovered.  Ad hoc shared URIs, for example,
+will likely require an ad hoc verification process.  Future automated means of
+feed discovery SHOULD have an accompanying automated means of verification.
+        </t>
+        <t>
+A consumer MUST only trust geolocation information for IP addresses or prefixes
+for which the publisher has been verified as administratively authoritative.
+All other geolocation feed entries MUST be ignored and SHOULD be logged for
+further administrative review.
+        </t>
+      </section>
+
+      <section title="Verification of accuracy">
+        <t>
+Errors and inaccuracies may occur at many levels, and publication and
+consumption of geolocation data are no exceptions.  To the extent practical
+consumers SHOULD take steps to verify the accuracy of published locality.
+Verification methodology, resolution of discrepancies, and preference for
+alternative sources of data are left to the discretion of the feed consumer.
+        </t>
+        <t>
+Consumers SHOULD decide on discrepancy thresholds and SHOULD flag for
+administrative review feed entries which exceed set thresholds.
+        </t>
+      </section>
+
+      <section title="Refreshing feed information">
+        <t>
+As a publisher can change geolocation data at any time and without
+notification consumers SHOULD implement mechanisms to periodically refresh
+local copies of feed data.  In the absence of any other refresh timing
+information it is recommended that consumers SHOULD refresh feeds no less
+often than weekly.
+        </t>
+        <t>
+For feeds available via HTTPS (or HTTP), the publisher MAY communicate
+refresh timing information by means of the standard HTTP expiration model
+(<eref target="http://tools.ietf.org/html/rfc2616#section-13.2">section
+13.2</eref> of <xref target="RFC2616"/>).  Specifically, publishers can
+include either an
+<eref target="http://tools.ietf.org/html/rfc2616#section-14.21">Expires
+header</eref> or a
+<eref target="http://tools.ietf.org/html/rfc2616#section-14.9">Cache-Control
+header</eref> specifying the max-age.  Where practical, consumers SHOULD
+refresh feed information before the expiry time is reached.
+        </t>
+      </section>
+    </section>
+
+    <section anchor="Privacy" title="Privacy Considerations">
+      <t>
+Publishers of geolocation feeds are advised to have fully considered any
+and all privacy implications of the disclosure of such information for the
+users of the described networks prior to publication.  A thorough
+comprehension of the
+<eref target="http://tools.ietf.org/html/rfc6772#section-13">security
+considerations</eref> of a chosen geolocation policy is highly recommended,
+including an understanding of some of the
+<eref target="http://tools.ietf.org/html/rfc6772#section-13.5">limitations
+of information obscurity</eref> (see also <xref target="RFC6772"/>).
+      </t>
+      <t>
+As noted in <xref target="spec"/>, each location field in an entry is
+optional, in order to support expressing only the level of specificity which
+the publisher has deemed acceptable.  There is no requirement that the level
+of specificity be consistent across all entries within a feed.
+In particular, the Postal Code field (<xref target="postal"/>) can provide
+very specific geolocation, sometimes within a building.  Such specific
+Postal Code values MUST NOT be published in geo feeds without the consent
+of the parties being located.
+      </t>
+    </section>
+
+    <section title="Relation to other work">
+      <t>
+While not originally done in conjunction with the <xref target="GEOPRIV"/>
+working group, Richard Barnes observed that this work is nevertheless
+consistent with that which the group has defined, both for address format and
+for privacy.  The data elements in geolocation feeds are equivalent to the
+following XML structure (vis. <xref target="RFC5139"/>):
+        <figure>
+          <artwork><![CDATA[
+    <civicAddress>
+      <country>country</country>
+      <A1>region</A1>
+      <A2>city</A2>
+      <PC>postal_code</PC>
+    </civicAddress>
+          ]]></artwork>
+        </figure>
+      </t>
+      <t>
+Providing geolocation information to this granularity is equivalent to the
+following privacy policy (vis. the definition of the
+<eref
+ target="http://tools.ietf.org/html/draft-ietf-geopriv-policy#section-6.5.1">
+'building'</eref> level of disclosure):
+        <figure>
+          <artwork><![CDATA[
+    <ruleset>
+      <rule>
+        <conditions/>
+        <actions/>
+        <transformations>
+          <provide-location profile="civic-transformation">
+            <provide-civic>building</provide-civic>
+          </provide-location>
+        </transformations>
+      </rule>
+    </ruleset>
+          ]]></artwork>
+        </figure>
+      </t>
+    </section>
+
+    <section anchor="Security" title="Security Considerations">
+      <t>
+As there is no true security in the obscurity of the location of any given
+IP address, self-publication of this data fundamentally opens no new attack
+vectors.  For publishers, self-published data merely increases the ease with
+which such location data might be exploited.
+      </t>
+      <t>
+For consumers, feed retrieval processes may receive input from potentially
+hostile sources (e.g. in the event of hijacked traffic).  As such, proper
+input validation and defense measures MUST be taken.
+      </t>
+      <t>
+Similarly, consumers who do not perform sufficient verification of published
+data bear the same risks as from other forms of geolocation configuration
+errors.
+     </t>
+    </section>
+
     <section title="Finding self-published IP geolocation feeds">
       <t>
 The issue of finding, and later verifying, geolocation feeds is not
@@ -582,164 +760,6 @@ ip6.arpa for the IP prefixes under their authority.
       </section>
     </section>
 
-    <section anchor="consumers"
-             title="Consuming self-published IP geolocation feeds">
-      <t>
-Consumers MAY treat published feed data as a hint only and MAY choose
-to prefer other sources of geolocation information for any given IP range.
-Regardless of a consumer's stance with respect to a given published feed,
-there are some points of note for sensibly and effectively consuming
-published feeds.
-      </t>
-
-      <section title="Feed integrity">
-        <t>
-The integrity of published information SHOULD be protected by securing the
-means of publication, for example by using HTTP over TLS
-<xref target="RFC2818"/>.  Whenever possible, consumers SHOULD prefer
-retrieving geolocation feeds in a manner that guarantees integrity of the feed.
-        </t>
-      </section>
-
-      <section title="Verification of authority">
-        <t>
-Consumers of self-published IP geolocation feeds SHOULD perform some form
-of verification that the publisher is in fact authoritative for the
-addresses in the feed.  The actual means of verification is likely dependent
-upon the way in which the feed is discovered.  Ad hoc shared URIs, for example,
-will likely require an ad hoc verification process.  Future automated means of
-feed discovery SHOULD have an accompanying automated means of verification.
-        </t>
-        <t>
-A consumer MUST only trust geolocation information for IP addresses or ranges
-for which the publisher has been verified as administratively authoritative.
-All other geolocation feed entries MUST be ignored and SHOULD be logged for
-further administrative review.
-        </t>
-      </section>
-
-      <section title="Verification of accuracy">
-        <t>
-Errors and inaccuracies may occur at many levels, and publication and
-consumption of geolocation data are no exceptions.  To the extent practical
-consumers SHOULD take steps to verify the accuracy of published locality.
-Verification methodology, resolution of discrepancies, and preference for
-alternative sources of data are left to the discretion of the feed consumer.
-        </t>
-        <t>
-Consumers SHOULD decide on discrepancy thresholds and SHOULD flag for
-administrative review feed entries which exceed set thresholds.
-        </t>
-      </section>
-
-      <section title="Refreshing feed information">
-        <t>
-As a publisher can change geolocation data at any time and without
-notification consumers SHOULD implement mechanisms to periodically refresh
-local copies of feed data.  In the absence of any other refresh timing
-information it is recommended that consumers SHOULD refresh feeds no less
-often than weekly.
-        </t>
-        <t>
-For feeds available via HTTPS (or HTTP), the publisher MAY communicate
-refresh timing information by means of the standard HTTP expiration model
-(<eref target="http://tools.ietf.org/html/rfc2616#section-13.2">section
-13.2</eref> of <xref target="RFC2616"/>).  Specifically, publishers can
-include either an
-<eref target="http://tools.ietf.org/html/rfc2616#section-14.21">Expires
-header</eref> or a
-<eref target="http://tools.ietf.org/html/rfc2616#section-14.9">Cache-Control
-header</eref> specifying the max-age.  Where practical, consumers SHOULD
-refresh feed information before the expiry time is reached.
-        </t>
-      </section>
-    </section>
-
-    <section anchor="Security" title="Security Considerations">
-      <t>
-As there is no true security in the obscurity of the location of any given
-IP address, self-publication of this data fundamentally opens no new attack
-vectors.  For publishers, self-published data merely increases the ease with
-which such location data might be exploited.
-      </t>
-      <t>
-For consumers, feed retrieval processes may receive input from potentially
-hostile sources (e.g. in the event of hijacked traffic).  As such, proper
-input validation and defense measures MUST be taken.
-      </t>
-      <t>
-Similarly, consumers who do not perform sufficient verification of published
-data bear the same risks as from other forms of geolocation configuration
-errors.
-     </t>
-    </section>
-
-    <section anchor="Privacy" title="Privacy Considerations">
-      <t>
-Publishers of geolocation feeds are advised to have fully considered any
-and all privacy implications of the disclosure of such information for the
-users of the described networks prior to publication.  A thorough
-comprehension of the
-<eref target="http://tools.ietf.org/html/rfc6772#section-13">security
-considerations</eref> of a chosen geolocation policy is highly recommended,
-including an understanding of some of the
-<eref target="http://tools.ietf.org/html/rfc6772#section-13.5">limitations
-of information obscurity</eref> (see also <xref target="RFC6772"/>).
-      </t>
-      <t>
-As noted in <xref target="spec"/>, each location field in an entry is
-optional, in order to support expressing only the level of specificity which
-the publisher has deemed acceptable.  There is no requirement that the level
-of specificity be consistent across all entries within a feed.
-In particular, the Postal Code field (<xref target="postal"/>) can provide
-very specific geolocation, sometimes within a building.  Such specific
-Postal Code values MUST NOT be published in geo feeds without the consent
-of the parties being located.
-      </t>
-    </section>
-
-    <section title="Relation to other work">
-      <t>
-While not originally done in conjunction with the <xref target="GEOPRIV"/>
-working group, Richard Barnes observed that this work is nevertheless
-consistent with that which the group has defined, both for address format and
-for privacy.  The data elements in geolocation feeds are equivalent to the
-following XML structure (vis. <xref target="RFC5139"/>):
-        <figure>
-          <artwork><![CDATA[
-    <civicAddress>
-      <country>country</country>
-      <A1>region</A1>
-      <A2>city</A2>
-      <PC>postal_code</PC>
-    </civicAddress>
-          ]]></artwork>
-        </figure>
-      </t>
-      <t>
-Providing geolocation information to this granularity is equivalent to the
-following privacy policy (vis. the definition of the
-<eref
- target="http://tools.ietf.org/html/draft-ietf-geopriv-policy#section-6.5.1">
-'building'</eref> level of disclosure):
-        <figure>
-          <artwork><![CDATA[
-    <ruleset>
-      <rule>
-        <conditions/>
-        <actions/>
-        <transformations>
-          <provide-location profile="civic-transformation">
-            <provide-civic>building</provide-civic>
-          </provide-location>
-        </transformations>
-      </rule>
-    </ruleset>
-          ]]></artwork>
-        </figure>
-      </t>
-    </section>
-
     <section title="Acknowledgements">
       <t>
 The authors would like to express their gratitude to reviewers and early
@@ -789,6 +809,7 @@ advice.
 International Organization for Standardization
       </organization>
     </author>
+    <date/>
   </front>
 </reference>
 
@@ -803,6 +824,7 @@ International Organization for Standardization
 International Organization for Standardization
       </organization>
     </author>
+    <date/>
   </front>
 </reference>
       </references>
@@ -837,6 +859,7 @@ International Organization for Standardization
 Réseaux IP Européens Network Coordination Centre
       </organization>
     </author>
+    <date/>
   </front>
 </reference>
 
@@ -849,6 +872,7 @@ Réseaux IP Européens Network Coordination Centre
 Internet Corporation For Assigned Names and Numbers
       </organization>
     </author>
+    <date/>
   </front>
 </reference>
 
@@ -861,6 +885,7 @@ Internet Corporation For Assigned Names and Numbers
 SixXS IPv6 Deployment and Tunnel Broker
       </organization>
     </author>
+    <date/>
   </front>
 </reference>
 
@@ -873,6 +898,7 @@ SixXS IPv6 Deployment and Tunnel Broker
 Internet Engineering Task Force
       </organization>
     </author>
+    <date/>
   </front>
 </reference>
 
@@ -890,6 +916,7 @@ Google Inc.
 Google Inc.
       </organization>
     </author>
+    <date/>
   </front>
 </reference>
       </references>
@@ -937,7 +964,7 @@ import sys
 
 class IPGeoFeedValidator(object):
   def __init__(self):
-    self.ranges = {}
+    self.prefixes = {}
     self.line_number = 0
     self.output_log = {}
     self.SetOutputStream(sys.stderr)
@@ -989,7 +1016,7 @@ class IPGeoFeedValidator(object):
   def _ValidateFields(self, fields):
     assert(len(fields) > 0)
 
-    is_correct = self._IsIPAddressOrRangeCorrect(fields[0])
+    is_correct = self._IsIPAddressOrPrefixCorrect(fields[0])
 
     if len(fields) > 1:
       if not self._IsCountryCode2Correct(fields[1]):
@@ -1003,18 +1030,18 @@ class IPGeoFeedValidator(object):
                           % len(fields))
 
   ############################################################
-  def _IsIPAddressOrRangeCorrect(self, field):
+  def _IsIPAddressOrPrefixCorrect(self, field):
     if '/' in field:
       return self._IsCIDRCorrect(field)
     return self._IsIPAddressCorrect(field)
 
   def _IsCIDRCorrect(self, cidr):
     try:
-      iprange = ipaddr.IPNetwork(cidr)
-      if iprange.network._ip != iprange._ip:
+      ipprefix = ipaddr.IPNetwork(cidr)
+      if ipprefix.network._ip != ipprefix._ip:
         self._ReportError('Incorrect IP Network.')
         return False
-      if iprange.is_private:
+      if ipprefix.is_private:
         self._ReportError('IP Address must not be private.')
         return False
     except:
