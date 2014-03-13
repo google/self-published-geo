@@ -34,7 +34,7 @@
       "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6772.xml">
 ]>
 
-<rfc category="info"
+<rfc category="exp"
      ipr="noModificationTrust200902"
      docName="draft-google-self-published-geofeeds-03">
 
@@ -49,7 +49,9 @@
 <?rfc subcompact="no" ?>
 
   <front>
-    <title>A Format for Self-published IP Geolocation Feeds</title>
+    <title abbrev="Self-published IP Geofeeds">
+    	A Format for Self-published IP Geolocation Feeds
+    </title>
 
     <author initials="E." surname="Kline" fullname="Erik Kline">
       <organization>Google Japan</organization>
@@ -118,19 +120,23 @@ update geofeed contents (RIPE)
 6280 - 4.1.1 network-based positioning system
 
 implicit use policy for LRs
-draft-ietf-geopriv-policy => 6772
 andy newton's feedback (whois/rdap, dns, ...)
 consumer => Location Recipient
 
 privacy and other work into new #3 section about RM, LG, and LS
 then transmitted LR policy and LR section (current #4)
 
-move finding feeds to last
-
 A1-A4
 Look at PIDF-LO
 specify a media type (application/csv)
 allow repeated fields for multiple regions
+
+from London:
+- add use case for more granularity (?)
+- include ISP privacy info URL
+- User can discover if they're in a feed, increases transparency
+- RIPE whois field, RDAP
+- create link relationship, RFC 5988
       </t>
     </abstract>
   </front>
@@ -596,8 +602,7 @@ following XML structure (vis. <xref target="RFC5139"/>):
       <t>
 Providing geolocation information to this granularity is equivalent to the
 following privacy policy (vis. the definition of the
-<eref
- target="http://tools.ietf.org/html/draft-ietf-geopriv-policy#section-6.5.1">
+<eref target="http://tools.ietf.org/html/rfc6772#section-6.5.1">
 'building'</eref> level of disclosure):
         <figure>
           <artwork><![CDATA[
