@@ -137,6 +137,12 @@ from London:
 - User can discover if they're in a feed, increases transparency
 - RIPE whois field, RDAP
 - create link relationship, RFC 5988
+
+References:
+- opengeofeed.org
+- https://www.opengeofeed.org/feed/public.csv
+- Mozilla Location Service https://location.services.mozilla.com/
+- https://bugzilla.mozilla.org/show_bug.cgi?id=1042925
       </t>
     </abstract>
   </front>
