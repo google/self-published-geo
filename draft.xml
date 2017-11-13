@@ -1008,7 +1008,7 @@ class IPGeoFeedValidator(object):
   def _ValidateLine(self, line):
     line = line.rstrip('\r\n')
     self.line_number += 1
-    self.line = line
+    self.line = line.split('#')[0]
     self.is_correct_line = True
 
     if self._ShouldIgnoreLine(line):
@@ -1021,7 +1021,7 @@ class IPGeoFeedValidator(object):
 
   def _ShouldIgnoreLine(self, line):
     line = line.strip()
-    return len(line) == 0 or line.startswith('#')
+    return len(line) == 0
 
   ############################################################
   def _ValidateFields(self, fields):
@@ -1215,7 +1215,7 @@ class IPGeoFeedValidatorTest(object):
 
     if msg_count != expected_msg_count:
       print 'TEST FAILED: %s\nexpected %d %s[s], observed %d\n%s\n' % (
-          self.validator.line, expected_sg_count, severity, msg_count,
+          self.validator.line, expected_msg_count, severity, msg_count,
           str(self.validator.output_log[severity]))
       return False
     return True
