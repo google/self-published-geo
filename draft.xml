@@ -85,6 +85,39 @@
       </address>
     </author>
 
+      <author fullname="Stefan Moser" initials="S." surname="Moser">
+      <organization>Google Switzerland GmbH</organization>
+
+       <address>
+        <postal>
+          <street>Brandschenkestrasse 110</street>
+          <code>8002</code>
+          <city>Zürich</city>
+          <country>Switzerland</country>
+        </postal>
+
+         <email>smoser@google.com</email>
+      </address>
+    </author>
+
+     <author fullname="Warren Kumari" initials="W." surname="Kumari">
+      <organization>Google</organization>
+
+      <address>
+        <postal>
+          <street>1600 Amphitheatre Parkway</street>
+
+          <city>Mountain View, CA</city>
+
+          <code>94043</code>
+
+          <country>US</country>
+        </postal>
+
+        <email>warren@kumari.net</email>
+      </address>
+    </author>
+
     <date/>
 
     <abstract>
@@ -256,10 +289,11 @@
           </section>
 
           <section anchor="postal" title="Postal code">
-            <t>OPTIONAL. The postal code field, if non-empty, SHOULD be free
-            UTF-8 text, excluding the comma (',') character. See <xref
-            target="Privacy"/> for some discussion of when this field must not
-            be populated.</t>
+            <t>OPTIONAL, DEPRECATED. The postal code field, if non-empty, SHOULD be free
+            UTF-8 text, excluding the comma (',') character. The use of this field
+            is deprecated; consumers of feeds should be able to parse feeds containing
+            these fields, but new feeds SHOULD NOT include this field, due to the granularity
+            of this information. See See <xref target="Privacy"/> for additional discussion.</t>
 
             <t>Examples include "106-6126" (in Minato ward, Tokyo, Japan).</t>
           </section>
@@ -309,7 +343,7 @@
           either in part or in full, SHOULD be discarded. It is RECOMMENDED
           that they also be logged for further administrative review.</t>
 
-          <t>For compatibility with future additional fields a parser MUST
+          <t>For compatibility with future additional fields, a parser MUST
           ignore any fields beyond those it expects. The data from fields
           which are expected and which parse successfully MUST still be
           considered valid.</t>
@@ -325,14 +359,14 @@
 
       <section title="Examples">
         <t>Example entries using different IP address formats and describing
-        locations at country, region, city and postal code granularity level,
+        locations at country, region, and city granularity level,
         respectively: <figure>
             <artwork><![CDATA[
     192.0.2.0/25,US,US-AL,,
     192.0.2.5,US,US-AL,Alabaster,
-    192.0.2.128/25,PL,PL-MZ,,02-784
+    192.0.2.128/25,PL,PL-MZ,,
     2001:db8::/32,PL,,,
-    2001:db8:cafe::/48,PL,PL-MZ,,02-784
+    2001:db8:cafe::/48,PL,PL-MZ,,
             ]]></artwork>
           </figure></t>
 
@@ -370,7 +404,7 @@
           </figure></t>
 
         <t>A longer example is the <xref target="GEO_Google"/> Google Corp
-        Geofeed, which lists the geo-location information for Google coroprate
+        Geofeed, which lists the geo-location information for Google corporate
         offices.</t>
 
         <t>Furthermore, it is worth noting that the geolocation data of SixXS
@@ -394,7 +428,7 @@
         While the purpose of this document is principally to record existing
         implementation details, it may be that there is a larger desire to
         publish other "network attributes" in a similar manner. One such
-        network attribute, "delegation size", is not currently implemented but
+        network attribute, "delegation size", is not currently implemented, but
         the state of the proposed extension is recorded here to demonstrate
         the flexibility required of parser implementations.</t>
 
@@ -426,6 +460,9 @@
           Object Notation (JSON, <xref target="RFC4627"/>), specifically, has
           been discussed. However, at the time of writing no such
           specification nor implementation exists.</t>
+
+          <t>The authors are planning on writing a new document describing
+            such a new format. The current document describes a deployed system.</t>
         </section>
       </section>
     </section>
@@ -465,7 +502,7 @@
       <section title="Verification of accuracy">
         <t>Errors and inaccuracies may occur at many levels, and publication
         and consumption of geolocation data are no exceptions. To the extent
-        practical consumers SHOULD take steps to verify the accuracy of
+        practical, consumers SHOULD take steps to verify the accuracy of
         published locality. Verification methodology, resolution of
         discrepancies, and preference for alternative sources of data are left
         to the discretion of the feed consumer.</t>
@@ -477,9 +514,9 @@
 
       <section title="Refreshing feed information">
         <t>As a publisher can change geolocation data at any time and without
-        notification consumers SHOULD implement mechanisms to periodically
+        notification, consumers SHOULD implement mechanisms to periodically
         refresh local copies of feed data. In the absence of any other refresh
-        timing information it is recommended that consumers SHOULD refresh
+        timing information, it is recommended that consumers SHOULD refresh
         feeds no less often than weekly.</t>
 
         <t>For feeds available via HTTPS (or HTTP), the publisher MAY
@@ -514,7 +551,7 @@
       In particular, the Postal Code field (<xref target="postal"/>) can
       provide very specific geolocation, sometimes within a building. Such
       specific Postal Code values MUST NOT be published in geo feeds without
-      the consent of the parties being located.</t>
+      the express consent of the parties being located.</t>
     </section>
 
     <section title="Relation to other work">
@@ -646,7 +683,7 @@
         "6.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa",
         respectively.</t>
 
-        <t>If no such record exists one further NAPTR query for the fully
+        <t>If no such record exists, one further NAPTR query for the fully
         qualified domain name of the SOA record in the authority section of
         the response to the previous query would be performed
         ("2.0.192.in-addr.arpa" and "d.0.1.0.0.2.ip6.arpa" in the examples
@@ -655,7 +692,7 @@
         <t>If one or more NAPTR records exist for the full PTR-style name but
         none of them are for the required service name (e.g. "x-geofeed"),
         then likely no SOA will be returned as a hint for subsequent queries.
-        In this case implementations would need to first explicitly query for
+        In this case, implementations would need to first explicitly query for
         an SOA record for the full PTR-style name, and then query for a NAPTR
         record of the SOA in the response (assuming it differs from the
         previously queried name).</t>
@@ -674,8 +711,8 @@
         oversights.</t>
 
         <t>This mode is untested and may prove impractical. However, the
-        operational burden is more closely located with those wishing and
-        willing to bear it, i.e. the publishers who would likely handle
+        operational burden is more closely located with those wishing to
+        bear it, i.e. the publishers who would likely handle
         serving in-addr.arpa and ip6.arpa for the IP prefixes under their
         authority.</t>
       </section>
@@ -685,7 +722,7 @@
       <t>The authors would like to express their gratitude to reviewers and
       early implementers, including but not limited to Mikael Abrahamsson, Ray
       Bellis, John Bond, Alissa Cooper, Andras Erdei, Marco Hogewoning, Mike
-      Joseph, Warren Kumari, Menno Schepers, Justyna Sidorska, Pim van Pelt,
+      Joseph, Maciej Kuzniar, Menno Schepers, Justyna Sidorska, Pim van Pelt,
       and Bjoern A. Zeeb. Richard L. Barnes in particular contributed
       substantial review, text, and advice.</t>
     </section>
