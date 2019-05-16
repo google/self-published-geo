@@ -3,11 +3,14 @@
 
 
 Network Working Group                                           E. Kline
-Internet-Draft                                              Google Japan
+Internet-Draft                                                  Loon LLC
 Intended status: Experimental                                  K. Duleba
-Expires: September 11, 2019                                  Z. Szamonek
+Expires: November 8, 2019                                    Z. Szamonek
+                                                                S. Moser
                                                  Google Switzerland GmbH
-                                                          March 10, 2019
+                                                               W. Kumari
+                                                              Google LLC
+                                                             May 7, 2019
 
 
             A Format for Self-published IP Geolocation Feeds
@@ -45,30 +48,32 @@ Abstract
    version of the document, open issues, etc should all be available
    here.  The authors (gratefully) accept pull requests ]
 
+
+
+
+
+
+Kline, et al.           Expires November 8, 2019                [Page 1]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
+
 Status of This Memo
 
    This Internet-Draft is submitted in full conformance with the
    provisions of BCP 78 and BCP 79.
 
-
-
-
-Kline, et al.          Expires September 11, 2019               [Page 1]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
-
    Internet-Drafts are working documents of the Internet Engineering
    Task Force (IETF).  Note that other groups may also distribute
    working documents as Internet-Drafts.  The list of current Internet-
-   Drafts is at https://datatracker.ietf.org/drafts/current/.
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
 
    Internet-Drafts are draft documents valid for a maximum of six months
    and may be updated, replaced, or obsoleted by other documents at any
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 11, 2019.
+   This Internet-Draft will expire on November 8, 2019.
 
 Copyright Notice
 
@@ -77,7 +82,7 @@ Copyright Notice
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
-   (https://trustee.ietf.org/license-info) in effect on the date of
+   (http://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
@@ -92,7 +97,7 @@ Table of Contents
      1.2.  Requirements notation . . . . . . . . . . . . . . . . . .   4
      1.3.  Implications of publication . . . . . . . . . . . . . . .   4
    2.  Self-published IP geolocation feeds . . . . . . . . . . . . .   4
-     2.1.  Specification . . . . . . . . . . . . . . . . . . . . . .   4
+     2.1.  Specification . . . . . . . . . . . . . . . . . . . . . .   5
        2.1.1.  Geolocation feed individual entry fields  . . . . . .   5
          2.1.1.1.  IP Prefix . . . . . . . . . . . . . . . . . . . .   5
          2.1.1.2.  Country . . . . . . . . . . . . . . . . . . . . .   5
@@ -101,38 +106,38 @@ Table of Contents
          2.1.1.5.  Postal code . . . . . . . . . . . . . . . . . . .   6
        2.1.2.  Prefixes with no geolocation information  . . . . . .   6
        2.1.3.  Additional parsing requirements . . . . . . . . . . .   6
+
+
+
+Kline, et al.           Expires November 8, 2019                [Page 2]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
+
        2.1.4.  Looking up an IP address  . . . . . . . . . . . . . .   7
      2.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . .   7
      2.3.  Proposed extensions . . . . . . . . . . . . . . . . . . .   8
        2.3.1.  Delegation size . . . . . . . . . . . . . . . . . . .   9
        2.3.2.  Alternate format  . . . . . . . . . . . . . . . . . .   9
-
-
-
-Kline, et al.          Expires September 11, 2019               [Page 2]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
-
    3.  Consuming self-published IP geolocation feeds . . . . . . . .   9
      3.1.  Feed integrity  . . . . . . . . . . . . . . . . . . . . .   9
-     3.2.  Verification of authority . . . . . . . . . . . . . . . .   9
+     3.2.  Verification of authority . . . . . . . . . . . . . . . .  10
      3.3.  Verification of accuracy  . . . . . . . . . . . . . . . .  10
      3.4.  Refreshing feed information . . . . . . . . . . . . . . .  10
-   4.  Privacy Considerations  . . . . . . . . . . . . . . . . . . .  10
+   4.  Privacy Considerations  . . . . . . . . . . . . . . . . . . .  11
    5.  Relation to other work  . . . . . . . . . . . . . . . . . . .  11
-   6.  Security Considerations . . . . . . . . . . . . . . . . . . .  11
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . .  12
    7.  Finding self-published IP geolocation feeds . . . . . . . . .  12
      7.1.  Ad hoc 'well known' URIs  . . . . . . . . . . . . . . . .  12
-     7.2.  Using public databases of network authority . . . . . . .  12
+     7.2.  Using public databases of network authority . . . . . . .  13
      7.3.  Using 'reverse' DNS with NAPTR records  . . . . . . . . .  13
    8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  14
-   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  14
-     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  14
+   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  15
+     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  15
      9.2.  Informative References  . . . . . . . . . . . . . . . . .  15
      9.3.  URIs  . . . . . . . . . . . . . . . . . . . . . . . . . .  17
-   Appendix A.  Sample Python validation code  . . . . . . . . . . .  17
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  23
+   Appendix A.  Sample Python validation code  . . . . . . . . . . .  18
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  24
 
 1.  Introduction
 
@@ -157,19 +162,19 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
    prefixes to be of concern) can publish a mapping of IP address
    prefixes to simplified geolocation information, colloquially termed a
    "geolocation feed".  Interested parties can poll and parse these
+
+
+
+Kline, et al.           Expires November 8, 2019                [Page 3]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
+
    feeds to update or merge with other geolocation data sources and
    procedures.
 
    Some technical organizations operating networks that move from one
    conference location to the next have already experimentally published
-
-
-
-Kline, et al.          Expires September 11, 2019               [Page 3]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
-
    small geolocation feeds.  At least one consumer (Google) has
    incorporated these ad hoc feeds into a geolocation data pipeline.
 
@@ -213,19 +218,19 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
    the feed) IP prefix (or single IP address) followed by a sequence of
    network locality attributes to be ascribed to the given prefix.
 
+
+
+
+Kline, et al.           Expires November 8, 2019                [Page 4]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
+
 2.1.  Specification
 
    For operational simplicity, every feed should contain data about all
    IP addresses the provider wants to publish.  Alternatives, like
    publishing only entries for IP addresses whose geolocation data has
-
-
-
-Kline, et al.          Expires September 11, 2019               [Page 4]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
-
    changed or differ from current observed geolocation behavior "at
    large", are likely to be too operationally complex.
 
@@ -268,19 +273,17 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
    conforming to ISO 3166-2 [ISO.3166.2].  Parsers SHOULD treat this
    field case-insensitively.
 
+
+
+
+
+Kline, et al.           Expires November 8, 2019                [Page 5]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
+
    Examples include "ID-RI" for the Riau province of Indonesia and "NG-
    RI" for the Rivers province in Nigeria.
-
-
-
-
-
-
-
-Kline, et al.          Expires September 11, 2019               [Page 5]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
 
 2.1.1.4.  City
 
@@ -326,17 +329,18 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
    which fails to parse correctly MUST be discarded.  It is RECOMMENDED
    that such entries also be logged for further administrative review.
 
+
+
+
+
+Kline, et al.           Expires November 8, 2019                [Page 6]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
+
    While publishers SHOULD follow [RFC5952] style for IPv6 prefix
    fields, consumers MUST nevertheless accept all valid string
    representations.
-
-
-
-
-Kline, et al.          Expires September 11, 2019               [Page 6]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
 
    Duplicate IP address or prefix entries MUST be considered an error,
    and consumer implementations SHOULD log the repeated entries for
@@ -375,6 +379,21 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
    and append the new meeting information.  The [GEO_IETF] at the time
    of this writing contains:
 
+
+
+
+
+
+
+
+
+
+
+Kline, et al.           Expires November 8, 2019                [Page 7]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
+
 # IETF 104, March 2019 - Prague, CZ.
 # Note that Prague changed from CZ-PR to CZ-10 2016-11-15 - https://www.iso.org/obp/ui/#iso:code:3166:CZ
 130.129.0.0/16,CZ,CZ-10,Prague,
@@ -383,16 +402,6 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
 31.130.224.0/20,CZ,CZ-10,Prague,
 2001:67c:1230::/46,CZ,CZ-10,Prague,
 2001:67c:370::/48,CZ,CZ-10,Prague,
-
-
-
-
-
-
-Kline, et al.          Expires September 11, 2019               [Page 7]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
 
    Experimentally, RIPE has published geolocation information for their
    conference network prefixes, which change location in accordance with
@@ -432,23 +441,20 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
    implementation details, it may be that there is a larger desire to
    publish other "network attributes" in a similar manner.  One such
    network attribute, "delegation size", is not currently implemented
+
+
+
+
+Kline, et al.           Expires November 8, 2019                [Page 8]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
+
    but the state of the proposed extension is recorded here to
    demonstrate the flexibility required of parser implementations.
 
    The following have been only informally discussed and are not in use
    at the time of writing.
-
-
-
-
-
-
-
-
-Kline, et al.          Expires September 11, 2019               [Page 8]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
 
 2.3.1.  Delegation size
 
@@ -492,20 +498,20 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
    [RFC2818].  Whenever possible, consumers SHOULD prefer retrieving
    geolocation feeds in a manner that guarantees integrity of the feed.
 
+
+
+
+Kline, et al.           Expires November 8, 2019                [Page 9]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
+
 3.2.  Verification of authority
 
    Consumers of self-published IP geolocation feeds SHOULD perform some
    form of verification that the publisher is in fact authoritative for
    the addresses in the feed.  The actual means of verification is
    likely dependent upon the way in which the feed is discovered.  Ad
-
-
-
-Kline, et al.          Expires September 11, 2019               [Page 9]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
-
    hoc shared URIs, for example, will likely require an ad hoc
    verification process.  Future automated means of feed discovery
    SHOULD have an accompanying automated means of verification.
@@ -544,6 +550,18 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
    consumers SHOULD refresh feed information before the expiry time is
    reached.
 
+
+
+
+
+
+
+
+Kline, et al.           Expires November 8, 2019               [Page 10]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
+
 4.  Privacy Considerations
 
    Publishers of geolocation feeds are advised to have fully considered
@@ -553,14 +571,6 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
    [6] of a chosen geolocation policy is highly recommended, including
    an understanding of some of the limitations of information obscurity
    [7] (see also [RFC6772]).
-
-
-
-
-Kline, et al.          Expires September 11, 2019              [Page 10]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
 
    As noted in Section 2.1, each location field in an entry is optional,
    in order to support expressing only the level of specificity which
@@ -590,6 +600,24 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
    to the following privacy policy (vis. the definition of the
    'building' [8] level of disclosure):
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kline, et al.           Expires November 8, 2019               [Page 11]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
+
        <ruleset>
          <rule>
            <conditions/>
@@ -608,15 +636,6 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
    given IP address, self-publication of this data fundamentally opens
    no new attack vectors.  For publishers, self-published data merely
    increases the ease with which such location data might be exploited.
-
-
-
-
-
-Kline, et al.          Expires September 11, 2019              [Page 11]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
 
    For consumers, feed retrieval processes may receive input from
    potentially hostile sources (e.g. in the event of hijacked traffic).
@@ -647,6 +666,14 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
 
    o  personal knowledge of the parties involved in the exchange, and
 
+
+
+
+Kline, et al.           Expires November 8, 2019               [Page 12]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
+
    o  comparison of feed-advertised prefixes with the BGP-advertised
       prefixes of Autonomous System Numbers known to be operated by the
       publishers.
@@ -666,13 +693,6 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
    Verification may be performed if the same or similarly authoritative
    service provides the identical feed URI for queries for each CIDR
    prefix in the geolocation feed.
-
-
-
-Kline, et al.          Expires September 11, 2019              [Page 12]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
 
    The burden of serving this data to all interested consumers,
    especially the load imposed by any verification process, is not yet
@@ -702,6 +722,14 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
    Attempts to locate the geolocation feed for a given IP address would
    begin by querying directly for a NAPTR record associated with the
    address's PTR-style name.  For example, 192.0.2.4 and 2001:db8::6
+
+
+
+Kline, et al.           Expires November 8, 2019               [Page 13]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
+
    would cause a NAPTR record request to be issued for "4.2.0.192.in-
    addr.arpa" and "6.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d
    .0.1.0.0.2.ip6.arpa", respectively.
@@ -721,14 +749,6 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
 
    Any successfully located feed URIs could then be processed as
    outlined by this document.
-
-
-
-
-Kline, et al.          Expires September 11, 2019              [Page 13]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
 
    Verification of the contents of a feed would proceed in essentially
    the same way.  CIDR prefixes may be verified by constructing a query
@@ -751,9 +771,20 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
    The authors would like to express their gratitude to reviewers and
    early implementers, including but not limited to Mikael Abrahamsson,
    Ray Bellis, John Bond, Alissa Cooper, Andras Erdei, Marco Hogewoning,
-   Mike Joseph, Warren Kumari, Menno Schepers, Justyna Sidorska, Pim van
-   Pelt, and Bjoern A.  Zeeb.  Richard L.  Barnes in particular
+   Mike Joseph, Maciej Kuzniar, Menno Schepers, Justyna Sidorska, Pim
+   van Pelt, and Bjoern A.  Zeeb.  Richard L.  Barnes in particular
    contributed substantial review, text, and advice.
+
+
+
+
+
+
+
+Kline, et al.           Expires November 8, 2019               [Page 14]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
 
 9.  References
 
@@ -773,18 +804,8 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
    [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
               Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
               Transfer Protocol -- HTTP/1.1", RFC 2616,
-              DOI 10.17487/RFC2616, June 1999,
-              <https://www.rfc-editor.org/info/rfc2616>.
-
-
-
-
-
-
-Kline, et al.          Expires September 11, 2019              [Page 14]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
+              DOI 10.17487/RFC2616, June 1999, <https://www.rfc-
+              editor.org/info/rfc2616>.
 
    [RFC3629]  Yergeau, F., "UTF-8, a transformation format of ISO
               10646", STD 63, RFC 3629, DOI 10.17487/RFC3629, November
@@ -792,8 +813,8 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
 
    [RFC4180]  Shafranovich, Y., "Common Format and MIME Type for Comma-
               Separated Values (CSV) Files", RFC 4180,
-              DOI 10.17487/RFC4180, October 2005,
-              <https://www.rfc-editor.org/info/rfc4180>.
+              DOI 10.17487/RFC4180, October 2005, <https://www.rfc-
+              editor.org/info/rfc4180>.
 
    [RFC4291]  Hinden, R. and S. Deering, "IP Version 6 Addressing
               Architecture", RFC 4291, DOI 10.17487/RFC4291, February
@@ -809,6 +830,17 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
    [GEO_Google]
               Google, LLC, "Google Corp Geofeed",
               <https://www.gstatic.com/geofeed/corp_external>.
+
+
+
+
+
+
+
+Kline, et al.           Expires November 8, 2019               [Page 15]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
 
    [GEO_ICANN]
               Internet Corporation For Assigned Names and Numbers,
@@ -834,17 +866,9 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
               Shields, M. and P. Moody, "Python IP address manipulation
               library", <http://code.google.com/p/ipaddr-py/>.
 
-
-
-
-Kline, et al.          Expires September 11, 2019              [Page 15]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
-
    [RFC2818]  Rescorla, E., "HTTP Over TLS", RFC 2818,
-              DOI 10.17487/RFC2818, May 2000,
-              <https://www.rfc-editor.org/info/rfc2818>.
+              DOI 10.17487/RFC2818, May 2000, <https://www.rfc-
+              editor.org/info/rfc2818>.
 
    [RFC3053]  Durand, A., Fasano, P., Guardini, I., and D. Lento, "IPv6
               Tunnel Broker", RFC 3053, DOI 10.17487/RFC3053, January
@@ -856,18 +880,28 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
               <https://www.rfc-editor.org/info/rfc3403>.
 
    [RFC3912]  Daigle, L., "WHOIS Protocol Specification", RFC 3912,
-              DOI 10.17487/RFC3912, September 2004,
-              <https://www.rfc-editor.org/info/rfc3912>.
+              DOI 10.17487/RFC3912, September 2004, <https://www.rfc-
+              editor.org/info/rfc3912>.
 
    [RFC4408]  Wong, M. and W. Schlitt, "Sender Policy Framework (SPF)
               for Authorizing Use of Domains in E-Mail, Version 1",
               RFC 4408, DOI 10.17487/RFC4408, April 2006,
               <https://www.rfc-editor.org/info/rfc4408>.
 
+
+
+
+
+
+Kline, et al.           Expires November 8, 2019               [Page 16]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
+
    [RFC4627]  Crockford, D., "The application/json Media Type for
               JavaScript Object Notation (JSON)", RFC 4627,
-              DOI 10.17487/RFC4627, July 2006,
-              <https://www.rfc-editor.org/info/rfc4627>.
+              DOI 10.17487/RFC4627, July 2006, <https://www.rfc-
+              editor.org/info/rfc4627>.
 
    [RFC4848]  Daigle, L., "Domain-Based Application Service Location
               Using URIs and the Dynamic Delegation Discovery Service
@@ -881,22 +915,14 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
 
    [RFC5952]  Kawamura, S. and M. Kawashima, "A Recommendation for IPv6
               Address Text Representation", RFC 5952,
-              DOI 10.17487/RFC5952, August 2010,
-              <https://www.rfc-editor.org/info/rfc5952>.
+              DOI 10.17487/RFC5952, August 2010, <https://www.rfc-
+              editor.org/info/rfc5952>.
 
    [RFC6772]  Schulzrinne, H., Ed., Tschofenig, H., Ed., Cuellar, J.,
               Polk, J., Morris, J., and M. Thomson, "Geolocation Policy:
               A Document Format for Expressing Privacy Preferences for
               Location Information", RFC 6772, DOI 10.17487/RFC6772,
               January 2013, <https://www.rfc-editor.org/info/rfc6772>.
-
-
-
-
-Kline, et al.          Expires September 11, 2019              [Page 16]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
 
 9.3.  URIs
 
@@ -915,6 +941,18 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
    [7] http://tools.ietf.org/html/rfc6772#section-13.5
 
    [8] http://tools.ietf.org/html/rfc6772#section-6.5.1
+
+
+
+
+
+
+
+
+Kline, et al.           Expires November 8, 2019               [Page 17]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
 
 Appendix A.  Sample Python validation code
 
@@ -946,14 +984,6 @@ Appendix A.  Sample Python validation code
 This tool reads CSV data in the self-published ipgeo feed format from
 the standard input and performs basic validation.  It is intended for
 use by feed publishers before launching a feed.
-
-
-
-Kline, et al.          Expires September 11, 2019              [Page 17]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
-
 """
 
 import csv
@@ -971,6 +1001,14 @@ class IPGeoFeedValidator(object):
 
   def Validate(self, feed):
     """Check validity of an IPGeo feed.
+
+
+
+
+Kline, et al.           Expires November 8, 2019               [Page 18]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
 
     Args:
       feed: iterable with feed lines
@@ -1003,13 +1041,6 @@ class IPGeoFeedValidator(object):
     if self._ShouldIgnoreLine(line):
       return
 
-
-
-Kline, et al.          Expires September 11, 2019              [Page 18]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
-
     fields = [field for field in csv.reader([line])][0]
 
     self._ValidateFields(fields)
@@ -1027,6 +1058,14 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
 
     if len(fields) > 1:
       if not self._IsCountryCode2Correct(fields[1]):
+
+
+
+Kline, et al.           Expires November 8, 2019               [Page 19]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
+
         is_correct = False
 
     if len(fields) > 2 and not self._IsRegionCodeCorrect(fields[2]):
@@ -1058,14 +1097,6 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
 
   def _IsIPAddressCorrect(self, ipaddress):
     try:
-
-
-
-Kline, et al.          Expires September 11, 2019              [Page 19]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
-
       ip = ipaddr.IPAddress(ipaddress)
     except:
       self._ReportError('Incorrect IP Address.')
@@ -1083,6 +1114,14 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
       self._ReportError(
           'Country code must be in the ISO 3166-1 alpha 2 format.')
       return False
+
+
+
+Kline, et al.           Expires November 8, 2019               [Page 20]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
+
     return True
 
   def _IsRegionCodeCorrect(self, region_code):
@@ -1115,13 +1154,6 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
     if self.output_stream is not None:
       self.output_stream.write(output_line)
 
-
-
-Kline, et al.          Expires September 11, 2019              [Page 20]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
-
   def _FlushOutputStream(self):
     if self.is_correct_line: return
     if self.output_stream is None: return
@@ -1137,6 +1169,14 @@ def main():
 
    if feed_validator.CountErrors('ERROR'):
      sys.exit(1)
+
+
+
+
+Kline, et al.           Expires November 8, 2019               [Page 21]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
 
 if __name__ == '__main__':
   main()
@@ -1170,14 +1210,6 @@ class IPGeoFeedValidatorTest(object):
     self.TestFeedLine('', 0, 0)
 
     self.TestFeedLine('asdf', 1, 1)
-
-
-
-Kline, et al.          Expires September 11, 2019              [Page 21]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
-
     self.TestFeedLine('asdf,US,,,', 1, 0)
     self.TestFeedLine('aaaa::,US,,,', 0, 0)
     self.TestFeedLine('zzzz::,US', 1, 1)
@@ -1194,6 +1226,14 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
     self.TestFeedLine('55.66.77.88,,,,', 0, 0)
     self.TestFeedLine('55.66.77.88,ZZ,,,', 0, 0)
     self.TestFeedLine('55.66.77.88,US,,,', 0, 0)
+
+
+
+Kline, et al.           Expires November 8, 2019               [Page 22]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
+
     self.TestFeedLine('55.66.77.88,USA,,,', 1, 0)
     self.TestFeedLine('55.66.77.88,99,,,', 1, 0)
 
@@ -1226,14 +1266,6 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
   def IsOutputLogCorrectAtSeverity(self, severity, expected_msg_count):
     msg_count = self.validator.CountErrors(severity)
 
-
-
-
-Kline, et al.          Expires September 11, 2019              [Page 22]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
-
-
     if msg_count != expected_msg_count:
       print 'TEST FAILED: %s\nexpected %d %s[s], observed %d\n%s\n' % (
           self.validator.line, expected_msg_count, severity, msg_count,
@@ -1250,6 +1282,13 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
       retval = False
 
     return retval
+
+
+
+Kline, et al.           Expires November 8, 2019               [Page 23]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
 
   def TestFeedLine(self, line, warning_count, error_count):
     self.validator.output_log['WARNING'] = []
@@ -1270,24 +1309,12 @@ if __name__ == '__main__':
 Authors' Addresses
 
    Erik Kline
-   Google Japan
-   Roppongi 6-10-1, 26th Floor
-   Minato, Tokyo  106-6126
-   Japan
+   Loon LLC
+   1600 Amphitheatre Parkway
+   Mountain View, California  94043
+   United States of America
 
-   Phone: +81 03 6384 9000
-   Email: ek@google.com
-
-
-
-
-
-
-
-
-Kline, et al.          Expires September 11, 2019              [Page 23]
-
-Internet-Draft         Self-published IP Geofeeds             March 2019
+   Email: ek@loon.com
 
 
    Krzysztof Duleba
@@ -1314,6 +1341,27 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
 
 
 
+Kline, et al.           Expires November 8, 2019               [Page 24]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
+
+   Stefan Moser
+   Google Switzerland GmbH
+   Brandschenkestrasse 110
+   Zuerich  8002
+   Switzerland
+
+   Email: smoser@google.com
+
+
+   Warren Kumari
+   Google LLC
+   1875 Explorer Street
+   Reston, Virginia  20190
+   United States of America
+
+   Email: wkumari@google.com
 
 
 
@@ -1341,4 +1389,12 @@ Internet-Draft         Self-published IP Geofeeds             March 2019
 
 
 
-Kline, et al.          Expires September 11, 2019              [Page 24]
+
+
+
+
+
+
+
+
+Kline, et al.           Expires November 8, 2019               [Page 25]

@@ -28,24 +28,18 @@
     Geolocation Feeds</title>
 
     <author fullname="Erik Kline" initials="E." surname="Kline">
-      <organization>Google Japan</organization>
+      <organization>Loon LLC</organization>
 
       <address>
         <postal>
-          <street>Roppongi 6-10-1, 26th Floor</street>
-
-          <city>Minato</city>
-
-          <region>Tokyo</region>
-
-          <code>106-6126</code>
-
-          <country>Japan</country>
+          <street>1600 Amphitheatre Parkway</street>
+          <city>Mountain View</city>
+          <region>California</region>
+          <code>94043</code>
+          <country>United States of America</country>
         </postal>
 
-        <phone>+81 03 6384 9000</phone>
-
-        <email>ek@google.com</email>
+        <email>ek@loon.com</email>
       </address>
     </author>
 
@@ -55,11 +49,8 @@
       <address>
         <postal>
           <street>Brandschenkestrasse 110</street>
-
           <code>8002</code>
-
           <city>Zürich</city>
-
           <country>Switzerland</country>
         </postal>
 
@@ -73,11 +64,8 @@
       <address>
         <postal>
           <street>Brandschenkestrasse 110</street>
-
           <code>8002</code>
-
           <city>Zürich</city>
-
           <country>Switzerland</country>
         </postal>
 
@@ -85,18 +73,17 @@
       </address>
     </author>
 
-      <author fullname="Stefan Moser" initials="S." surname="Moser">
+    <author fullname="Stefan Moser" initials="S." surname="Moser">
       <organization>Google Switzerland GmbH</organization>
 
-       <address>
+      <address>
         <postal>
           <street>Brandschenkestrasse 110</street>
           <code>8002</code>
           <city>Zürich</city>
           <country>Switzerland</country>
         </postal>
-
-         <email>smoser@google.com</email>
+        <email>smoser@google.com</email>
       </address>
     </author>
 
@@ -106,14 +93,10 @@
       <address>
         <postal>
           <street>1600 Amphitheatre Parkway</street>
-
           <city>Mountain View, CA</city>
-
           <code>94043</code>
-
           <country>US</country>
         </postal>
-
         <email>warren@kumari.net</email>
       </address>
     </author>
