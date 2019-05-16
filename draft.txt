@@ -5,12 +5,12 @@
 Network Working Group                                           E. Kline
 Internet-Draft                                                  Loon LLC
 Intended status: Experimental                                  K. Duleba
-Expires: November 8, 2019                                    Z. Szamonek
+Expires: November 17, 2019                                   Z. Szamonek
                                                                 S. Moser
                                                  Google Switzerland GmbH
                                                                W. Kumari
-                                                              Google LLC
-                                                             May 7, 2019
+                                                                  Google
+                                                            May 16, 2019
 
 
             A Format for Self-published IP Geolocation Feeds
@@ -53,7 +53,7 @@ Abstract
 
 
 
-Kline, et al.           Expires November 8, 2019                [Page 1]
+Kline, et al.           Expires November 17, 2019               [Page 1]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -73,7 +73,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on November 8, 2019.
+   This Internet-Draft will expire on November 17, 2019.
 
 Copyright Notice
 
@@ -105,11 +105,11 @@ Table of Contents
          2.1.1.4.  City  . . . . . . . . . . . . . . . . . . . . . .   6
          2.1.1.5.  Postal code . . . . . . . . . . . . . . . . . . .   6
        2.1.2.  Prefixes with no geolocation information  . . . . . .   6
-       2.1.3.  Additional parsing requirements . . . . . . . . . . .   6
+       2.1.3.  Additional parsing requirements . . . . . . . . . . .   7
 
 
 
-Kline, et al.           Expires November 8, 2019                [Page 2]
+Kline, et al.           Expires November 17, 2019               [Page 2]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -120,7 +120,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
        2.3.1.  Delegation size . . . . . . . . . . . . . . . . . . .   9
        2.3.2.  Alternate format  . . . . . . . . . . . . . . . . . .   9
    3.  Consuming self-published IP geolocation feeds . . . . . . . .   9
-     3.1.  Feed integrity  . . . . . . . . . . . . . . . . . . . . .   9
+     3.1.  Feed integrity  . . . . . . . . . . . . . . . . . . . . .  10
      3.2.  Verification of authority . . . . . . . . . . . . . . . .  10
      3.3.  Verification of accuracy  . . . . . . . . . . . . . . . .  10
      3.4.  Refreshing feed information . . . . . . . . . . . . . . .  10
@@ -165,7 +165,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 8, 2019                [Page 3]
+Kline, et al.           Expires November 17, 2019               [Page 3]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -221,7 +221,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 8, 2019                [Page 4]
+Kline, et al.           Expires November 17, 2019               [Page 4]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -277,7 +277,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 8, 2019                [Page 5]
+Kline, et al.           Expires November 17, 2019               [Page 5]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -295,9 +295,12 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 2.1.1.5.  Postal code
 
-   OPTIONAL.  The postal code field, if non-empty, SHOULD be free UTF-8
-   text, excluding the comma (',') character.  See Section 4 for some
-   discussion of when this field must not be populated.
+   OPTIONAL, DEPRECATED.  The postal code field, if non-empty, SHOULD be
+   free UTF-8 text, excluding the comma (',') character.  The use of
+   this field is deprecated; consumers of feeds should be able to parse
+   feeds containing these fields, but new feeds SHOULD NOT include this
+   field, due to the granularity of this information.  See See Section 4
+   for additional discussion.
 
    Examples include "106-6126" (in Minato ward, Tokyo, Japan).
 
@@ -323,20 +326,23 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
    no specific interpretation of any of the other user-assigned country
    codes is currently defined.
 
+
+
+
+
+
+
+
+Kline, et al.           Expires November 17, 2019               [Page 6]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
+
 2.1.3.  Additional parsing requirements
 
    Feed entries missing required fields, or having a required field
    which fails to parse correctly MUST be discarded.  It is RECOMMENDED
    that such entries also be logged for further administrative review.
-
-
-
-
-
-Kline, et al.           Expires November 8, 2019                [Page 6]
-
-Internet-Draft         Self-published IP Geofeeds               May 2019
-
 
    While publishers SHOULD follow [RFC5952] style for IPv6 prefix
    fields, consumers MUST nevertheless accept all valid string
@@ -351,7 +357,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
    either in part or in full, SHOULD be discarded.  It is RECOMMENDED
    that they also be logged for further administrative review.
 
-   For compatibility with future additional fields a parser MUST ignore
+   For compatibility with future additional fields, a parser MUST ignore
    any fields beyond those it expects.  The data from fields which are
    expected and which parse successfully MUST still be considered valid.
 
@@ -365,14 +371,14 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 2.2.  Examples
 
    Example entries using different IP address formats and describing
-   locations at country, region, city and postal code granularity level,
+   locations at country, region, and city granularity level,
    respectively:
 
        192.0.2.0/25,US,US-AL,,
        192.0.2.5,US,US-AL,Alabaster,
-       192.0.2.128/25,PL,PL-MZ,,02-784
+       192.0.2.128/25,PL,PL-MZ,,
        2001:db8::/32,PL,,,
-       2001:db8:cafe::/48,PL,PL-MZ,,02-784
+       2001:db8:cafe::/48,PL,PL-MZ,,
 
    The IETF network publishes geolocation information for the meeting
    prefixes, and generally just comment out the last meeting information
@@ -383,13 +389,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-
-
-
-
-
-
-Kline, et al.           Expires November 8, 2019                [Page 7]
+Kline, et al.           Expires November 17, 2019               [Page 7]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -418,7 +418,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
       2620:f:8000::/48,ES,ES-CT,Barcelona
 
    A longer example is the [GEO_Google] Google Corp Geofeed, which lists
-   the geo-location information for Google coroprate offices.
+   the geo-location information for Google corporate offices.
 
    Furthermore, it is worth noting that the geolocation data of SixXS
    users, already available at whois.sixxs.net, is now also accessible
@@ -440,12 +440,12 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
    the purpose of this document is principally to record existing
    implementation details, it may be that there is a larger desire to
    publish other "network attributes" in a similar manner.  One such
-   network attribute, "delegation size", is not currently implemented
+   network attribute, "delegation size", is not currently implemented,
 
 
 
 
-Kline, et al.           Expires November 8, 2019                [Page 8]
+Kline, et al.           Expires November 17, 2019               [Page 8]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -483,6 +483,9 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
    However, at the time of writing no such specification nor
    implementation exists.
 
+   The authors are planning on writing a new document describing such a
+   new format.  The current document describes a deployed system.
+
 3.  Consuming self-published IP geolocation feeds
 
    Consumers MAY treat published feed data as a hint only and MAY choose
@@ -491,20 +494,24 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
    published feed, there are some points of note for sensibly and
    effectively consuming published feeds.
 
+
+
+
+
+
+
+
+Kline, et al.           Expires November 17, 2019               [Page 9]
+
+Internet-Draft         Self-published IP Geofeeds               May 2019
+
+
 3.1.  Feed integrity
 
    The integrity of published information SHOULD be protected by
    securing the means of publication, for example by using HTTP over TLS
    [RFC2818].  Whenever possible, consumers SHOULD prefer retrieving
    geolocation feeds in a manner that guarantees integrity of the feed.
-
-
-
-
-Kline, et al.           Expires November 8, 2019                [Page 9]
-
-Internet-Draft         Self-published IP Geofeeds               May 2019
-
 
 3.2.  Verification of authority
 
@@ -526,7 +533,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
    Errors and inaccuracies may occur at many levels, and publication and
    consumption of geolocation data are no exceptions.  To the extent
-   practical consumers SHOULD take steps to verify the accuracy of
+   practical, consumers SHOULD take steps to verify the accuracy of
    published locality.  Verification methodology, resolution of
    discrepancies, and preference for alternative sources of data are
    left to the discretion of the feed consumer.
@@ -537,9 +544,9 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 3.4.  Refreshing feed information
 
    As a publisher can change geolocation data at any time and without
-   notification consumers SHOULD implement mechanisms to periodically
+   notification, consumers SHOULD implement mechanisms to periodically
    refresh local copies of feed data.  In the absence of any other
-   refresh timing information it is recommended that consumers SHOULD
+   refresh timing information, it is recommended that consumers SHOULD
    refresh feeds no less often than weekly.
 
    For feeds available via HTTPS (or HTTP), the publisher MAY
@@ -547,20 +554,16 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
    expiration model (section 13.2 [3] of [RFC2616]).  Specifically,
    publishers can include either an Expires header [4] or a Cache-
    Control header [5] specifying the max-age.  Where practical,
-   consumers SHOULD refresh feed information before the expiry time is
-   reached.
 
 
 
-
-
-
-
-
-Kline, et al.           Expires November 8, 2019               [Page 10]
+Kline, et al.           Expires November 17, 2019              [Page 10]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
+
+   consumers SHOULD refresh feed information before the expiry time is
+   reached.
 
 4.  Privacy Considerations
 
@@ -579,7 +582,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
    feed.  In particular, the Postal Code field (Section 2.1.1.5) can
    provide very specific geolocation, sometimes within a building.  Such
    specific Postal Code values MUST NOT be published in geo feeds
-   without the consent of the parties being located.
+   without the express consent of the parties being located.
 
 5.  Relation to other work
 
@@ -610,10 +613,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-
-
-
-Kline, et al.           Expires November 8, 2019               [Page 11]
+Kline, et al.           Expires November 17, 2019              [Page 11]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -669,7 +669,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 8, 2019               [Page 12]
+Kline, et al.           Expires November 17, 2019              [Page 12]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -725,7 +725,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 8, 2019               [Page 13]
+Kline, et al.           Expires November 17, 2019              [Page 13]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -734,7 +734,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
    addr.arpa" and "6.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d
    .0.1.0.0.2.ip6.arpa", respectively.
 
-   If no such record exists one further NAPTR query for the fully
+   If no such record exists, one further NAPTR query for the fully
    qualified domain name of the SOA record in the authority section of
    the response to the previous query would be performed ("2.0.192.in-
    addr.arpa" and "d.0.1.0.0.2.ip6.arpa" in the examples above).
@@ -742,9 +742,9 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
    If one or more NAPTR records exist for the full PTR-style name but
    none of them are for the required service name (e.g. "x-geofeed"),
    then likely no SOA will be returned as a hint for subsequent queries.
-   In this case implementations would need to first explicitly query for
-   an SOA record for the full PTR-style name, and then query for a NAPTR
-   record of the SOA in the response (assuming it differs from the
+   In this case, implementations would need to first explicitly query
+   for an SOA record for the full PTR-style name, and then query for a
+   NAPTR record of the SOA in the response (assuming it differs from the
    previously queried name).
 
    Any successfully located feed URIs could then be processed as
@@ -761,10 +761,9 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
    (eventually) catch any oversights.
 
    This mode is untested and may prove impractical.  However, the
-   operational burden is more closely located with those wishing and
-   willing to bear it, i.e. the publishers who would likely handle
-   serving in-addr.arpa and ip6.arpa for the IP prefixes under their
-   authority.
+   operational burden is more closely located with those wishing to bear
+   it, i.e. the publishers who would likely handle serving in-addr.arpa
+   and ip6.arpa for the IP prefixes under their authority.
 
 8.  Acknowledgements
 
@@ -781,7 +780,8 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 8, 2019               [Page 14]
+
+Kline, et al.           Expires November 17, 2019              [Page 14]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -837,7 +837,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 8, 2019               [Page 15]
+Kline, et al.           Expires November 17, 2019              [Page 15]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -893,7 +893,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 8, 2019               [Page 16]
+Kline, et al.           Expires November 17, 2019              [Page 16]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -949,7 +949,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 8, 2019               [Page 17]
+Kline, et al.           Expires November 17, 2019              [Page 17]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -1005,7 +1005,7 @@ class IPGeoFeedValidator(object):
 
 
 
-Kline, et al.           Expires November 8, 2019               [Page 18]
+Kline, et al.           Expires November 17, 2019              [Page 18]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -1061,7 +1061,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 8, 2019               [Page 19]
+Kline, et al.           Expires November 17, 2019              [Page 19]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -1117,7 +1117,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 8, 2019               [Page 20]
+Kline, et al.           Expires November 17, 2019              [Page 20]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -1173,7 +1173,7 @@ def main():
 
 
 
-Kline, et al.           Expires November 8, 2019               [Page 21]
+Kline, et al.           Expires November 17, 2019              [Page 21]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -1229,7 +1229,7 @@ class IPGeoFeedValidatorTest(object):
 
 
 
-Kline, et al.           Expires November 8, 2019               [Page 22]
+Kline, et al.           Expires November 17, 2019              [Page 22]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -1285,7 +1285,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 8, 2019               [Page 23]
+Kline, et al.           Expires November 17, 2019              [Page 23]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -1341,7 +1341,7 @@ Authors' Addresses
 
 
 
-Kline, et al.           Expires November 8, 2019               [Page 24]
+Kline, et al.           Expires November 17, 2019              [Page 24]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -1356,14 +1356,12 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
    Warren Kumari
-   Google LLC
-   1875 Explorer Street
-   Reston, Virginia  20190
-   United States of America
+   Google
+   1600 Amphitheatre Parkway
+   Mountain View, CA  94043
+   US
 
-   Email: wkumari@google.com
-
-
+   Email: warren@kumari.net
 
 
 
@@ -1397,4 +1395,6 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 8, 2019               [Page 25]
+
+
+Kline, et al.           Expires November 17, 2019              [Page 25]
