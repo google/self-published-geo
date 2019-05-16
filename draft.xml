@@ -28,24 +28,18 @@
     Geolocation Feeds</title>
 
     <author fullname="Erik Kline" initials="E." surname="Kline">
-      <organization>Google Japan</organization>
+      <organization>Loon LLC</organization>
 
       <address>
         <postal>
-          <street>Roppongi 6-10-1, 26th Floor</street>
-
-          <city>Minato</city>
-
-          <region>Tokyo</region>
-
-          <code>106-6126</code>
-
-          <country>Japan</country>
+          <street>1600 Amphitheatre Parkway</street>
+          <city>Mountain View</city>
+          <region>California</region>
+          <code>94043</code>
+          <country>United States of America</country>
         </postal>
 
-        <phone>+81 03 6384 9000</phone>
-
-        <email>ek@google.com</email>
+        <email>ek@loon.com</email>
       </address>
     </author>
 
@@ -55,11 +49,8 @@
       <address>
         <postal>
           <street>Brandschenkestrasse 110</street>
-
           <code>8002</code>
-
           <city>Zürich</city>
-
           <country>Switzerland</country>
         </postal>
 
@@ -73,15 +64,43 @@
       <address>
         <postal>
           <street>Brandschenkestrasse 110</street>
-
           <code>8002</code>
-
           <city>Zürich</city>
-
           <country>Switzerland</country>
         </postal>
 
         <email>zszami@google.com</email>
+      </address>
+    </author>
+
+    <author fullname="Stefan Moser" initials="S." surname="Moser">
+      <organization>Google Switzerland GmbH</organization>
+
+      <address>
+        <postal>
+          <street>Brandschenkestrasse 110</street>
+          <code>8002</code>
+          <city>Zürich</city>
+          <country>Switzerland</country>
+        </postal>
+
+        <email>smoser@google.com</email>
+      </address>
+    </author>
+
+    <author fullname="Warren Kumari" initials="W." surname="Kumari">
+      <organization>Google LLC</organization>
+
+      <address>
+        <postal>
+          <street>1875 Explorer Street</street>
+          <city>Reston</city>
+          <region>Virginia</region>
+          <code>20190</code>
+          <country>United States of America</country>
+        </postal>
+
+        <email>wkumari@google.com</email>
       </address>
     </author>
 
@@ -685,7 +704,7 @@
       <t>The authors would like to express their gratitude to reviewers and
       early implementers, including but not limited to Mikael Abrahamsson, Ray
       Bellis, John Bond, Alissa Cooper, Andras Erdei, Marco Hogewoning, Mike
-      Joseph, Warren Kumari, Menno Schepers, Justyna Sidorska, Pim van Pelt,
+      Joseph, Maciej Kuzniar, Menno Schepers, Justyna Sidorska, Pim van Pelt,
       and Bjoern A. Zeeb. Richard L. Barnes in particular contributed
       substantial review, text, and advice.</t>
     </section>
