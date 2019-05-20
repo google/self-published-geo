@@ -5,12 +5,12 @@
 Network Working Group                                           E. Kline
 Internet-Draft                                                  Loon LLC
 Intended status: Experimental                                  K. Duleba
-Expires: November 17, 2019                                   Z. Szamonek
+Expires: November 18, 2019                                   Z. Szamonek
                                                                 S. Moser
                                                  Google Switzerland GmbH
                                                                W. Kumari
                                                                   Google
-                                                            May 16, 2019
+                                                            May 17, 2019
 
 
             A Format for Self-published IP Geolocation Feeds
@@ -27,9 +27,12 @@ Abstract
 
    Some technical organizations operating networks that move from one
    conference location to the next have already experimentally published
-   small geolocation feeds.  At least one consumer (Google) has
-   incorporated these ad hoc feeds into a geolocation data pipeline, and
-   is using it to allow ISPs to inform them where the prefixes live.
+   small geolocation feeds.
+
+   This document describes a currently deployed format.  At least one
+   consumer (Google) has incorporated these feeds into a geolocation
+   data pipeline, and a significant number of ISPs are using it to
+   inform them where their prefixes should be geolocated.
 
    [RFC Ed - Please remove publication: The IETF Meeting network
    currently publishes a feed in this format at:
@@ -50,10 +53,7 @@ Abstract
 
 
 
-
-
-
-Kline, et al.           Expires November 17, 2019               [Page 1]
+Kline, et al.           Expires November 18, 2019               [Page 1]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -66,14 +66,14 @@ Status of This Memo
    Internet-Drafts are working documents of the Internet Engineering
    Task Force (IETF).  Note that other groups may also distribute
    working documents as Internet-Drafts.  The list of current Internet-
-   Drafts is at http://datatracker.ietf.org/drafts/current/.
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
 
    Internet-Drafts are draft documents valid for a maximum of six months
    and may be updated, replaced, or obsoleted by other documents at any
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on November 17, 2019.
+   This Internet-Draft will expire on November 18, 2019.
 
 Copyright Notice
 
@@ -82,7 +82,7 @@ Copyright Notice
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
-   (http://trustee.ietf.org/license-info) in effect on the date of
+   (https://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Kline, et al.           Expires November 17, 2019               [Page 2]
+Kline, et al.           Expires November 18, 2019               [Page 2]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -165,7 +165,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 17, 2019               [Page 3]
+Kline, et al.           Expires November 18, 2019               [Page 3]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -173,10 +173,10 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
    feeds to update or merge with other geolocation data sources and
    procedures.
 
-   Some technical organizations operating networks that move from one
-   conference location to the next have already experimentally published
-   small geolocation feeds.  At least one consumer (Google) has
-   incorporated these ad hoc feeds into a geolocation data pipeline.
+   This document describes a currently deployed format.  At least one
+   consumer (Google) has incorporated these feeds into a geolocation
+   data pipeline, and a significant number of ISPs are using it to
+   inform them where their prefixes should be geolocated.
 
 1.2.  Requirements notation
 
@@ -221,7 +221,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 17, 2019               [Page 4]
+Kline, et al.           Expires November 18, 2019               [Page 4]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -277,7 +277,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 17, 2019               [Page 5]
+Kline, et al.           Expires November 18, 2019               [Page 5]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -333,7 +333,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 17, 2019               [Page 6]
+Kline, et al.           Expires November 18, 2019               [Page 6]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -389,19 +389,20 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 17, 2019               [Page 7]
+Kline, et al.           Expires November 18, 2019               [Page 7]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
-# IETF 104, March 2019 - Prague, CZ.
-# Note that Prague changed from CZ-PR to CZ-10 2016-11-15 - https://www.iso.org/obp/ui/#iso:code:3166:CZ
-130.129.0.0/16,CZ,CZ-10,Prague,
-2001:df8::/32,CZ,CZ-10,Prague,
-31.133.128.0/18,CZ,CZ-10,Prague,
-31.130.224.0/20,CZ,CZ-10,Prague,
-2001:67c:1230::/46,CZ,CZ-10,Prague,
-2001:67c:370::/48,CZ,CZ-10,Prague,
+   # IETF 104, March 2019 - Prague, CZ.
+   # Note that Prague changed from CZ-PR to CZ-10 2016-11-15
+   # https://www.iso.org/obp/ui/#iso:code:3166:CZ
+   130.129.0.0/16,CZ,CZ-10,Prague,
+   2001:df8::/32,CZ,CZ-10,Prague,
+   31.133.128.0/18,CZ,CZ-10,Prague,
+   31.130.224.0/20,CZ,CZ-10,Prague,
+   2001:67c:1230::/46,CZ,CZ-10,Prague,
+   2001:67c:370::/48,CZ,CZ-10,Prague,
 
    Experimentally, RIPE has published geolocation information for their
    conference network prefixes, which change location in accordance with
@@ -444,8 +445,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-
-Kline, et al.           Expires November 17, 2019               [Page 8]
+Kline, et al.           Expires November 18, 2019               [Page 8]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -484,7 +484,8 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
    implementation exists.
 
    The authors are planning on writing a new document describing such a
-   new format.  The current document describes a deployed system.
+   new format.  The current document describes a currently deployed and
+   used format.
 
 3.  Consuming self-published IP geolocation feeds
 
@@ -500,8 +501,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-
-Kline, et al.           Expires November 17, 2019               [Page 9]
+Kline, et al.           Expires November 18, 2019               [Page 9]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -557,7 +557,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 17, 2019              [Page 10]
+Kline, et al.           Expires November 18, 2019              [Page 10]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -613,7 +613,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 17, 2019              [Page 11]
+Kline, et al.           Expires November 18, 2019              [Page 11]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -669,7 +669,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 17, 2019              [Page 12]
+Kline, et al.           Expires November 18, 2019              [Page 12]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -725,7 +725,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 17, 2019              [Page 13]
+Kline, et al.           Expires November 18, 2019              [Page 13]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -781,7 +781,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 17, 2019              [Page 14]
+Kline, et al.           Expires November 18, 2019              [Page 14]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -804,8 +804,8 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
    [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
               Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
               Transfer Protocol -- HTTP/1.1", RFC 2616,
-              DOI 10.17487/RFC2616, June 1999, <https://www.rfc-
-              editor.org/info/rfc2616>.
+              DOI 10.17487/RFC2616, June 1999,
+              <https://www.rfc-editor.org/info/rfc2616>.
 
    [RFC3629]  Yergeau, F., "UTF-8, a transformation format of ISO
               10646", STD 63, RFC 3629, DOI 10.17487/RFC3629, November
@@ -813,8 +813,8 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
    [RFC4180]  Shafranovich, Y., "Common Format and MIME Type for Comma-
               Separated Values (CSV) Files", RFC 4180,
-              DOI 10.17487/RFC4180, October 2005, <https://www.rfc-
-              editor.org/info/rfc4180>.
+              DOI 10.17487/RFC4180, October 2005,
+              <https://www.rfc-editor.org/info/rfc4180>.
 
    [RFC4291]  Hinden, R. and S. Deering, "IP Version 6 Addressing
               Architecture", RFC 4291, DOI 10.17487/RFC4291, February
@@ -837,7 +837,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 17, 2019              [Page 15]
+Kline, et al.           Expires November 18, 2019              [Page 15]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -867,8 +867,8 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
               library", <http://code.google.com/p/ipaddr-py/>.
 
    [RFC2818]  Rescorla, E., "HTTP Over TLS", RFC 2818,
-              DOI 10.17487/RFC2818, May 2000, <https://www.rfc-
-              editor.org/info/rfc2818>.
+              DOI 10.17487/RFC2818, May 2000,
+              <https://www.rfc-editor.org/info/rfc2818>.
 
    [RFC3053]  Durand, A., Fasano, P., Guardini, I., and D. Lento, "IPv6
               Tunnel Broker", RFC 3053, DOI 10.17487/RFC3053, January
@@ -880,8 +880,8 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
               <https://www.rfc-editor.org/info/rfc3403>.
 
    [RFC3912]  Daigle, L., "WHOIS Protocol Specification", RFC 3912,
-              DOI 10.17487/RFC3912, September 2004, <https://www.rfc-
-              editor.org/info/rfc3912>.
+              DOI 10.17487/RFC3912, September 2004,
+              <https://www.rfc-editor.org/info/rfc3912>.
 
    [RFC4408]  Wong, M. and W. Schlitt, "Sender Policy Framework (SPF)
               for Authorizing Use of Domains in E-Mail, Version 1",
@@ -893,15 +893,15 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 17, 2019              [Page 16]
+Kline, et al.           Expires November 18, 2019              [Page 16]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
    [RFC4627]  Crockford, D., "The application/json Media Type for
               JavaScript Object Notation (JSON)", RFC 4627,
-              DOI 10.17487/RFC4627, July 2006, <https://www.rfc-
-              editor.org/info/rfc4627>.
+              DOI 10.17487/RFC4627, July 2006,
+              <https://www.rfc-editor.org/info/rfc4627>.
 
    [RFC4848]  Daigle, L., "Domain-Based Application Service Location
               Using URIs and the Dynamic Delegation Discovery Service
@@ -915,8 +915,8 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
    [RFC5952]  Kawamura, S. and M. Kawashima, "A Recommendation for IPv6
               Address Text Representation", RFC 5952,
-              DOI 10.17487/RFC5952, August 2010, <https://www.rfc-
-              editor.org/info/rfc5952>.
+              DOI 10.17487/RFC5952, August 2010,
+              <https://www.rfc-editor.org/info/rfc5952>.
 
    [RFC6772]  Schulzrinne, H., Ed., Tschofenig, H., Ed., Cuellar, J.,
               Polk, J., Morris, J., and M. Thomson, "Geolocation Policy:
@@ -949,7 +949,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 17, 2019              [Page 17]
+Kline, et al.           Expires November 18, 2019              [Page 17]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -1005,7 +1005,7 @@ class IPGeoFeedValidator(object):
 
 
 
-Kline, et al.           Expires November 17, 2019              [Page 18]
+Kline, et al.           Expires November 18, 2019              [Page 18]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -1061,7 +1061,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 17, 2019              [Page 19]
+Kline, et al.           Expires November 18, 2019              [Page 19]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -1117,7 +1117,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 17, 2019              [Page 20]
+Kline, et al.           Expires November 18, 2019              [Page 20]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -1173,7 +1173,7 @@ def main():
 
 
 
-Kline, et al.           Expires November 17, 2019              [Page 21]
+Kline, et al.           Expires November 18, 2019              [Page 21]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -1229,7 +1229,7 @@ class IPGeoFeedValidatorTest(object):
 
 
 
-Kline, et al.           Expires November 17, 2019              [Page 22]
+Kline, et al.           Expires November 18, 2019              [Page 22]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -1285,7 +1285,7 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 17, 2019              [Page 23]
+Kline, et al.           Expires November 18, 2019              [Page 23]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -1341,7 +1341,7 @@ Authors' Addresses
 
 
 
-Kline, et al.           Expires November 17, 2019              [Page 24]
+Kline, et al.           Expires November 18, 2019              [Page 24]
 
 Internet-Draft         Self-published IP Geofeeds               May 2019
 
@@ -1397,4 +1397,4 @@ Internet-Draft         Self-published IP Geofeeds               May 2019
 
 
 
-Kline, et al.           Expires November 17, 2019              [Page 25]
+Kline, et al.           Expires November 18, 2019              [Page 25]

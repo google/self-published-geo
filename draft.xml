@@ -113,9 +113,12 @@
 
       <t>Some technical organizations operating networks that move from one
       conference location to the next have already experimentally published
-      small geolocation feeds. At least one consumer (Google) has incorporated
-      these ad hoc feeds into a geolocation data pipeline, and is using it to
-      allow ISPs to inform them where the prefixes live.</t>
+      small geolocation feeds.</t>
+
+      <t>This document describes a currently deployed format. At
+	least one consumer (Google) has incorporated these feeds into a
+	geolocation data pipeline, and a significant number of ISPs are
+	using it to inform them where their prefixes should be geolocated.</t>
 
       <t>[RFC Ed - Please remove publication: The IETF Meeting network
       currently publishes a feed in this format at:
@@ -161,10 +164,10 @@
         to update or merge with other geolocation data sources and
         procedures.</t>
 
-        <t>Some technical organizations operating networks that move from one
-        conference location to the next have already experimentally published
-        small geolocation feeds. At least one consumer (Google) has
-        incorporated these ad hoc feeds into a geolocation data pipeline.</t>
+     <t>This document describes a currently deployed format. At
+        least one consumer (Google) has incorporated these feeds into a
+        geolocation data pipeline, and a significant number of ISPs are
+        using it to inform them where their prefixes should be geolocated.</t>
       </section>
 
       <section title="Requirements notation">
@@ -360,7 +363,8 @@
 
         <t><figure>
             <artwork><![CDATA[# IETF 104, March 2019 - Prague, CZ.
-# Note that Prague changed from CZ-PR to CZ-10 2016-11-15 - https://www.iso.org/obp/ui/#iso:code:3166:CZ
+# Note that Prague changed from CZ-PR to CZ-10 2016-11-15
+# https://www.iso.org/obp/ui/#iso:code:3166:CZ
 130.129.0.0/16,CZ,CZ-10,Prague,
 2001:df8::/32,CZ,CZ-10,Prague,
 31.133.128.0/18,CZ,CZ-10,Prague,
@@ -445,7 +449,8 @@
           specification nor implementation exists.</t>
 
           <t>The authors are planning on writing a new document describing
-            such a new format. The current document describes a deployed system.</t>
+            such a new format. The current document describes a currently
+	    deployed and used format.</t>
         </section>
       </section>
     </section>
