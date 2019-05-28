@@ -279,7 +279,7 @@
             UTF-8 text, excluding the comma (',') character. The use of this field
             is deprecated; consumers of feeds should be able to parse feeds containing
             these fields, but new feeds SHOULD NOT include this field, due to the granularity
-            of this information. See See <xref target="Privacy"/> for additional discussion.</t>
+            of this information. See <xref target="Privacy"/> for additional discussion.</t>
 
             <t>Examples include "106-6126" (in Minato ward, Tokyo, Japan).</t>
           </section>
