@@ -363,15 +363,17 @@
         at the time of this writing contains:</t>
 
         <t><figure>
-            <artwork><![CDATA[# IETF 104, March 2019 - Prague, CZ.
-# Note that Prague changed from CZ-PR to CZ-10 2016-11-15
-# https://www.iso.org/obp/ui/#iso:code:3166:CZ
-130.129.0.0/16,CZ,CZ-10,Prague,
-2001:df8::/32,CZ,CZ-10,Prague,
-31.133.128.0/18,CZ,CZ-10,Prague,
-31.130.224.0/20,CZ,CZ-10,Prague,
-2001:67c:1230::/46,CZ,CZ-10,Prague,
-2001:67c:370::/48,CZ,CZ-10,Prague,]]></artwork>
+            <artwork><![CDATA[
+    # IETF 104, March 2019 - Prague, CZ.
+    # Note that Prague changed from CZ-PR to CZ-10 2016-11-15
+    # https://www.iso.org/obp/ui/#iso:code:3166:CZ
+    130.129.0.0/16,CZ,CZ-10,Prague,
+    2001:df8::/32,CZ,CZ-10,Prague,
+    31.133.128.0/18,CZ,CZ-10,Prague,
+    31.130.224.0/20,CZ,CZ-10,Prague,
+    2001:67c:1230::/46,CZ,CZ-10,Prague,
+    2001:67c:370::/48,CZ,CZ-10,Prague,
+            ]]></artwork>
           </figure></t>
 
         <t>Experimentally, RIPE has published geolocation information for
@@ -379,16 +381,18 @@
         with each new event. <xref target="GEO_RIPE_NCC"/> at the time of
         writing contains: <figure>
             <artwork><![CDATA[
-   193.0.24.0/21,IS,IS-1,Reykjavík,
-   2001:67c:64::/48,IS,IS-1,Reykjavík,      ]]></artwork>
+    193.0.24.0/21,IS,IS-1,Reykjavík,
+    2001:67c:64::/48,IS,IS-1,Reykjavík,
+            ]]></artwork>
           </figure></t>
 
         <t>Similarly, ICANN has published geolocation information for their
         portable conference network prefixes. <xref target="GEO_ICANN"/> at
         the time of writing contains: <figure>
             <artwork><![CDATA[
-   199.91.192.0/21,ES,ES-CT,Barcelona
-   2620:f:8000::/48,ES,ES-CT,Barcelona   ]]></artwork>
+    199.91.192.0/21,ES,ES-CT,Barcelona
+    2620:f:8000::/48,ES,ES-CT,Barcelona
+            ]]></artwork>
           </figure></t>
 
         <t>A longer example is the <xref target="GEO_Google"/> Google Corp
