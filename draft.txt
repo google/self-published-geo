@@ -842,6 +842,7 @@ Kline, et al.           Expires January 21, 2020               [Page 15]
 Internet-Draft         Self-published IP Geofeeds              July 2019
 
 
+<CODE BEGINS>
 #!/usr/bin/python
 #
 # Copyright (c) 2012 IETF Trust and the persons identified as authors of
@@ -889,7 +890,6 @@ class IPGeoFeedValidator(object):
 
     Args:
       logfile: a file object (e.g., sys.stdout or sys.stderr) or None.
-    """
 
 
 
@@ -898,6 +898,7 @@ Kline, et al.           Expires January 21, 2020               [Page 16]
 Internet-Draft         Self-published IP Geofeeds              July 2019
 
 
+    """
     self.output_stream = logfile
 
   def CountErrors(self, severity):
@@ -945,7 +946,6 @@ Internet-Draft         Self-published IP Geofeeds              July 2019
     if '/' in field:
       return self._IsCIDRCorrect(field)
     return self._IsIPAddressCorrect(field)
-
 
 
 
@@ -1178,6 +1178,8 @@ Kline, et al.           Expires January 21, 2020               [Page 21]
 Internet-Draft         Self-published IP Geofeeds              July 2019
 
 
+<CODE ENDS>
+
 Authors' Addresses
 
    Erik Kline
@@ -1223,8 +1225,6 @@ Authors' Addresses
    US
 
    Email: warren@kumari.net
-
-
 
 
 

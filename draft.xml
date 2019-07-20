@@ -802,6 +802,7 @@
 
       <t><figure>
           <artwork><![CDATA[
+<CODE BEGINS>
 #!/usr/bin/python
 #
 # Copyright (c) 2012 IETF Trust and the persons identified as authors of
@@ -1095,6 +1096,7 @@ class IPGeoFeedValidatorTest(object):
 
 if __name__ == '__main__':
   IPGeoFeedValidatorTest().Run()
+<CODE ENDS>
             ]]></artwork>
         </figure></t>
     </section>
