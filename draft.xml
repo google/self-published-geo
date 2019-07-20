@@ -5,7 +5,7 @@
 <?rfc tocdepth="4"?>
 <?rfc sortrefs="yes"?>
 <?rfc symrefs="yes"?>
-<rfc category="exp" docName="draft-google-self-published-geofeeds-04"
+<rfc category="info" docName="draft-google-self-published-geofeeds-05"
      ipr="trust200902">
   <?xml-stylesheet type="text/xsl" href="rfc2629.xslt" ?>
 
@@ -116,9 +116,9 @@
       small geolocation feeds.</t>
 
       <t>This document describes a currently deployed format. At
-	least one consumer (Google) has incorporated these feeds into a
-	geolocation data pipeline, and a significant number of ISPs are
-	using it to inform them where their prefixes should be geolocated.</t>
+      least one consumer (Google) has incorporated these feeds into a
+      geolocation data pipeline, and a significant number of ISPs are
+      using it to inform them where their prefixes should be geolocated.</t>
 
       <t>[RFC Ed - Please remove publication: The IETF Meeting network
       currently publishes a feed in this format at:
@@ -222,8 +222,9 @@
         Text after a '#' character is treated as a comment only and ignored.
         Blank lines are similarly ignored.</t>
 
-        <t>Feeds MUST be in comma separated values format as described in
-        <xref target="RFC4180"/>. Each feed entry is a text line of the form:
+        <t>Feeds lines that are not comments MUST be in comma separated value
+        (CSV) format as described in <xref target="RFC4180"/>. Each feed entry
+        is a text line of the form:
         <figure>
             <artwork><![CDATA[
     ip_prefix,country,region,city,postal_code
@@ -409,50 +410,6 @@
             achieve.</t>
           </list></t>
       </section>
-
-      <section title="Proposed extensions">
-        <t>Already some discussions have resulted in proposed extensions.
-        While the purpose of this document is principally to record existing
-        implementation details, it may be that there is a larger desire to
-        publish other "network attributes" in a similar manner. One such
-        network attribute, "delegation size", is not currently implemented, but
-        the state of the proposed extension is recorded here to demonstrate
-        the flexibility required of parser implementations.</t>
-
-        <t>The following have been only informally discussed and are not in
-        use at the time of writing.</t>
-
-        <section title="Delegation size">
-          <t>OPTIONAL. A publisher may optionally communicate the average
-          delegated prefix size for subnetworks within the IP prefix of this
-          entry. For a network operator this can be used to help consumers
-          distinguish IP prefixes among various use types such as residential
-          prefixes, allocations to businesses, or data center customer
-          allocations.</t>
-
-          <t>Non-empty strings MUST be of the form required for CIDR notation
-          suffixes, i.e. "/" followed by the integer prefix length of the
-          expected allocation to the subnetworks from within the entry's
-          prefix. In the absence of data to the contrary, it is common to
-          assume that leaf networks may be delegated a prefix ranging from /24
-          to /32 in IPv4 and /48 to /64 in IPv6. Default assumptions about
-          delegation size are left to the consumer's implementation.</t>
-
-          <t>Examples for IPv6 include "/48", "/56", "/60", and "/64".</t>
-        </section>
-
-        <section title="Alternate format">
-          <t>In order to more flexibly support future extensions, use of a
-          more expressive feed format has been suggested. Use of JavaScript
-          Object Notation (JSON, <xref target="RFC4627"/>), specifically, has
-          been discussed. However, at the time of writing no such
-          specification nor implementation exists.</t>
-
-          <t>The authors are planning on writing a new document describing
-            such a new format. The current document describes a currently
-	    deployed and used format.</t>
-        </section>
-      </section>
     </section>
 
     <section anchor="consumers"
@@ -592,14 +549,35 @@
       <t>Similarly, consumers who do not perform sufficient verification of
       published data bear the same risks as from other forms of geolocation
       configuration errors.</t>
+
+      <t>Validation of a feed's contents includes verifying that the publisher
+      is authoritative for the IP prefixes included in the feed. Failure to
+      verify IP prefix authority would, for example, allow ISP Bob to make
+      geolocation statements about IP space held by ISP Alice. At this time
+      only out-of-band verification methods are implemented (i.e. an ISP's
+      feed may be verified against publicly available IP allocation data).
+      </t>
+    </section>
+
+    <section title="Planned future work">
+      <t>In order to more flexibly support future extensions, use of a
+      more expressive feed format has been suggested. Use of JavaScript
+      Object Notation (JSON, <xref target="RFC4627"/>), specifically, has
+      been discussed. However, at the time of writing no such
+      specification nor implementation exists. Nevertheless, work on
+      extensions is deferred until a more suitable format has been
+      selected</t>
+
+      <t>The authors are planning on writing a document describing
+      such a new format. The current document describes a currently
+      deployed and used format.</t>
     </section>
 
     <section title="Finding self-published IP geolocation feeds">
       <t>The issue of finding, and later verifying, geolocation feeds is not
       formally specified in this document. At this time, only ad hoc feed
       discovery and verification has a modicum of established practice (see
-      below). Regardless, both the ad hoc mechanics and a few proposed but not
-      yet implemented alternatives are discussed.</t>
+      below); discussion of other mechanisms has been removed for clarity.</t>
 
       <section title="Ad hoc 'well known' URIs">
         <t>To date, geolocation feeds have been shared informally in the form
@@ -626,84 +604,18 @@
         of operational authority of advertised prefixes.</t>
       </section>
 
-      <section title="Using public databases of network authority">
-        <t>One possibility for enabling automation would be publication of
-        feed URIs as a well-known attribute in public databases of network
-        authority, e.g. the WHOIS service (<xref target="RFC3912"/>) operated
-        by RIRs. Verification may be performed if the same or similarly
-        authoritative service provides the identical feed URI for queries for
-        each CIDR prefix in the geolocation feed.</t>
-
-        <t>The burden of serving this data to all interested consumers,
-        especially the load imposed by any verification process, is not yet
-        known. The anticipation of additional operational burden on the public
-        resource of record (the database of network authority) is however a
-        noted concern.</t>
+      <section title="Other mechanisms">
+        <t>Previous versions of this document referenced use of the
+        WHOIS service (<xref target="RFC3912"/>) operated by RIRs as well as
+        possible DNS-based schemes to discover and validate geofeeds.
+        To the authors' knowledge support for such mechanisms has never been
+        implemented, and this speculative text has been removed to avoid
+        ambiguity.</t>
       </section>
+    </section>
 
-      <section title="Using 'reverse' DNS with NAPTR records">
-        <t>Another possibility for automating the location and verification of
-        a geolocation feed is to incorporate feed URIs into the DNS,
-        specifically the in-addr.arpa and ip6.arpa portions of the DNS
-        hierarchy. A suitably formatted query for a NAPTR (<xref
-        target="RFC3403"/>) record, or more specifically a U-NAPTR (<xref
-        target="RFC4848"/>) record, could yield a transformation to a
-        geolocation feed URI.</t>
-
-        <t>For example, assuming a purely theoretical service name of
-        "x-geofeed", a 'reverse' DNS zone might contain a record of the form:
-        <figure>
-            <artwork><![CDATA[
-    ;;       order pref flags
-    IN NAPTR 200   10   "u"    "x-geofeed"        ( ; service
-                                                    ; regexp
-                               "!.*!https://example.com/ipgeo.csv!"
-                               ""                   ; replacement
-                               )
-            ]]></artwork>
-          </figure></t>
-
-        <t>Attempts to locate the geolocation feed for a given IP address
-        would begin by querying directly for a NAPTR record associated with
-        the address's PTR-style name. For example, 192.0.2.4 and 2001:db8::6
-        would cause a NAPTR record request to be issued for
-        "4.2.0.192.in-addr.arpa" and
-        "6.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa",
-        respectively.</t>
-
-        <t>If no such record exists, one further NAPTR query for the fully
-        qualified domain name of the SOA record in the authority section of
-        the response to the previous query would be performed
-        ("2.0.192.in-addr.arpa" and "d.0.1.0.0.2.ip6.arpa" in the examples
-        above).</t>
-
-        <t>If one or more NAPTR records exist for the full PTR-style name but
-        none of them are for the required service name (e.g. "x-geofeed"),
-        then likely no SOA will be returned as a hint for subsequent queries.
-        In this case, implementations would need to first explicitly query for
-        an SOA record for the full PTR-style name, and then query for a NAPTR
-        record of the SOA in the response (assuming it differs from the
-        previously queried name).</t>
-
-        <t>Any successfully located feed URIs could then be processed as
-        outlined by this document.</t>
-
-        <t>Verification of the contents of a feed would proceed in essentially
-        the same way. CIDR prefixes may be verified by constructing a query
-        for any single address (at random) within the prefix and proceeding as
-        above. While not strictly provably correct (in cases where a publisher
-        has delegated some portion of the advertised prefix but not excluded
-        it from its feed), it may nevertheless suffice for operational
-        purposes, especially if a low-impact on-going verification of observed
-        client IP addresses is implemented, to (eventually) catch any
-        oversights.</t>
-
-        <t>This mode is untested and may prove impractical. However, the
-        operational burden is more closely located with those wishing to
-        bear it, i.e. the publishers who would likely handle
-        serving in-addr.arpa and ip6.arpa for the IP prefixes under their
-        authority.</t>
-      </section>
+    <section title="IANA Considerations">
+      <t>This document makes no requests of the IANA.</t>
     </section>
 
     <section title="Acknowledgements">
@@ -736,8 +648,6 @@
 
       <?rfc include='reference.RFC.3629.xml'?>
 
-      <?rfc include='reference.RFC.4180.xml'?>
-
       <?rfc include='reference.RFC.4291.xml'?>
 
       <?rfc include='reference.RFC.4632.xml'?>
@@ -762,15 +672,13 @@
 
       <?rfc include='reference.RFC.3053.xml'?>
 
-      <?rfc include='reference.RFC.3403.xml'?>
-
       <?rfc include='reference.RFC.3912.xml'?>
+
+      <?rfc include='reference.RFC.4180.xml'?>
 
       <?rfc include='reference.RFC.4408.xml'?>
 
       <?rfc include='reference.RFC.4627.xml'?>
-
-      <?rfc include='reference.RFC.4848.xml'?>
 
       <?rfc include='reference.RFC.5139.xml'?>
 
@@ -824,9 +732,9 @@
                  target="https://www.gstatic.com/geofeed/corp_external">
         <front>
           <title>Google Corp Geofeed</title>
-	  <author>
-	    <organization>Google, LLC</organization>
-	  </author>
+          <author>
+            <organization>Google, LLC</organization>
+          </author>
 
           <date/>
         </front>
