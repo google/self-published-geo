@@ -298,9 +298,9 @@
           all fields which specify any degree of geolocation information. For
           example: <figure>
               <artwork><![CDATA[
-    127.0.0.0/8,,,,
-    224.0.0.0/4,,,,
-    240.0.0.0/4,,,,
+    192.0.2.0/24,,,,
+    2001:db8:1::/48,,,,
+    2001:db8:2::/48,,,,
             ]]></artwork>
             </figure></t>
 
@@ -627,8 +627,8 @@
       early implementers, including but not limited to Mikael Abrahamsson, Ray
       Bellis, John Bond, Alissa Cooper, Andras Erdei, Marco Hogewoning, Mike
       Joseph, Maciej Kuzniar, Menno Schepers, Justyna Sidorska, Pim van Pelt,
-      and Bjoern A. Zeeb. Richard L. Barnes in particular contributed
-      substantial review, text, and advice.</t>
+      and Bjoern A. Zeeb. Richard L. Barnes and Andy Newton in particular
+      contributed substantial review, text, and advice.</t>
     </section>
   </middle>
 
