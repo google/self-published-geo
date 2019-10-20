@@ -5,7 +5,7 @@
 <?rfc tocdepth="4"?>
 <?rfc sortrefs="yes"?>
 <?rfc symrefs="yes"?>
-<rfc category="info" docName="draft-google-self-published-geofeeds-05"
+<rfc category="info" docName="draft-google-self-published-geofeeds-06"
      ipr="trust200902">
   <?xml-stylesheet type="text/xsl" href="rfc2629.xslt" ?>
 
@@ -172,18 +172,26 @@
 
       <section title="Requirements notation">
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-        "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-        document are to be interpreted as described in RFC2119.</t>
+        "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+        "OPTIONAL" in this document are to be interpreted as described in
+        BCP 14 <xref target="RFC2119"/> and <xref target="RFC8174"/> when,
+        and only when, they appear in all capitals, as shown here.</t>
+
+        <t>As this is an informational document about a data format and set of
+        operational practices presently in use, requirements notation captures
+        the design goals of the authors and implementors.</t>
       </section>
 
-      <section title="Implications of publication">
+      <section title="Assumptions about publication">
         <t>This document describes both a format and a mechanism for
-        publishing data, with the implication that the owner of the data
+        publishing data, with the assumption that the network operator to whom
+        operational responsibility has been delegated for any published data
         wishes it to be public. Any privacy risk is bounded by the format, and
-        feed publishers MAY omit any location field to further protect privacy
-        (see <xref target="spec"/> for details about which fields exactly may
-        be omitted). Feed publishers assume the responsibility of determining
-        which data should be made public.</t>
+        feed publishers MAY omit prefixes or any location field associated with
+        a given prefix to further protect privacy (see <xref target="spec"/>
+        for details about which fields exactly may be omitted). Feed publishers
+        assume the responsibility of determining which data should be made
+        public.</t>
 
         <t>This proposal does not incorporate a mechanism to communicate
         acceptable use policies for self-published data. Publication itself is
@@ -222,7 +230,7 @@
         Text after a '#' character is treated as a comment only and ignored.
         Blank lines are similarly ignored.</t>
 
-        <t>Feeds lines that are not comments MUST be in comma separated value
+        <t>Feed lines that are not comments MUST be in comma separated value
         (CSV) format as described in <xref target="RFC4180"/>. Each feed entry
         is a text line of the form:
         <figure>
@@ -334,9 +342,7 @@
           ignore any fields beyond those it expects. The data from fields
           which are expected and which parse successfully MUST still be
           considered valid.</t>
-        </section>
 
-        <section title="Looking up an IP address">
           <t>Multiple entries which constitute nested prefixes are permitted.
           Consumers SHOULD consider the entry with the longest matching prefix
           (i.e. the "most specific") to be the best matching entry for a given
@@ -364,15 +370,13 @@
 
         <t><figure>
             <artwork><![CDATA[
-    # IETF 104, March 2019 - Prague, CZ.
-    # Note that Prague changed from CZ-PR to CZ-10 2016-11-15
-    # https://www.iso.org/obp/ui/#iso:code:3166:CZ
-    130.129.0.0/16,CZ,CZ-10,Prague,
-    2001:df8::/32,CZ,CZ-10,Prague,
-    31.133.128.0/18,CZ,CZ-10,Prague,
-    31.130.224.0/20,CZ,CZ-10,Prague,
-    2001:67c:1230::/46,CZ,CZ-10,Prague,
-    2001:67c:370::/48,CZ,CZ-10,Prague,
+    # IETF106 (Singapore) - November 2019 - Singapore, SG
+    130.129.0.0/16,SG,SG-01,Singapore,
+    2001:df8::/32,SG,SG-01,Singapore,
+    31.133.128.0/18,SG,SG-01,Singapore,
+    31.130.224.0/20,SG,SG-01,Singapore,
+    2001:67c:1230::/46,SG,SG-01,Singapore,
+    2001:67c:370::/48,SG,SG-01,Singapore,
             ]]></artwork>
           </figure></t>
 
@@ -381,8 +385,8 @@
         with each new event. <xref target="GEO_RIPE_NCC"/> at the time of
         writing contains: <figure>
             <artwork><![CDATA[
-    193.0.24.0/21,IS,IS-1,Reykjavík,
-    2001:67c:64::/48,IS,IS-1,Reykjavík,
+    193.0.24.0/21,NL,NL-ZH,Rotterdam,
+    2001:67c:64::/48,NL,NL-ZH,Rotterdam,
             ]]></artwork>
           </figure></t>
 
@@ -390,8 +394,8 @@
         portable conference network prefixes. <xref target="GEO_ICANN"/> at
         the time of writing contains: <figure>
             <artwork><![CDATA[
-    199.91.192.0/21,ES,ES-CT,Barcelona
-    2620:f:8000::/48,ES,ES-CT,Barcelona
+    199.91.192.0/21,MA,MA-07,Marrakech
+    2620:f:8000::/48,MA,MA-07,Marrakech
             ]]></artwork>
           </figure></t>
 
@@ -399,20 +403,8 @@
         Geofeed, which lists the geo-location information for Google corporate
         offices.</t>
 
-        <t>Furthermore, it is worth noting that the geolocation data of SixXS
-        users, already available at whois.sixxs.net, is now also accessible in
-        the format described here (see <xref target="GEO_SIXXS"/>). This can
-        be particularly useful where tunnel broker networks <xref
-        target="RFC3053"/> are concerned as: <list style="symbols">
-            <t>the geolocation attributes of users with neighboring prefixes
-            can be quite different and therefore not easily aggregated,
-            and</t>
-
-            <t>attempting to learn this data by statistical analysis can be
-            complicated by the likely low number of samples for any given
-            user, making satisfactory statistical confidence difficult to
-            achieve.</t>
-          </list></t>
+        <t>At the time of writing, Google processes approximately 400 feeds
+        comprising more than 750,000 IPv4 and IPv6 prefixes.</t>
       </section>
     </section>
 
@@ -441,11 +433,10 @@
         process. Future automated means of feed discovery SHOULD have an
         accompanying automated means of verification.</t>
 
-        <t>A consumer MUST only trust geolocation information for IP addresses
+        <t>A consumer should only trust geolocation information for IP addresses
         or prefixes for which the publisher has been verified as
         administratively authoritative. All other geolocation feed entries
-        MUST be ignored and SHOULD be logged for further administrative
-        review.</t>
+        should be ignored and logged for further administrative review.</t>
       </section>
 
       <section title="Verification of accuracy">
@@ -543,8 +534,10 @@
     <section anchor="Security" title="Security Considerations">
       <t>As there is no true security in the obscurity of the location of any
       given IP address, self-publication of this data fundamentally opens no
-      new attack vectors. For publishers, self-published data merely increases
-      the ease with which such location data might be exploited.</t>
+      new attack vectors. For publishers, self-published data may increase
+      the ease with which such location data might be exploited (it can, for
+      example, make easy the discovery of prefixes populated with customers
+      as distinct from prefixes not generally in use).</t>
 
       <t>For consumers, feed retrieval processes may receive input from
       potentially hostile sources (e.g. in the event of hijacked traffic). As
@@ -624,11 +617,14 @@
 
     <section title="Acknowledgements">
       <t>The authors would like to express their gratitude to reviewers and
-      early implementers, including but not limited to Mikael Abrahamsson, Ray
-      Bellis, John Bond, Alissa Cooper, Andras Erdei, Marco Hogewoning, Mike
-      Joseph, Maciej Kuzniar, Menno Schepers, Justyna Sidorska, Pim van Pelt,
-      and Bjoern A. Zeeb. Richard L. Barnes and Andy Newton in particular
-      contributed substantial review, text, and advice.</t>
+      early implementers, including but not limited to Mikael Abrahamsson,
+      Andrew Alston, Ray Bellis, John Bond, Alissa Cooper, Andras Erdei,
+      Stephen Farrell, Marco Hogewoning, Mike Joseph, Maciej Kuzniar,
+      Menno Schepers, Justyna Sidorska, Pim van Pelt, and
+      Bjoern A.&nbsp;Zeeb.</t>
+
+      <t>Richard L.&nbsp;Barnes and Andy Newton in particular contributed
+      substantial review, text, and advice.</t>
     </section>
   </middle>
 
@@ -649,11 +645,8 @@
       </reference>
 
       <?rfc include='reference.RFC.2616.xml'?>
-
       <?rfc include='reference.RFC.3629.xml'?>
-
       <?rfc include='reference.RFC.4291.xml'?>
-
       <?rfc include='reference.RFC.4632.xml'?>
 
       <reference anchor="ISO.3166.2"
@@ -672,23 +665,16 @@
     </references>
 
     <references title="Informative References">
+      <?rfc include='reference.RFC.2119.xml'?>
       <?rfc include='reference.RFC.2818.xml'?>
-
-      <?rfc include='reference.RFC.3053.xml'?>
-
       <?rfc include='reference.RFC.3912.xml'?>
-
       <?rfc include='reference.RFC.4180.xml'?>
-
       <?rfc include='reference.RFC.4408.xml'?>
-
       <?rfc include='reference.RFC.4627.xml'?>
-
       <?rfc include='reference.RFC.5139.xml'?>
-
       <?rfc include='reference.RFC.5952.xml'?>
-
       <?rfc include='reference.RFC.6772.xml'?>
+      <?rfc include='reference.RFC.8174.xml'?>
 
       <reference anchor="GEO_IETF"
                  target="https://noc.ietf.org/geo/google.csv">
@@ -719,7 +705,7 @@
       </reference>
 
       <reference anchor="GEO_ICANN"
-                 target="https://registration.icann.org/geo/google.csv">
+                 target="https://meeting-services.icann.org/geo/google.csv">
         <front>
           <title>ICANN Meeting Geolocation Data</title>
 
@@ -738,20 +724,6 @@
           <title>Google Corp Geofeed</title>
           <author>
             <organization>Google, LLC</organization>
-          </author>
-
-          <date/>
-        </front>
-      </reference>
-
-      <reference anchor="GEO_SIXXS"
-                 target="https://www.sixxs.net/export/google/">
-        <front>
-          <title>SixXS Geolocation Data</title>
-
-          <author fullname="Pim van Pelt" initials="P." surname="van Pelt">
-            <organization abbrev="SixXS">SixXS IPv6 Deployment and Tunnel
-            Broker</organization>
           </author>
 
           <date/>
