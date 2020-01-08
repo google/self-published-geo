@@ -5,7 +5,7 @@
 <?rfc tocdepth="4"?>
 <?rfc sortrefs="yes"?>
 <?rfc symrefs="yes"?>
-<rfc category="info" docName="draft-google-self-published-geofeeds-07"
+<rfc category="info" docName="draft-google-self-published-geofeeds-08"
      ipr="trust200902">
   <?xml-stylesheet type="text/xsl" href="rfc2629.xslt" ?>
 
@@ -842,6 +842,8 @@ class IPGeoFeedValidator(object):
 
   def _ShouldIgnoreLine(self, line):
     line = line.strip()
+    if line.startswith('#'):
+      return True
     return len(line) == 0
 
   ############################################################
@@ -1027,15 +1029,16 @@ class IPGeoFeedValidatorTest(object):
     self.TestFeedLine('fc00::/48,PL,,,', 1, 0)
     self.TestFeedLine('fe00::/48,PL,,,', 0, 0)
 
-    print '%d tests passed, %d failed' % (self.successes, self.failures)
+    print ('%d tests passed, %d failed'
+      % (self.successes, self.failures))
 
   def IsOutputLogCorrectAtSeverity(self, severity, expected_msg_count):
     msg_count = self.validator.CountErrors(severity)
 
     if msg_count != expected_msg_count:
-      print 'TEST FAILED: %s\nexpected %d %s[s], observed %d\n%s\n' % (
+      print ('TEST FAILED: %s\nexpected %d %s[s], observed %d\n%s\n' % (
           self.validator.line, expected_msg_count, severity, msg_count,
-          str(self.validator.output_log[severity]))
+          str(self.validator.output_log[severity])))
       return False
     return True
 
