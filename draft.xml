@@ -210,8 +210,10 @@
         large", are likely to be too operationally complex.</t>
 
         <t>Feeds MUST use UTF-8 <xref target="RFC3629"/> character encoding.
-        Text after a '#' character is treated as a comment only and ignored.
-        Blank lines are similarly ignored.</t>
+        Text from a '#' character to the end of the current line is treated 
+        as a comment only and ignored. Blank lines are similarly ignored.
+        Lines are delimited by a line break (CRLF) (as specifed in 
+        <xref target="RFC4180"/>).</t>
 
         <t>Feed lines that are not comments MUST be in comma separated value
         (CSV) format as described in <xref target="RFC4180"/>. Each feed entry
@@ -442,7 +444,8 @@
         notification, consumers SHOULD implement mechanisms to periodically
         refresh local copies of feed data. In the absence of any other refresh
         timing information, it is recommended that consumers SHOULD refresh
-        feeds no less often than weekly.</t>
+        feeds no less often than weekly, and no more often than is likely
+        cause issues to the publisher.</t>
 
         <t>For feeds available via HTTPS (or HTTP), the publisher MAY
         communicate refresh timing information by means of the standard HTTP
@@ -570,8 +573,9 @@
 
       <section title="Ad Hoc 'Well Known' URIs">
         <t>To date, geolocation feeds have been shared informally in the form
-        of HTTPS URIs exchanged in email threads. The two example URIs
-        documented above describe networks that change locations periodically,
+        of HTTPS URIs exchanged in email threads. Three of example URIs
+        documented below (<xref target="GEO_IETF"/>, <xref target="GEO_RIPE_NCC"/>,
+        <xref target="GEO_ICANN"/>) describe networks that change locations periodically,
         the operators and operational practices of which are well known within
         their respective technical communities.</t>
 
@@ -638,8 +642,10 @@
 
       <?rfc include='reference.RFC.2616.xml'?>
       <?rfc include='reference.RFC.3629.xml'?>
+      <?rfc include='reference.RFC.4180.xml'?>
       <?rfc include='reference.RFC.4291.xml'?>
       <?rfc include='reference.RFC.4632.xml'?>
+      <?rfc include='reference.RFC.5952.xml'?>
 
       <reference anchor="ISO.3166.2"
                  target="http://www.iso.org/iso/home/standards/country_codes.htm#2012_iso3166-2">
@@ -660,11 +666,9 @@
       <?rfc include='reference.RFC.2119.xml'?>
       <?rfc include='reference.RFC.2818.xml'?>
       <?rfc include='reference.RFC.3912.xml'?>
-      <?rfc include='reference.RFC.4180.xml'?>
       <?rfc include='reference.RFC.4408.xml'?>
       <?rfc include='reference.RFC.4627.xml'?>
       <?rfc include='reference.RFC.5139.xml'?>
-      <?rfc include='reference.RFC.5952.xml'?>
       <?rfc include='reference.RFC.6772.xml'?>
       <?rfc include='reference.RFC.8174.xml'?>
 
@@ -952,6 +956,8 @@ def main():
 
 if __name__ == '__main__':
   main()
+<CODE ENDS>
+
             ]]></artwork>
         </figure></t>
 
@@ -961,6 +967,7 @@ if __name__ == '__main__':
 
       <t><figure>
           <artwork><![CDATA[
+<CODE BEGINS>
 #!/usr/bin/python
 #
 # Copyright (c) 2012 IETF Trust and the persons identified as authors of
