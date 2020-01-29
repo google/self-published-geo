@@ -445,7 +445,7 @@
         refresh local copies of feed data. In the absence of any other refresh
         timing information, it is recommended that consumers SHOULD refresh
         feeds no less often than weekly, and no more often than is likely
-        cause issues to the publisher.</t>
+        to cause issues to the publisher.</t>
 
         <t>For feeds available via HTTPS (or HTTP), the publisher MAY
         communicate refresh timing information by means of the standard HTTP
