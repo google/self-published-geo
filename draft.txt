@@ -5,12 +5,12 @@
 Network Working Group                                           E. Kline
 Internet-Draft                                                  Loon LLC
 Intended status: Informational                                 K. Duleba
-Expires: July 11, 2020                                       Z. Szamonek
+Expires: July 31, 2020                                       Z. Szamonek
                                                                 S. Moser
                                                  Google Switzerland GmbH
                                                                W. Kumari
                                                                   Google
-                                                         January 8, 2020
+                                                        January 28, 2020
 
 
             A Format for Self-published IP Geolocation Feeds
@@ -49,11 +49,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 11, 2020.
+   This Internet-Draft will expire on July 31, 2020.
 
 
 
-Kline, et al.             Expires July 11, 2020                 [Page 1]
+Kline, et al.             Expires July 31, 2020                 [Page 1]
 
 Internet-Draft         Self-published IP Geofeeds           January 2020
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Kline, et al.             Expires July 11, 2020                 [Page 2]
+Kline, et al.             Expires July 31, 2020                 [Page 2]
 
 Internet-Draft         Self-published IP Geofeeds           January 2020
 
@@ -165,7 +165,7 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 
 
 
-Kline, et al.             Expires July 11, 2020                 [Page 3]
+Kline, et al.             Expires July 31, 2020                 [Page 3]
 
 Internet-Draft         Self-published IP Geofeeds           January 2020
 
@@ -214,14 +214,14 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
    changed or differ from current observed geolocation behavior "at
    large", are likely to be too operationally complex.
 
-   Feeds MUST use UTF-8 [RFC3629] character encoding.  Text after a '#'
-   character is treated as a comment only and ignored.  Blank lines are
-   similarly ignored.
+   Feeds MUST use UTF-8 [RFC3629] character encoding.  Text from a '#'
+   character to the end of the current line is treated as a comment only
+   and ignored.  Blank lines are similarly ignored.  Lines are delimited
+   by a line break (CRLF) (as specifed in [RFC4180]).
 
 
 
-
-Kline, et al.             Expires July 11, 2020                 [Page 4]
+Kline, et al.             Expires July 31, 2020                 [Page 4]
 
 Internet-Draft         Self-published IP Geofeeds           January 2020
 
@@ -277,7 +277,7 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 
 
 
-Kline, et al.             Expires July 11, 2020                 [Page 5]
+Kline, et al.             Expires July 31, 2020                 [Page 5]
 
 Internet-Draft         Self-published IP Geofeeds           January 2020
 
@@ -333,7 +333,7 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 
 
 
-Kline, et al.             Expires July 11, 2020                 [Page 6]
+Kline, et al.             Expires July 31, 2020                 [Page 6]
 
 Internet-Draft         Self-published IP Geofeeds           January 2020
 
@@ -389,7 +389,7 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 
 
 
-Kline, et al.             Expires July 11, 2020                 [Page 7]
+Kline, et al.             Expires July 31, 2020                 [Page 7]
 
 Internet-Draft         Self-published IP Geofeeds           January 2020
 
@@ -445,7 +445,7 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 
 
 
-Kline, et al.             Expires July 11, 2020                 [Page 8]
+Kline, et al.             Expires July 31, 2020                 [Page 8]
 
 Internet-Draft         Self-published IP Geofeeds           January 2020
 
@@ -463,7 +463,8 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
    notification, consumers SHOULD implement mechanisms to periodically
    refresh local copies of feed data.  In the absence of any other
    refresh timing information, it is recommended that consumers SHOULD
-   refresh feeds no less often than weekly.
+   refresh feeds no less often than weekly, and no more often than is
+   likely to cause issues to the publisher.
 
    For feeds available via HTTPS (or HTTP), the publisher MAY
    communicate refresh timing information by means of the standard HTTP
@@ -500,8 +501,7 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 
 
 
-
-Kline, et al.             Expires July 11, 2020                 [Page 9]
+Kline, et al.             Expires July 31, 2020                 [Page 9]
 
 Internet-Draft         Self-published IP Geofeeds           January 2020
 
@@ -557,7 +557,7 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 
 
 
-Kline, et al.             Expires July 11, 2020                [Page 10]
+Kline, et al.             Expires July 31, 2020                [Page 10]
 
 Internet-Draft         Self-published IP Geofeeds           January 2020
 
@@ -599,10 +599,11 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 8.1.  Ad Hoc 'Well Known' URIs
 
    To date, geolocation feeds have been shared informally in the form of
-   HTTPS URIs exchanged in email threads.  The two example URIs
-   documented above describe networks that change locations
-   periodically, the operators and operational practices of which are
-   well known within their respective technical communities.
+   HTTPS URIs exchanged in email threads.  Three of example URIs
+   documented below ([GEO_IETF], [GEO_RIPE_NCC], [GEO_ICANN]) describe
+   networks that change locations periodically, the operators and
+   operational practices of which are well known within their respective
+   technical communities.
 
    The contents of the feeds are verified by a similarly ad hoc process
    including:
@@ -612,8 +613,7 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 
 
 
-
-Kline, et al.             Expires July 11, 2020                [Page 11]
+Kline, et al.             Expires July 31, 2020                [Page 11]
 
 Internet-Draft         Self-published IP Geofeeds           January 2020
 
@@ -669,7 +669,7 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 
 
 
-Kline, et al.             Expires July 11, 2020                [Page 12]
+Kline, et al.             Expires July 31, 2020                [Page 12]
 
 Internet-Draft         Self-published IP Geofeeds           January 2020
 
@@ -684,6 +684,11 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
               10646", STD 63, RFC 3629, DOI 10.17487/RFC3629, November
               2003, <https://www.rfc-editor.org/info/rfc3629>.
 
+   [RFC4180]  Shafranovich, Y., "Common Format and MIME Type for Comma-
+              Separated Values (CSV) Files", RFC 4180,
+              DOI 10.17487/RFC4180, October 2005,
+              <https://www.rfc-editor.org/info/rfc4180>.
+
    [RFC4291]  Hinden, R. and S. Deering, "IP Version 6 Addressing
               Architecture", RFC 4291, DOI 10.17487/RFC4291, February
               2006, <https://www.rfc-editor.org/info/rfc4291>.
@@ -692,6 +697,11 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
               (CIDR): The Internet Address Assignment and Aggregation
               Plan", BCP 122, RFC 4632, DOI 10.17487/RFC4632, August
               2006, <https://www.rfc-editor.org/info/rfc4632>.
+
+   [RFC5952]  Kawamura, S. and M. Kawashima, "A Recommendation for IPv6
+              Address Text Representation", RFC 5952,
+              DOI 10.17487/RFC5952, August 2010,
+              <https://www.rfc-editor.org/info/rfc5952>.
 
 11.2.  Informative References
 
@@ -712,23 +722,20 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
               Schepers, M., "RIPE NCC Meeting Geolocation Data",
               <https://meetings.ripe.net/geo/google.csv>.
 
+
+
+
+Kline, et al.             Expires July 31, 2020                [Page 13]
+
+Internet-Draft         Self-published IP Geofeeds           January 2020
+
+
    [GEOPRIV]  Internet Engineering Task Force, "IETF geopriv Working
               Group", <http://datatracker.ietf.org/wg/geopriv/>.
 
    [IPADDR_PY]
               Shields, M. and P. Moody, "Python IP address manipulation
               library", <http://code.google.com/p/ipaddr-py/>.
-
-
-
-
-
-
-
-Kline, et al.             Expires July 11, 2020                [Page 13]
-
-Internet-Draft         Self-published IP Geofeeds           January 2020
-
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -742,11 +749,6 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
    [RFC3912]  Daigle, L., "WHOIS Protocol Specification", RFC 3912,
               DOI 10.17487/RFC3912, September 2004,
               <https://www.rfc-editor.org/info/rfc3912>.
-
-   [RFC4180]  Shafranovich, Y., "Common Format and MIME Type for Comma-
-              Separated Values (CSV) Files", RFC 4180,
-              DOI 10.17487/RFC4180, October 2005,
-              <https://www.rfc-editor.org/info/rfc4180>.
 
    [RFC4408]  Wong, M. and W. Schlitt, "Sender Policy Framework (SPF)
               for Authorizing Use of Domains in E-Mail, Version 1",
@@ -763,11 +765,6 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
               Object (PIDF-LO)", RFC 5139, DOI 10.17487/RFC5139,
               February 2008, <https://www.rfc-editor.org/info/rfc5139>.
 
-   [RFC5952]  Kawamura, S. and M. Kawashima, "A Recommendation for IPv6
-              Address Text Representation", RFC 5952,
-              DOI 10.17487/RFC5952, August 2010,
-              <https://www.rfc-editor.org/info/rfc5952>.
-
    [RFC6772]  Schulzrinne, H., Ed., Tschofenig, H., Ed., Cuellar, J.,
               Polk, J., Morris, J., and M. Thomson, "Geolocation Policy:
               A Document Format for Expressing Privacy Preferences for
@@ -781,7 +778,10 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 
 
 
-Kline, et al.             Expires July 11, 2020                [Page 14]
+
+
+
+Kline, et al.             Expires July 31, 2020                [Page 14]
 
 Internet-Draft         Self-published IP Geofeeds           January 2020
 
@@ -837,7 +837,7 @@ the standard input and performs basic validation.  It is intended for
 
 
 
-Kline, et al.             Expires July 11, 2020                [Page 15]
+Kline, et al.             Expires July 31, 2020                [Page 15]
 
 Internet-Draft         Self-published IP Geofeeds           January 2020
 
@@ -893,7 +893,7 @@ class IPGeoFeedValidator(object):
 
 
 
-Kline, et al.             Expires July 11, 2020                [Page 16]
+Kline, et al.             Expires July 31, 2020                [Page 16]
 
 Internet-Draft         Self-published IP Geofeeds           January 2020
 
@@ -949,7 +949,7 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 
 
 
-Kline, et al.             Expires July 11, 2020                [Page 17]
+Kline, et al.             Expires July 31, 2020                [Page 17]
 
 Internet-Draft         Self-published IP Geofeeds           January 2020
 
@@ -1005,7 +1005,7 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 
 
 
-Kline, et al.             Expires July 11, 2020                [Page 18]
+Kline, et al.             Expires July 31, 2020                [Page 18]
 
 Internet-Draft         Self-published IP Geofeeds           January 2020
 
@@ -1033,11 +1033,14 @@ def main():
 
 if __name__ == '__main__':
   main()
+<CODE ENDS>
+
 
    A unit test file, "ipgeo_feed_validator_test.py" is provided as well.
    It provides basic test coverage of the code above, though does not
    test correct handling of non-ASCII UTF-8 strings.
 
+<CODE BEGINS>
 #!/usr/bin/python
 #
 # Copyright (c) 2012 IETF Trust and the persons identified as authors of
@@ -1055,17 +1058,17 @@ class IPGeoFeedValidatorTest(object):
     self.validator = IPGeoFeedValidator()
     self.validator.SetOutputStream(None)
     self.successes = 0
-    self.failures = 0
-
-  def Run(self):
 
 
 
-Kline, et al.             Expires July 11, 2020                [Page 19]
+Kline, et al.             Expires July 31, 2020                [Page 19]
 
 Internet-Draft         Self-published IP Geofeeds           January 2020
 
 
+    self.failures = 0
+
+  def Run(self):
     self.TestFeedLine('# asdf', 0, 0)
     self.TestFeedLine('   ', 0, 0)
     self.TestFeedLine('', 0, 0)
@@ -1111,16 +1114,16 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
     self.TestFeedLine('192.168.100.1,US,,,', 1, 0)
     self.TestFeedLine('10.0.5.9,US,,,', 1, 0)
     self.TestFeedLine('10.0.5.0/24,US,,,', 1, 0)
-    self.TestFeedLine('fc00::/48,PL,,,', 1, 0)
-    self.TestFeedLine('fe00::/48,PL,,,', 0, 0)
 
 
 
-
-Kline, et al.             Expires July 11, 2020                [Page 20]
+Kline, et al.             Expires July 31, 2020                [Page 20]
 
 Internet-Draft         Self-published IP Geofeeds           January 2020
 
+
+    self.TestFeedLine('fc00::/48,PL,,,', 1, 0)
+    self.TestFeedLine('fe00::/48,PL,,,', 0, 0)
 
     print ('%d tests passed, %d failed'
       % (self.successes, self.failures))
@@ -1170,10 +1173,7 @@ Authors' Addresses
 
 
 
-
-
-
-Kline, et al.             Expires July 11, 2020                [Page 21]
+Kline, et al.             Expires July 31, 2020                [Page 21]
 
 Internet-Draft         Self-published IP Geofeeds           January 2020
 
@@ -1229,4 +1229,4 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 
 
 
-Kline, et al.             Expires July 11, 2020                [Page 22]
+Kline, et al.             Expires July 31, 2020                [Page 22]
