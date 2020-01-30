@@ -210,10 +210,13 @@
         large", are likely to be too operationally complex.</t>
 
         <t>Feeds MUST use UTF-8 <xref target="RFC3629"/> character encoding.
-        Text from a '#' character to the end of the current line is treated 
-        as a comment only and ignored. Blank lines are similarly ignored.
         Lines are delimited by a line break (CRLF) (as specifed in 
-        <xref target="RFC4180"/>).</t>
+        <xref target="RFC4180"/>), and blank lines are ignored.
+        Text from a '#' character to the end of the current line is treated 
+        as a comment only and is similarily ignored (note that this does not
+        stricly follow <xref target="RFC4180"/>, which has no support for
+        comments).
+        </t>
 
         <t>Feed lines that are not comments MUST be in comma separated value
         (CSV) format as described in <xref target="RFC4180"/>. Each feed entry
