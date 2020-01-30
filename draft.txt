@@ -14,7 +14,7 @@ Expires: August 2, 2020                                      Z. Szamonek
 
 
             A Format for Self-published IP Geolocation Feeds
-                draft-google-self-published-geofeeds-09
+                draft-google-self-published-geofeeds-08
 
 Abstract
 
