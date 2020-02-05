@@ -5,7 +5,7 @@
 <?rfc tocdepth="4"?>
 <?rfc sortrefs="yes"?>
 <?rfc symrefs="yes"?>
-<rfc category="info" docName="draft-google-self-published-geofeeds-08"
+<rfc category="info" docName="draft-google-self-published-geofeeds-09"
      ipr="trust200902">
   <?xml-stylesheet type="text/xsl" href="rfc2629.xslt" ?>
 
@@ -223,7 +223,7 @@
         is a text line of the form:
         <figure>
             <artwork><![CDATA[
-    ip_prefix,country,region,city,postal_code
+    ip_prefix,alpha2code,region,city,postal_code
             ]]></artwork>
           </figure></t>
 
@@ -244,11 +244,13 @@
             "2001:db8::1" and "2001:db8::/32" for IPv6.</t>
           </section>
 
-          <section title="Country">
-            <t>OPTIONAL. The country field, if non-empty, MUST be a 2 letter
+          <section title="Alpha2code (previously: 'country')">
+            <t>OPTIONAL. The alpha2code field, if non-empty, MUST be a 2 letter
             ISO country code conforming to ISO 3166-1 alpha 2 <xref
             target="ISO.3166.1alpha2"/>. Parsers SHOULD treat this field
-            case-insensitively.</t>
+            case-insensitively. Earlier versions of this document called this
+            field "country", and it may still be referred to as such in
+            existing tools / interfaces.</t>
 
             <t>Examples include "US" for the United States, "JP" for Japan,
             and "PL" for Poland.</t>
@@ -302,9 +304,9 @@
             ]]></artwork>
             </figure></t>
 
-          <t>Historically, the user-assigned country identifier of "ZZ" has been
+          <t>Historically, the user-assigned alpha2code identifier of "ZZ" has been
           used for this same purpose. This is not necessarily preferred, and
-          no specific interpretation of any of the other user-assigned country
+          no specific interpretation of any of the other user-assigned alpha2code
           codes is currently defined.</t>
         </section>
 
@@ -342,7 +344,7 @@
 
       <section title="Examples">
         <t>Example entries using different IP address formats and describing
-        locations at country, region, and city granularity level,
+        locations at alpha2code ("country codes"), region, and city granularity level,
         respectively: <figure>
             <artwork><![CDATA[
     192.0.2.0/25,US,US-AL,,
@@ -619,7 +621,7 @@
       early implementers, including but not limited to Mikael Abrahamsson,
       Andrew Alston, Ray Bellis, John Bond, Alissa Cooper, Andras Erdei,
       Stephen Farrell, Marco Hogewoning, Mike Joseph, Maciej Kuzniar,
-      Menno Schepers, Justyna Sidorska, Pim van Pelt, and
+      George Michaelson, Menno Schepers, Justyna Sidorska, Pim van Pelt, and
       Bjoern A.&nbsp;Zeeb.</t>
 
       <t>Richard L.&nbsp;Barnes and Andy Newton in particular contributed

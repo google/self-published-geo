@@ -5,16 +5,16 @@
 Network Working Group                                           E. Kline
 Internet-Draft                                                  Loon LLC
 Intended status: Informational                                 K. Duleba
-Expires: August 2, 2020                                      Z. Szamonek
+Expires: August 8, 2020                                      Z. Szamonek
                                                                 S. Moser
                                                  Google Switzerland GmbH
                                                                W. Kumari
                                                                   Google
-                                                        January 30, 2020
+                                                        February 5, 2020
 
 
             A Format for Self-published IP Geolocation Feeds
-                draft-google-self-published-geofeeds-08
+                draft-google-self-published-geofeeds-09
 
 Abstract
 
@@ -49,13 +49,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 2, 2020.
+   This Internet-Draft will expire on August 8, 2020.
 
 
 
-Kline, et al.            Expires August 2, 2020                 [Page 1]
+Kline, et al.            Expires August 8, 2020                 [Page 1]
 
-Internet-Draft         Self-published IP Geofeeds           January 2020
+Internet-Draft         Self-published IP Geofeeds          February 2020
 
 
 Copyright Notice
@@ -83,9 +83,9 @@ Table of Contents
      2.1.  Specification . . . . . . . . . . . . . . . . . . . . . .   4
        2.1.1.  Geolocation Feed Individual Entry Fields  . . . . . .   5
          2.1.1.1.  IP Prefix . . . . . . . . . . . . . . . . . . . .   5
-         2.1.1.2.  Country . . . . . . . . . . . . . . . . . . . . .   5
+         2.1.1.2.  Alpha2code (previously: 'country')  . . . . . . .   5
          2.1.1.3.  Region  . . . . . . . . . . . . . . . . . . . . .   5
-         2.1.1.4.  City  . . . . . . . . . . . . . . . . . . . . . .   5
+         2.1.1.4.  City  . . . . . . . . . . . . . . . . . . . . . .   6
          2.1.1.5.  Postal Code . . . . . . . . . . . . . . . . . . .   6
        2.1.2.  Prefixes With No Geolocation Information  . . . . . .   6
        2.1.3.  Additional Parsing Requirements . . . . . . . . . . .   6
@@ -105,19 +105,19 @@ Table of Contents
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  12
    10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  12
    11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  12
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  12
+     11.1.  Normative References . . . . . . . . . . . . . . . . . .  13
 
 
 
-Kline, et al.            Expires August 2, 2020                 [Page 2]
+Kline, et al.            Expires August 8, 2020                 [Page 2]
 
-Internet-Draft         Self-published IP Geofeeds           January 2020
+Internet-Draft         Self-published IP Geofeeds          February 2020
 
 
      11.2.  Informative References . . . . . . . . . . . . . . . . .  13
      11.3.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . .  15
    Appendix A.  Sample Python Validation Code  . . . . . . . . . . .  15
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  21
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  22
 
 1.  Introduction
 
@@ -165,9 +165,9 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 
 
 
-Kline, et al.            Expires August 2, 2020                 [Page 3]
+Kline, et al.            Expires August 8, 2020                 [Page 3]
 
-Internet-Draft         Self-published IP Geofeeds           January 2020
+Internet-Draft         Self-published IP Geofeeds          February 2020
 
 
 1.3.  Assumptions About Publication
@@ -221,9 +221,9 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 
 
 
-Kline, et al.            Expires August 2, 2020                 [Page 4]
+Kline, et al.            Expires August 8, 2020                 [Page 4]
 
-Internet-Draft         Self-published IP Geofeeds           January 2020
+Internet-Draft         Self-published IP Geofeeds          February 2020
 
 
    (note that this does not stricly follow [RFC4180], which has no
@@ -233,7 +233,7 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
    (CSV) format as described in [RFC4180].  Each feed entry is a text
    line of the form:
 
-       ip_prefix,country,region,city,postal_code
+       ip_prefix,alpha2code,region,city,postal_code
 
    The IP prefix field is REQUIRED, all others are OPTIONAL (can be
    empty), though the requisite minimum number of commas SHOULD be
@@ -250,11 +250,13 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
    Examples include "192.0.2.1" and "192.0.2.0/24" for IPv4 and
    "2001:db8::1" and "2001:db8::/32" for IPv6.
 
-2.1.1.2.  Country
+2.1.1.2.  Alpha2code (previously: 'country')
 
-   OPTIONAL.  The country field, if non-empty, MUST be a 2 letter ISO
+   OPTIONAL.  The alpha2code field, if non-empty, MUST be a 2 letter ISO
    country code conforming to ISO 3166-1 alpha 2 [ISO.3166.1alpha2].
-   Parsers SHOULD treat this field case-insensitively.
+   Parsers SHOULD treat this field case-insensitively.  Earlier versions
+   of this document called this field "country", and it may still be
+   referred to as such in existing tools / interfaces.
 
    Examples include "US" for the United States, "JP" for Japan, and "PL"
    for Poland.
@@ -268,19 +270,22 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
    Examples include "ID-RI" for the Riau province of Indonesia and "NG-
    RI" for the Rivers province in Nigeria.
 
+
+
+
+
+
+
+
+Kline, et al.            Expires August 8, 2020                 [Page 5]
+
+Internet-Draft         Self-published IP Geofeeds          February 2020
+
+
 2.1.1.4.  City
 
    OPTIONAL.  The city field, if non-empty, SHOULD be free UTF-8 text,
    excluding the comma (',') character.
-
-
-
-
-
-Kline, et al.            Expires August 2, 2020                 [Page 5]
-
-Internet-Draft         Self-published IP Geofeeds           January 2020
-
 
    Examples include "Dublin", "New York", and "Sao Paulo" (specifically
    "S" followed by 0xc3, 0xa3, and "o Paulo").
@@ -313,10 +318,10 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
        2001:db8:1::/48,,,,
        2001:db8:2::/48,,,,
 
-   Historically, the user-assigned country identifier of "ZZ" has been
-   used for this same purpose.  This is not necessarily preferred, and
-   no specific interpretation of any of the other user-assigned country
-   codes is currently defined.
+   Historically, the user-assigned alpha2code identifier of "ZZ" has
+   been used for this same purpose.  This is not necessarily preferred,
+   and no specific interpretation of any of the other user-assigned
+   alpha2code codes is currently defined.
 
 2.1.3.  Additional Parsing Requirements
 
@@ -324,20 +329,21 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
    address or prefix field which fails to parse correctly MUST be
    discarded.
 
+
+
+
+
+Kline, et al.            Expires August 8, 2020                 [Page 6]
+
+Internet-Draft         Self-published IP Geofeeds          February 2020
+
+
    While publishers SHOULD follow [RFC5952] style for IPv6 prefix
    fields, consumers MUST nevertheless accept all valid string
    representations.
 
    Duplicate IP address or prefix entries MUST be considered an error,
    and consumer implementations SHOULD log the repeated entries for
-
-
-
-Kline, et al.            Expires August 2, 2020                 [Page 6]
-
-Internet-Draft         Self-published IP Geofeeds           January 2020
-
-
    further administrative review.  Publishers SHOULD take measures to
    ensure there is one and only one entry per IP address and prefix.
 
@@ -359,8 +365,8 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 2.2.  Examples
 
    Example entries using different IP address formats and describing
-   locations at country, region, and city granularity level,
-   respectively:
+   locations at alpha2code ("country codes"), region, and city
+   granularity level, respectively:
 
        192.0.2.0/25,US,US-AL,,
        192.0.2.5,US,US-AL,Alabaster,
@@ -381,18 +387,16 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
        2001:67c:1230::/46,SG,SG-01,Singapore,
        2001:67c:370::/48,SG,SG-01,Singapore,
 
+
+
+Kline, et al.            Expires August 8, 2020                 [Page 7]
+
+Internet-Draft         Self-published IP Geofeeds          February 2020
+
+
    Experimentally, RIPE has published geolocation information for their
    conference network prefixes, which change location in accordance with
    each new event.  [GEO_RIPE_NCC] at the time of writing contains:
-
-
-
-
-
-Kline, et al.            Expires August 2, 2020                 [Page 7]
-
-Internet-Draft         Self-published IP Geofeeds           January 2020
-
 
        193.0.24.0/21,NL,NL-ZH,Rotterdam,
        2001:67c:64::/48,NL,NL-ZH,Rotterdam,
@@ -437,18 +441,17 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 
    A consumer should only trust geolocation information for IP addresses
    or prefixes for which the publisher has been verified as
+
+
+
+
+Kline, et al.            Expires August 8, 2020                 [Page 8]
+
+Internet-Draft         Self-published IP Geofeeds          February 2020
+
+
    administratively authoritative.  All other geolocation feed entries
    should be ignored and logged for further administrative review.
-
-
-
-
-
-
-Kline, et al.            Expires August 2, 2020                 [Page 8]
-
-Internet-Draft         Self-published IP Geofeeds           January 2020
-
 
 3.3.  Verification of Accuracy
 
@@ -495,16 +498,16 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
    the level of specificity be consistent across all entries within a
    feed.  In particular, the Postal Code field (Section 2.1.1.5) can
    provide very specific geolocation, sometimes within a building.  Such
+
+
+
+Kline, et al.            Expires August 8, 2020                 [Page 9]
+
+Internet-Draft         Self-published IP Geofeeds          February 2020
+
+
    specific Postal Code values MUST NOT be published in geofeeds without
    the express consent of the parties being located.
-
-
-
-
-Kline, et al.            Expires August 2, 2020                 [Page 9]
-
-Internet-Draft         Self-published IP Geofeeds           January 2020
-
 
    Operators who publish geolocation information are strongly encouraged
    to inform affected users/customers of this fact and of the potential
@@ -550,17 +553,19 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
    (it can, for example, make easy the discovery of prefixes populated
    with customers as distinct from prefixes not generally in use).
 
+
+
+
+
+Kline, et al.            Expires August 8, 2020                [Page 10]
+
+Internet-Draft         Self-published IP Geofeeds          February 2020
+
+
    For consumers, feed retrieval processes may receive input from
    potentially hostile sources (e.g. in the event of hijacked traffic).
    As such, proper input validation and defense measures MUST be taken
    (see the discussion in Section 3.1).
-
-
-
-Kline, et al.            Expires August 2, 2020                [Page 10]
-
-Internet-Draft         Self-published IP Geofeeds           January 2020
-
 
    Similarly, consumers who do not perform sufficient verification of
    published data bear the same risks as from other forms of geolocation
@@ -604,19 +609,20 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
    HTTPS URIs exchanged in email threads.  Three of example URIs
    documented below ([GEO_IETF], [GEO_RIPE_NCC], [GEO_ICANN]) describe
    networks that change locations periodically, the operators and
+
+
+
+
+Kline, et al.            Expires August 8, 2020                [Page 11]
+
+Internet-Draft         Self-published IP Geofeeds          February 2020
+
+
    operational practices of which are well known within their respective
    technical communities.
 
    The contents of the feeds are verified by a similarly ad hoc process
    including:
-
-
-
-
-Kline, et al.            Expires August 2, 2020                [Page 11]
-
-Internet-Draft         Self-published IP Geofeeds           January 2020
-
 
    o  personal knowledge of the parties involved in the exchange, and
 
@@ -648,13 +654,25 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
    The authors would like to express their gratitude to reviewers and
    early implementers, including but not limited to Mikael Abrahamsson,
    Andrew Alston, Ray Bellis, John Bond, Alissa Cooper, Andras Erdei,
-   Stephen Farrell, Marco Hogewoning, Mike Joseph, Maciej Kuzniar, Menno
-   Schepers, Justyna Sidorska, Pim van Pelt, and Bjoern A. Zeeb.
+   Stephen Farrell, Marco Hogewoning, Mike Joseph, Maciej Kuzniar,
+   George Michaelson, Menno Schepers, Justyna Sidorska, Pim van Pelt,
+   and Bjoern A. Zeeb.
 
    Richard L. Barnes and Andy Newton in particular contributed
    substantial review, text, and advice.
 
 11.  References
+
+
+
+
+
+
+
+Kline, et al.            Expires August 8, 2020                [Page 12]
+
+Internet-Draft         Self-published IP Geofeeds          February 2020
+
 
 11.1.  Normative References
 
@@ -662,17 +680,6 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
               agency, I. 3. M., "ISO 3166-1 decoding table",
               <http://www.iso.org/iso/home/standards/country_codes/iso-
               3166-1_decoding_table.htm>.
-
-
-
-
-
-
-
-Kline, et al.            Expires August 2, 2020                [Page 12]
-
-Internet-Draft         Self-published IP Geofeeds           January 2020
-
 
    [ISO.3166.2]
               agency, I. 3. M., "ISO 3166-2:2007",
@@ -714,6 +721,15 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
               Google, LLC, "Google Corp Geofeed",
               <https://www.gstatic.com/geofeed/corp_external>.
 
+
+
+
+
+Kline, et al.            Expires August 8, 2020                [Page 13]
+
+Internet-Draft         Self-published IP Geofeeds          February 2020
+
+
    [GEO_ICANN]
               Internet Corporation For Assigned Names and Numbers,
               "ICANN Meeting Geolocation Data",
@@ -722,13 +738,6 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
    [GEO_IETF]
               Kumari, A., "IETF Meeting Network Geolocation Data",
               <https://noc.ietf.org/geo/google.csv>.
-
-
-
-Kline, et al.            Expires August 2, 2020                [Page 13]
-
-Internet-Draft         Self-published IP Geofeeds           January 2020
-
 
    [GEO_RIPE_NCC]
               Schepers, M., "RIPE NCC Meeting Geolocation Data",
@@ -769,6 +778,14 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
               Object (PIDF-LO)", RFC 5139, DOI 10.17487/RFC5139,
               February 2008, <https://www.rfc-editor.org/info/rfc5139>.
 
+
+
+
+Kline, et al.            Expires August 8, 2020                [Page 14]
+
+Internet-Draft         Self-published IP Geofeeds          February 2020
+
+
    [RFC6772]  Schulzrinne, H., Ed., Tschofenig, H., Ed., Cuellar, J.,
               Polk, J., Morris, J., and M. Thomson, "Geolocation Policy:
               A Document Format for Expressing Privacy Preferences for
@@ -778,13 +795,6 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
-
-
-
-Kline, et al.            Expires August 2, 2020                [Page 14]
-
-Internet-Draft         Self-published IP Geofeeds           January 2020
-
 
 11.3.  URIs
 
@@ -824,6 +834,14 @@ Appendix A.  Sample Python Validation Code
 #
 # Copyright (c) 2012 IETF Trust and the persons identified as authors of
 # the code.  All rights reserved.  Redistribution and use in source and
+
+
+
+Kline, et al.            Expires August 8, 2020                [Page 15]
+
+Internet-Draft         Self-published IP Geofeeds          February 2020
+
+
 # binary forms, with or without modification, is permitted pursuant to,
 # and subject to the license terms contained in, the Simplified BSD
 # License set forth in Section 4.c of the IETF Trust's Legal Provisions
@@ -834,14 +852,6 @@ Appendix A.  Sample Python Validation Code
 
 This tool reads CSV data in the self-published ipgeo feed format from
 the standard input and performs basic validation.  It is intended for
-
-
-
-Kline, et al.            Expires August 2, 2020                [Page 15]
-
-Internet-Draft         Self-published IP Geofeeds           January 2020
-
-
 use by feed publishers before launching a feed.
 """
 
@@ -880,6 +890,14 @@ class IPGeoFeedValidator(object):
 
   def CountErrors(self, severity):
     """How many ERRORs or WARNINGs were generated."""
+
+
+
+Kline, et al.            Expires August 8, 2020                [Page 16]
+
+Internet-Draft         Self-published IP Geofeeds          February 2020
+
+
     return len(self.output_log.get(severity, []))
 
   ############################################################
@@ -890,14 +908,6 @@ class IPGeoFeedValidator(object):
     self.is_correct_line = True
 
     if self._ShouldIgnoreLine(line):
-
-
-
-Kline, et al.            Expires August 2, 2020                [Page 16]
-
-Internet-Draft         Self-published IP Geofeeds           January 2020
-
-
       return
 
     fields = [field for field in csv.reader([line])][0]
@@ -936,6 +946,14 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 
   def _IsCIDRCorrect(self, cidr):
     try:
+
+
+
+Kline, et al.            Expires August 8, 2020                [Page 17]
+
+Internet-Draft         Self-published IP Geofeeds          February 2020
+
+
       ipprefix = ipaddr.IPNetwork(cidr)
       if ipprefix.network._ip != ipprefix._ip:
         self._ReportError('Incorrect IP Network.')
@@ -946,14 +964,6 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
     except:
       self._ReportError('Incorrect IP Network.')
       return False
-
-
-
-Kline, et al.            Expires August 2, 2020                [Page 17]
-
-Internet-Draft         Self-published IP Geofeeds           January 2020
-
-
     return True
 
   def _IsIPAddressCorrect(self, ipaddress):
@@ -993,6 +1003,13 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
   def _ReportError(self, message):
     self._ReportWithSeverity('ERROR', message)
 
+
+
+Kline, et al.            Expires August 8, 2020                [Page 18]
+
+Internet-Draft         Self-published IP Geofeeds          February 2020
+
+
   def _ReportWarning(self, message):
     self._ReportWithSeverity('WARNING', message)
 
@@ -1002,14 +1019,6 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 
     if severity not in self.output_log:
       self.output_log[severity] = []
-
-
-
-Kline, et al.            Expires August 2, 2020                [Page 18]
-
-Internet-Draft         Self-published IP Geofeeds           January 2020
-
-
     self.output_log[severity].append(output_line)
 
     if self.output_stream is not None:
@@ -1050,6 +1059,13 @@ if __name__ == '__main__':
 # License set forth in Section 4.c of the IETF Trust's Legal Provisions
 # Relating to IETF Documents (http://trustee.ietf.org/license-info).
 
+
+
+Kline, et al.            Expires August 8, 2020                [Page 19]
+
+Internet-Draft         Self-published IP Geofeeds          February 2020
+
+
 import sys
 from ipgeo_feed_validator import IPGeoFeedValidator
 
@@ -1058,14 +1074,6 @@ class IPGeoFeedValidatorTest(object):
     self.validator = IPGeoFeedValidator()
     self.validator.SetOutputStream(None)
     self.successes = 0
-
-
-
-Kline, et al.            Expires August 2, 2020                [Page 19]
-
-Internet-Draft         Self-published IP Geofeeds           January 2020
-
-
     self.failures = 0
 
   def Run(self):
@@ -1106,6 +1114,14 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
     self.TestFeedLine('55.66.77.88/24,US,,,', 1, 0)
     self.TestFeedLine('55.66.77.88/32,US,,,', 0, 0)
     self.TestFeedLine('55.66.77/24,US,,,', 1, 0)
+
+
+
+Kline, et al.            Expires August 8, 2020                [Page 20]
+
+Internet-Draft         Self-published IP Geofeeds          February 2020
+
+
     self.TestFeedLine('55.66.77.0/35,US,,,', 1, 0)
 
     self.TestFeedLine('172.15.30.1,US,,,', 0, 0)
@@ -1114,14 +1130,6 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
     self.TestFeedLine('192.168.100.1,US,,,', 1, 0)
     self.TestFeedLine('10.0.5.9,US,,,', 1, 0)
     self.TestFeedLine('10.0.5.0/24,US,,,', 1, 0)
-
-
-
-Kline, et al.            Expires August 2, 2020                [Page 20]
-
-Internet-Draft         Self-published IP Geofeeds           January 2020
-
-
     self.TestFeedLine('fc00::/48,PL,,,', 1, 0)
     self.TestFeedLine('fe00::/48,PL,,,', 0, 0)
 
@@ -1162,21 +1170,18 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 
 
 if __name__ == '__main__':
+
+
+
+Kline, et al.            Expires August 8, 2020                [Page 21]
+
+Internet-Draft         Self-published IP Geofeeds          February 2020
+
+
   IPGeoFeedValidatorTest().Run()
 <CODE ENDS>
 
 Authors' Addresses
-
-
-
-
-
-
-
-Kline, et al.            Expires August 2, 2020                [Page 21]
-
-Internet-Draft         Self-published IP Geofeeds           January 2020
-
 
    Erik Kline
    Loon LLC
@@ -1224,9 +1229,4 @@ Internet-Draft         Self-published IP Geofeeds           January 2020
 
 
 
-
-
-
-
-
-Kline, et al.            Expires August 2, 2020                [Page 22]
+Kline, et al.            Expires August 8, 2020                [Page 22]
