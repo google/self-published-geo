@@ -210,9 +210,9 @@
         large", are likely to be too operationally complex.</t>
 
         <t>Feeds MUST use UTF-8 <xref target="RFC3629"/> character encoding.
-        Lines are delimited by a line break (CRLF) (as specifed in 
+        Lines are delimited by a line break (CRLF) (as specifed in
         <xref target="RFC4180"/>), and blank lines are ignored.
-        Text from a '#' character to the end of the current line is treated 
+        Text from a '#' character to the end of the current line is treated
         as a comment only and is similarily ignored (note that this does not
         stricly follow <xref target="RFC4180"/>, which has no support for
         comments).
@@ -248,9 +248,20 @@
             <t>OPTIONAL. The alpha2code field, if non-empty, MUST be a 2 letter
             ISO country code conforming to ISO 3166-1 alpha 2 <xref
             target="ISO.3166.1alpha2"/>. Parsers SHOULD treat this field
-            case-insensitively. Earlier versions of this document called this
-            field "country", and it may still be referred to as such in
-            existing tools / interfaces.</t>
+            case-insensitively.</t>
+
+            <t>Earlier versions of this document called this field "country",
+            and it may still be referred to as such in existing
+            tools / interfaces.</t>
+
+            <t>Parsers MAY additionally support other 2 letter codes outside
+            the ISO 3166-1 alpha 2 codes. For example, 2 letter codes from the
+            <eref target="https://www.iso.org/glossary-for-iso-3166.html">
+            "Exceptionally reserved codes"</eref> set may appear in this field,
+            e.g. <eref target="https://www.iso.org/obp/ui/#iso:code:3166:UK"
+                       >"UK"</eref>
+            or <eref target="https://www.iso.org/obp/ui/#iso:code:3166:EU"
+                     >"EU"</eref>.</t>
 
             <t>Examples include "US" for the United States, "JP" for Japan,
             and "PL" for Poland.</t>
@@ -344,7 +355,7 @@
 
       <section title="Examples">
         <t>Example entries using different IP address formats and describing
-        locations at alpha2code ("country codes"), region, and city granularity level,
+        locations at alpha2code ("country code"), region, and city granularity level,
         respectively: <figure>
             <artwork><![CDATA[
     192.0.2.0/25,US,US-AL,,
@@ -862,7 +873,7 @@ class IPGeoFeedValidator(object):
     is_correct = self._IsIPAddressOrPrefixCorrect(fields[0])
 
     if len(fields) > 1:
-      if not self._IsCountryCode2Correct(fields[1]):
+      if not self._IsAlpha2CodeCorrect(fields[1]):
         is_correct = False
 
     if len(fields) > 2 and not self._IsRegionCodeCorrect(fields[2]):
@@ -904,12 +915,12 @@ class IPGeoFeedValidator(object):
     return True
 
   ############################################################
-  def _IsCountryCode2Correct(self, country_code_2):
-    if len(country_code_2) == 0:
+  def _IsAlpha2CodeCorrect(self, alpha2code):
+    if len(alpha2code) == 0:
       return True
-    if len(country_code_2) != 2 or not country_code_2.isalpha():
+    if len(alpha2code) != 2 or not alpha2code.isalpha():
       self._ReportError(
-          'Country code must be in the ISO 3166-1 alpha 2 format.')
+          'Alpha 2 code must be in the ISO 3166-1 alpha 2 format.')
       return False
     return True
 
@@ -921,7 +932,7 @@ class IPGeoFeedValidator(object):
       return False
 
     parts = region_code.split('-')
-    if not self._IsCountryCode2Correct(parts[0]):
+    if not self._IsAlpha2CodeCorrect(parts[0]):
       return False
     return True
 
