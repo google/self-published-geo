@@ -793,19 +793,19 @@
 <CODE BEGINS>
 #!/usr/bin/python
 #
-# Copyright (c) 2012 IETF Trust and the persons identified as authors of
-# the code.  All rights reserved.  Redistribution and use in source and
-# binary forms, with or without modification, is permitted pursuant to,
-# and subject to the license terms contained in, the Simplified BSD
-# License set forth in Section 4.c of the IETF Trust's Legal Provisions
-# Relating to IETF Documents (http://trustee.ietf.org/license-info).
-
+# Copyright (c) 2012 IETF Trust and the persons identified as
+# authors of the code.  All rights reserved.  Redistribution and use
+# in source and # binary forms, with or without modification, is
+# permitted pursuant to, and subject to the license terms contained
+# in, the Simplified BSD License set forth in Section 4.c of the
+# IETF Trust's Legal Provisions Relating to IETF
+# Documents (http://trustee.ietf.org/license-info).
 
 """Simple format validator for self-published ipgeo feeds.
 
-This tool reads CSV data in the self-published ipgeo feed format from
-the standard input and performs basic validation.  It is intended for
-use by feed publishers before launching a feed.
+This tool reads CSV data in the self-published ipgeo feed format
+from the standard input and performs basic validation. It is
+intended foruse by feed publishers before launching a feed.
 """
 
 import csv
@@ -837,7 +837,7 @@ class IPGeoFeedValidator(object):
     Use None to disable logging.
 
     Args:
-      logfile: a file object (e.g., sys.stdout or sys.stderr) or None.
+      logfile: a file object (e.g., sys.stdout) or None.
     """
     self.output_stream = logfile
 
@@ -928,7 +928,7 @@ class IPGeoFeedValidator(object):
     if len(region_code) == 0:
       return True
     if '-' not in region_code:
-      self._ReportError('Region code must be in the ISO 3166-2 format.')
+      self._ReportError('Region code must be in ISO 3166-2 format.')
       return False
 
     parts = region_code.split('-')
@@ -986,12 +986,13 @@ if __name__ == '__main__':
 <CODE BEGINS>
 #!/usr/bin/python
 #
-# Copyright (c) 2012 IETF Trust and the persons identified as authors of
-# the code.  All rights reserved.  Redistribution and use in source and
-# binary forms, with or without modification, is permitted pursuant to,
-# and subject to the license terms contained in, the Simplified BSD
-# License set forth in Section 4.c of the IETF Trust's Legal Provisions
-# Relating to IETF Documents (http://trustee.ietf.org/license-info).
+# Copyright (c) 2012 IETF Trust and the persons identified as
+# authors of the code.  All rights reserved.  Redistribution and use
+# in source and # binary forms, with or without modification, is
+# permitted pursuant to, and subject to the license terms contained
+# in, the Simplified BSD License set forth in Section 4.c of the
+# IETF Trust's Legal Provisions Relating to IETF
+# Documents (http://trustee.ietf.org/license-info).
 
 import sys
 from ipgeo_feed_validator import IPGeoFeedValidator
@@ -1033,7 +1034,8 @@ class IPGeoFeedValidatorTest(object):
     self.TestFeedLine('55.66.77.88,USA,USA-CA,,', 2, 0)
 
     self.TestFeedLine('55.66.77.88,US,US-CA,Mountain View,', 0, 0)
-    self.TestFeedLine('55.66.77.88,US,US-CA,Mountain View,94043', 0, 0)
+    self.TestFeedLine('55.66.77.88,US,US-CA,Mountain View,94043',
+                      0, 0)
     self.TestFeedLine('55.66.77.88,US,US-CA,Mountain View,94043,'
                       '1600 Ampthitheatre Parkway', 0, 1)
 
@@ -1055,12 +1057,14 @@ class IPGeoFeedValidatorTest(object):
     print ('%d tests passed, %d failed'
       % (self.successes, self.failures))
 
-  def IsOutputLogCorrectAtSeverity(self, severity, expected_msg_count):
+  def IsOutputLogCorrectAtSeverity(self, severity,
+    expected_msg_count):
     msg_count = self.validator.CountErrors(severity)
 
     if msg_count != expected_msg_count:
-      print ('TEST FAILED: %s\nexpected %d %s[s], observed %d\n%s\n' % (
-          self.validator.line, expected_msg_count, severity, msg_count,
+      print ('TEST FAILED: %s\nexpected %d %s[s], observed %d\n%s\n'
+         % (self.validator.line, expected_msg_count, severity,
+           msg_count,
           str(self.validator.output_log[severity])))
       return False
     return True
@@ -1070,7 +1074,8 @@ class IPGeoFeedValidatorTest(object):
 
     if not self.IsOutputLogCorrectAtSeverity('ERROR', new_errors):
       retval = False
-    if not self.IsOutputLogCorrectAtSeverity('WARNING', new_warnings):
+    if not self.IsOutputLogCorrectAtSeverity('WARNING',
+                                             new_warnings):
       retval = False
 
     return retval

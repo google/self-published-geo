@@ -5,12 +5,12 @@
 Network Working Group                                           E. Kline
 Internet-Draft                                                  Loon LLC
 Intended status: Informational                                 K. Duleba
-Expires: August 10, 2020                                     Z. Szamonek
+Expires: January 23, 2021                                    Z. Szamonek
                                                                 S. Moser
                                                  Google Switzerland GmbH
                                                                W. Kumari
                                                                   Google
-                                                        February 7, 2020
+                                                           July 22, 2020
 
 
             A Format for Self-published IP Geolocation Feeds
@@ -49,13 +49,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 10, 2020.
+   This Internet-Draft will expire on January 23, 2021.
 
 
 
-Kline, et al.            Expires August 10, 2020                [Page 1]
+Kline, et al.           Expires January 23, 2021                [Page 1]
 
-Internet-Draft         Self-published IP Geofeeds          February 2020
+Internet-Draft         Self-published IP Geofeeds              July 2020
 
 
 Copyright Notice
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Kline, et al.            Expires August 10, 2020                [Page 2]
+Kline, et al.           Expires January 23, 2021                [Page 2]
 
-Internet-Draft         Self-published IP Geofeeds          February 2020
+Internet-Draft         Self-published IP Geofeeds              July 2020
 
 
      11.2.  Informative References . . . . . . . . . . . . . . . . .  14
@@ -165,9 +165,9 @@ Internet-Draft         Self-published IP Geofeeds          February 2020
 
 
 
-Kline, et al.            Expires August 10, 2020                [Page 3]
+Kline, et al.           Expires January 23, 2021                [Page 3]
 
-Internet-Draft         Self-published IP Geofeeds          February 2020
+Internet-Draft         Self-published IP Geofeeds              July 2020
 
 
 1.3.  Assumptions About Publication
@@ -221,9 +221,9 @@ Internet-Draft         Self-published IP Geofeeds          February 2020
 
 
 
-Kline, et al.            Expires August 10, 2020                [Page 4]
+Kline, et al.           Expires January 23, 2021                [Page 4]
 
-Internet-Draft         Self-published IP Geofeeds          February 2020
+Internet-Draft         Self-published IP Geofeeds              July 2020
 
 
    (note that this does not stricly follow [RFC4180], which has no
@@ -277,9 +277,9 @@ Internet-Draft         Self-published IP Geofeeds          February 2020
 
 
 
-Kline, et al.            Expires August 10, 2020                [Page 5]
+Kline, et al.           Expires January 23, 2021                [Page 5]
 
-Internet-Draft         Self-published IP Geofeeds          February 2020
+Internet-Draft         Self-published IP Geofeeds              July 2020
 
 
    Examples include "ID-RI" for the Riau province of Indonesia and "NG-
@@ -333,9 +333,9 @@ Internet-Draft         Self-published IP Geofeeds          February 2020
 
 
 
-Kline, et al.            Expires August 10, 2020                [Page 6]
+Kline, et al.           Expires January 23, 2021                [Page 6]
 
-Internet-Draft         Self-published IP Geofeeds          February 2020
+Internet-Draft         Self-published IP Geofeeds              July 2020
 
 
 2.1.3.  Additional Parsing Requirements
@@ -389,9 +389,9 @@ Internet-Draft         Self-published IP Geofeeds          February 2020
 
 
 
-Kline, et al.            Expires August 10, 2020                [Page 7]
+Kline, et al.           Expires January 23, 2021                [Page 7]
 
-Internet-Draft         Self-published IP Geofeeds          February 2020
+Internet-Draft         Self-published IP Geofeeds              July 2020
 
 
        # IETF106 (Singapore) - November 2019 - Singapore, SG
@@ -445,9 +445,9 @@ Internet-Draft         Self-published IP Geofeeds          February 2020
 
 
 
-Kline, et al.            Expires August 10, 2020                [Page 8]
+Kline, et al.           Expires January 23, 2021                [Page 8]
 
-Internet-Draft         Self-published IP Geofeeds          February 2020
+Internet-Draft         Self-published IP Geofeeds              July 2020
 
 
    likely dependent upon the way in which the feed is discovered.  Ad
@@ -501,9 +501,9 @@ Internet-Draft         Self-published IP Geofeeds          February 2020
 
 
 
-Kline, et al.            Expires August 10, 2020                [Page 9]
+Kline, et al.           Expires January 23, 2021                [Page 9]
 
-Internet-Draft         Self-published IP Geofeeds          February 2020
+Internet-Draft         Self-published IP Geofeeds              July 2020
 
 
    As noted in Section 2.1, each location field in an entry is optional,
@@ -557,9 +557,9 @@ Internet-Draft         Self-published IP Geofeeds          February 2020
 
 
 
-Kline, et al.            Expires August 10, 2020               [Page 10]
+Kline, et al.           Expires January 23, 2021               [Page 10]
 
-Internet-Draft         Self-published IP Geofeeds          February 2020
+Internet-Draft         Self-published IP Geofeeds              July 2020
 
 
 6.  Security Considerations
@@ -613,9 +613,9 @@ Internet-Draft         Self-published IP Geofeeds          February 2020
 
 
 
-Kline, et al.            Expires August 10, 2020               [Page 11]
+Kline, et al.           Expires January 23, 2021               [Page 11]
 
-Internet-Draft         Self-published IP Geofeeds          February 2020
+Internet-Draft         Self-published IP Geofeeds              July 2020
 
 
    discovery and verification has a modicum of established practice (see
@@ -669,9 +669,9 @@ Internet-Draft         Self-published IP Geofeeds          February 2020
 
 
 
-Kline, et al.            Expires August 10, 2020               [Page 12]
+Kline, et al.           Expires January 23, 2021               [Page 12]
 
-Internet-Draft         Self-published IP Geofeeds          February 2020
+Internet-Draft         Self-published IP Geofeeds              July 2020
 
 
    Richard L. Barnes and Andy Newton in particular contributed
@@ -682,14 +682,13 @@ Internet-Draft         Self-published IP Geofeeds          February 2020
 11.1.  Normative References
 
    [ISO.3166.1alpha2]
-              International Organization for Standardization, "ISO
-              3166-1 decoding table",
-              <http://www.iso.org/iso/home/standards/country_codes/
-              iso-3166-1_decoding_table.htm>.
+              agency, I. 3. M., "ISO 3166-1 decoding table",
+              <http://www.iso.org/iso/home/standards/country_codes/iso-
+              3166-1_decoding_table.htm>.
 
    [ISO.3166.2]
-              International Organization for Standardization, "ISO
-              3166-2:2007", <http://www.iso.org/iso/home/standards/
+              agency, I. 3. M., "ISO 3166-2:2007",
+              <http://www.iso.org/iso/home/standards/
               country_codes.htm#2012_iso3166-2>.
 
    [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
@@ -725,9 +724,10 @@ Internet-Draft         Self-published IP Geofeeds          February 2020
 
 
 
-Kline, et al.            Expires August 10, 2020               [Page 13]
+
+Kline, et al.           Expires January 23, 2021               [Page 13]
 
-Internet-Draft         Self-published IP Geofeeds          February 2020
+Internet-Draft         Self-published IP Geofeeds              July 2020
 
 
 11.2.  Informative References
@@ -781,9 +781,9 @@ Internet-Draft         Self-published IP Geofeeds          February 2020
 
 
 
-Kline, et al.            Expires August 10, 2020               [Page 14]
+Kline, et al.           Expires January 23, 2021               [Page 14]
 
-Internet-Draft         Self-published IP Geofeeds          February 2020
+Internet-Draft         Self-published IP Geofeeds              July 2020
 
 
    [RFC5139]  Thomson, M. and J. Winterbottom, "Revised Civic Location
@@ -837,9 +837,9 @@ Appendix A.  Sample Python Validation Code
 
 
 
-Kline, et al.            Expires August 10, 2020               [Page 15]
+Kline, et al.           Expires January 23, 2021               [Page 15]
 
-Internet-Draft         Self-published IP Geofeeds          February 2020
+Internet-Draft         Self-published IP Geofeeds              July 2020
 
 
    only verifies the syntax of each single line from within the feed.  A
@@ -849,350 +849,356 @@ Internet-Draft         Self-published IP Geofeeds          February 2020
    use of the open source ipaddr Python library for IP address and CIDR
    parsing and validation [IPADDR_PY].
 
-<CODE BEGINS>
-#!/usr/bin/python
-#
-# Copyright (c) 2012 IETF Trust and the persons identified as authors of
-# the code.  All rights reserved.  Redistribution and use in source and
-# binary forms, with or without modification, is permitted pursuant to,
-# and subject to the license terms contained in, the Simplified BSD
-# License set forth in Section 4.c of the IETF Trust's Legal Provisions
-# Relating to IETF Documents (http://trustee.ietf.org/license-info).
+   <CODE BEGINS>
+   #!/usr/bin/python
+   #
+   # Copyright (c) 2012 IETF Trust and the persons identified as
+   # authors of the code.  All rights reserved.  Redistribution and use
+   # in source and # binary forms, with or without modification, is
+   # permitted pursuant to, and subject to the license terms contained
+   # in, the Simplified BSD License set forth in Section 4.c of the
+   # IETF Trust's Legal Provisions Relating to IETF
+   # Documents (http://trustee.ietf.org/license-info).
+
+   """Simple format validator for self-published ipgeo feeds.
+
+   This tool reads CSV data in the self-published ipgeo feed format
+   from the standard input and performs basic validation. It is
+   intended foruse by feed publishers before launching a feed.
+   """
+
+   import csv
+   import ipaddr
+   import re
+   import sys
 
 
-"""Simple format validator for self-published ipgeo feeds.
+   class IPGeoFeedValidator(object):
+     def __init__(self):
+       self.prefixes = {}
+       self.line_number = 0
+       self.output_log = {}
+       self.SetOutputStream(sys.stderr)
 
-This tool reads CSV data in the self-published ipgeo feed format from
-the standard input and performs basic validation.  It is intended for
-use by feed publishers before launching a feed.
-"""
+     def Validate(self, feed):
+       """Check validity of an IPGeo feed.
 
-import csv
-import ipaddr
-import re
-import sys
+       Args:
+         feed: iterable with feed lines
+       """
 
-
-class IPGeoFeedValidator(object):
-  def __init__(self):
-    self.prefixes = {}
-    self.line_number = 0
-    self.output_log = {}
-    self.SetOutputStream(sys.stderr)
-
-  def Validate(self, feed):
-    """Check validity of an IPGeo feed.
-
-    Args:
-      feed: iterable with feed lines
-    """
-
-    for line in feed:
-      self._ValidateLine(line)
+       for line in feed:
+         self._ValidateLine(line)
 
 
 
 
-Kline, et al.            Expires August 10, 2020               [Page 16]
+Kline, et al.           Expires January 23, 2021               [Page 16]
 
-Internet-Draft         Self-published IP Geofeeds          February 2020
+Internet-Draft         Self-published IP Geofeeds              July 2020
 
 
-  def SetOutputStream(self, logfile):
-    """Controls where the output messages go do (STDERR by default).
+     def SetOutputStream(self, logfile):
+       """Controls where the output messages go do (STDERR by default).
 
-    Use None to disable logging.
+       Use None to disable logging.
 
-    Args:
-      logfile: a file object (e.g., sys.stdout or sys.stderr) or None.
-    """
-    self.output_stream = logfile
+       Args:
+         logfile: a file object (e.g., sys.stdout) or None.
+       """
+       self.output_stream = logfile
 
-  def CountErrors(self, severity):
-    """How many ERRORs or WARNINGs were generated."""
-    return len(self.output_log.get(severity, []))
+     def CountErrors(self, severity):
+       """How many ERRORs or WARNINGs were generated."""
+       return len(self.output_log.get(severity, []))
 
-  ############################################################
-  def _ValidateLine(self, line):
-    line = line.rstrip('\r\n')
-    self.line_number += 1
-    self.line = line.split('#')[0]
-    self.is_correct_line = True
+     ############################################################
+     def _ValidateLine(self, line):
+       line = line.rstrip('\r\n')
+       self.line_number += 1
+       self.line = line.split('#')[0]
+       self.is_correct_line = True
 
-    if self._ShouldIgnoreLine(line):
-      return
+       if self._ShouldIgnoreLine(line):
+         return
 
-    fields = [field for field in csv.reader([line])][0]
+       fields = [field for field in csv.reader([line])][0]
 
-    self._ValidateFields(fields)
-    self._FlushOutputStream()
+       self._ValidateFields(fields)
+       self._FlushOutputStream()
 
-  def _ShouldIgnoreLine(self, line):
-    line = line.strip()
-    if line.startswith('#'):
-      return True
-    return len(line) == 0
+     def _ShouldIgnoreLine(self, line):
+       line = line.strip()
+       if line.startswith('#'):
+         return True
+       return len(line) == 0
 
-  ############################################################
-  def _ValidateFields(self, fields):
-    assert(len(fields) > 0)
+     ############################################################
+     def _ValidateFields(self, fields):
+       assert(len(fields) > 0)
 
-    is_correct = self._IsIPAddressOrPrefixCorrect(fields[0])
+       is_correct = self._IsIPAddressOrPrefixCorrect(fields[0])
 
-    if len(fields) > 1:
-      if not self._IsAlpha2CodeCorrect(fields[1]):
-        is_correct = False
+       if len(fields) > 1:
+         if not self._IsAlpha2CodeCorrect(fields[1]):
+           is_correct = False
 
-    if len(fields) > 2 and not self._IsRegionCodeCorrect(fields[2]):
-      is_correct = False
-
-
+       if len(fields) > 2 and not self._IsRegionCodeCorrect(fields[2]):
+         is_correct = False
 
 
-Kline, et al.            Expires August 10, 2020               [Page 17]
+
+
+Kline, et al.           Expires January 23, 2021               [Page 17]
 
-Internet-Draft         Self-published IP Geofeeds          February 2020
+Internet-Draft         Self-published IP Geofeeds              July 2020
 
 
-    if len(fields) != 5:
-      self._ReportWarning('5 fields were expected (got %d).'
-                          % len(fields))
+       if len(fields) != 5:
+         self._ReportWarning('5 fields were expected (got %d).'
+                             % len(fields))
 
-  ############################################################
-  def _IsIPAddressOrPrefixCorrect(self, field):
-    if '/' in field:
-      return self._IsCIDRCorrect(field)
-    return self._IsIPAddressCorrect(field)
+     ############################################################
+     def _IsIPAddressOrPrefixCorrect(self, field):
+       if '/' in field:
+         return self._IsCIDRCorrect(field)
+       return self._IsIPAddressCorrect(field)
 
-  def _IsCIDRCorrect(self, cidr):
-    try:
-      ipprefix = ipaddr.IPNetwork(cidr)
-      if ipprefix.network._ip != ipprefix._ip:
-        self._ReportError('Incorrect IP Network.')
-        return False
-      if ipprefix.is_private:
-        self._ReportError('IP Address must not be private.')
-        return False
-    except:
-      self._ReportError('Incorrect IP Network.')
-      return False
-    return True
+     def _IsCIDRCorrect(self, cidr):
+       try:
+         ipprefix = ipaddr.IPNetwork(cidr)
+         if ipprefix.network._ip != ipprefix._ip:
+           self._ReportError('Incorrect IP Network.')
+           return False
+         if ipprefix.is_private:
+           self._ReportError('IP Address must not be private.')
+           return False
+       except:
+         self._ReportError('Incorrect IP Network.')
+         return False
+       return True
 
-  def _IsIPAddressCorrect(self, ipaddress):
-    try:
-      ip = ipaddr.IPAddress(ipaddress)
-    except:
-      self._ReportError('Incorrect IP Address.')
-      return False
-    if ip.is_private:
-      self._ReportError('IP Address must not be private.')
-      return False
-    return True
+     def _IsIPAddressCorrect(self, ipaddress):
+       try:
+         ip = ipaddr.IPAddress(ipaddress)
+       except:
+         self._ReportError('Incorrect IP Address.')
+         return False
+       if ip.is_private:
+         self._ReportError('IP Address must not be private.')
+         return False
+       return True
 
-  ############################################################
-  def _IsAlpha2CodeCorrect(self, alpha2code):
-    if len(alpha2code) == 0:
-      return True
-    if len(alpha2code) != 2 or not alpha2code.isalpha():
-      self._ReportError(
-          'Alpha 2 code must be in the ISO 3166-1 alpha 2 format.')
-      return False
-    return True
+     ############################################################
+     def _IsAlpha2CodeCorrect(self, alpha2code):
+       if len(alpha2code) == 0:
+         return True
+       if len(alpha2code) != 2 or not alpha2code.isalpha():
+         self._ReportError(
+             'Alpha 2 code must be in the ISO 3166-1 alpha 2 format.')
+         return False
+       return True
 
-  def _IsRegionCodeCorrect(self, region_code):
-    if len(region_code) == 0:
-      return True
+     def _IsRegionCodeCorrect(self, region_code):
+       if len(region_code) == 0:
+         return True
 
 
 
-Kline, et al.            Expires August 10, 2020               [Page 18]
+Kline, et al.           Expires January 23, 2021               [Page 18]
 
-Internet-Draft         Self-published IP Geofeeds          February 2020
+Internet-Draft         Self-published IP Geofeeds              July 2020
 
 
-    if '-' not in region_code:
-      self._ReportError('Region code must be in the ISO 3166-2 format.')
-      return False
+       if '-' not in region_code:
+         self._ReportError('Region code must be in ISO 3166-2 format.')
+         return False
 
-    parts = region_code.split('-')
-    if not self._IsAlpha2CodeCorrect(parts[0]):
-      return False
-    return True
+       parts = region_code.split('-')
+       if not self._IsAlpha2CodeCorrect(parts[0]):
+         return False
+       return True
 
-  ############################################################
-  def _ReportError(self, message):
-    self._ReportWithSeverity('ERROR', message)
+     ############################################################
+     def _ReportError(self, message):
+       self._ReportWithSeverity('ERROR', message)
 
-  def _ReportWarning(self, message):
-    self._ReportWithSeverity('WARNING', message)
+     def _ReportWarning(self, message):
+       self._ReportWithSeverity('WARNING', message)
 
-  def _ReportWithSeverity(self, severity, message):
-    self.is_correct_line = False
-    output_line = '%s: %s\n' % (severity, message)
+     def _ReportWithSeverity(self, severity, message):
+       self.is_correct_line = False
+       output_line = '%s: %s\n' % (severity, message)
 
-    if severity not in self.output_log:
-      self.output_log[severity] = []
-    self.output_log[severity].append(output_line)
+       if severity not in self.output_log:
+         self.output_log[severity] = []
+       self.output_log[severity].append(output_line)
 
-    if self.output_stream is not None:
-      self.output_stream.write(output_line)
+       if self.output_stream is not None:
+         self.output_stream.write(output_line)
 
-  def _FlushOutputStream(self):
-    if self.is_correct_line: return
-    if self.output_stream is None: return
+     def _FlushOutputStream(self):
+       if self.is_correct_line: return
+       if self.output_stream is None: return
 
-    self.output_stream.write('line %d: %s\n\n'
-                             % (self.line_number, self.line))
-
-
-############################################################
-def main():
-   feed_validator = IPGeoFeedValidator()
-   feed_validator.Validate(sys.stdin)
-
-   if feed_validator.CountErrors('ERROR'):
-     sys.exit(1)
-
-if __name__ == '__main__':
-  main()
-<CODE ENDS>
+       self.output_stream.write('line %d: %s\n\n'
+                                % (self.line_number, self.line))
 
 
+   ############################################################
+   def main():
+      feed_validator = IPGeoFeedValidator()
+      feed_validator.Validate(sys.stdin)
+
+      if feed_validator.CountErrors('ERROR'):
+        sys.exit(1)
+
+   if __name__ == '__main__':
+     main()
+   <CODE ENDS>
 
 
 
-Kline, et al.            Expires August 10, 2020               [Page 19]
+
+
+Kline, et al.           Expires January 23, 2021               [Page 19]
 
-Internet-Draft         Self-published IP Geofeeds          February 2020
+Internet-Draft         Self-published IP Geofeeds              July 2020
 
 
    A unit test file, "ipgeo_feed_validator_test.py" is provided as well.
    It provides basic test coverage of the code above, though does not
    test correct handling of non-ASCII UTF-8 strings.
 
-<CODE BEGINS>
-#!/usr/bin/python
-#
-# Copyright (c) 2012 IETF Trust and the persons identified as authors of
-# the code.  All rights reserved.  Redistribution and use in source and
-# binary forms, with or without modification, is permitted pursuant to,
-# and subject to the license terms contained in, the Simplified BSD
-# License set forth in Section 4.c of the IETF Trust's Legal Provisions
-# Relating to IETF Documents (http://trustee.ietf.org/license-info).
+   <CODE BEGINS>
+   #!/usr/bin/python
+   #
+   # Copyright (c) 2012 IETF Trust and the persons identified as
+   # authors of the code.  All rights reserved.  Redistribution and use
+   # in source and # binary forms, with or without modification, is
+   # permitted pursuant to, and subject to the license terms contained
+   # in, the Simplified BSD License set forth in Section 4.c of the
+   # IETF Trust's Legal Provisions Relating to IETF
+   # Documents (http://trustee.ietf.org/license-info).
 
-import sys
-from ipgeo_feed_validator import IPGeoFeedValidator
+   import sys
+   from ipgeo_feed_validator import IPGeoFeedValidator
 
-class IPGeoFeedValidatorTest(object):
-  def __init__(self):
-    self.validator = IPGeoFeedValidator()
-    self.validator.SetOutputStream(None)
-    self.successes = 0
-    self.failures = 0
+   class IPGeoFeedValidatorTest(object):
+     def __init__(self):
+       self.validator = IPGeoFeedValidator()
+       self.validator.SetOutputStream(None)
+       self.successes = 0
+       self.failures = 0
 
-  def Run(self):
-    self.TestFeedLine('# asdf', 0, 0)
-    self.TestFeedLine('   ', 0, 0)
-    self.TestFeedLine('', 0, 0)
+     def Run(self):
+       self.TestFeedLine('# asdf', 0, 0)
+       self.TestFeedLine('   ', 0, 0)
+       self.TestFeedLine('', 0, 0)
 
-    self.TestFeedLine('asdf', 1, 1)
-    self.TestFeedLine('asdf,US,,,', 1, 0)
-    self.TestFeedLine('aaaa::,US,,,', 0, 0)
-    self.TestFeedLine('zzzz::,US', 1, 1)
-    self.TestFeedLine(',US,,,', 1, 0)
-    self.TestFeedLine('55.66.77', 1, 1)
-    self.TestFeedLine('55.66.77.888', 1, 1)
-    self.TestFeedLine('55.66.77.asdf', 1, 1)
+       self.TestFeedLine('asdf', 1, 1)
+       self.TestFeedLine('asdf,US,,,', 1, 0)
+       self.TestFeedLine('aaaa::,US,,,', 0, 0)
+       self.TestFeedLine('zzzz::,US', 1, 1)
+       self.TestFeedLine(',US,,,', 1, 0)
+       self.TestFeedLine('55.66.77', 1, 1)
+       self.TestFeedLine('55.66.77.888', 1, 1)
+       self.TestFeedLine('55.66.77.asdf', 1, 1)
 
-    self.TestFeedLine('2001:db8:cafe::/48,PL,PL-MZ,,02-784', 0, 0)
-    self.TestFeedLine('2001:db8:cafe::/48', 0, 1)
+       self.TestFeedLine('2001:db8:cafe::/48,PL,PL-MZ,,02-784', 0, 0)
+       self.TestFeedLine('2001:db8:cafe::/48', 0, 1)
 
-    self.TestFeedLine('55.66.77.88,PL', 0, 1)
-    self.TestFeedLine('55.66.77.88,PL,,,', 0, 0)
-    self.TestFeedLine('55.66.77.88,,,,', 0, 0)
-    self.TestFeedLine('55.66.77.88,ZZ,,,', 0, 0)
-    self.TestFeedLine('55.66.77.88,US,,,', 0, 0)
-    self.TestFeedLine('55.66.77.88,USA,,,', 1, 0)
-    self.TestFeedLine('55.66.77.88,99,,,', 1, 0)
-
+       self.TestFeedLine('55.66.77.88,PL', 0, 1)
+       self.TestFeedLine('55.66.77.88,PL,,,', 0, 0)
+       self.TestFeedLine('55.66.77.88,,,,', 0, 0)
+       self.TestFeedLine('55.66.77.88,ZZ,,,', 0, 0)
+       self.TestFeedLine('55.66.77.88,US,,,', 0, 0)
+       self.TestFeedLine('55.66.77.88,USA,,,', 1, 0)
 
 
-Kline, et al.            Expires August 10, 2020               [Page 20]
+
+Kline, et al.           Expires January 23, 2021               [Page 20]
 
-Internet-Draft         Self-published IP Geofeeds          February 2020
+Internet-Draft         Self-published IP Geofeeds              July 2020
 
 
-    self.TestFeedLine('55.66.77.88,US,US-CA,,', 0, 0)
-    self.TestFeedLine('55.66.77.88,US,USA-CA,,', 1, 0)
-    self.TestFeedLine('55.66.77.88,USA,USA-CA,,', 2, 0)
+       self.TestFeedLine('55.66.77.88,99,,,', 1, 0)
 
-    self.TestFeedLine('55.66.77.88,US,US-CA,Mountain View,', 0, 0)
-    self.TestFeedLine('55.66.77.88,US,US-CA,Mountain View,94043', 0, 0)
-    self.TestFeedLine('55.66.77.88,US,US-CA,Mountain View,94043,'
-                      '1600 Ampthitheatre Parkway', 0, 1)
+       self.TestFeedLine('55.66.77.88,US,US-CA,,', 0, 0)
+       self.TestFeedLine('55.66.77.88,US,USA-CA,,', 1, 0)
+       self.TestFeedLine('55.66.77.88,USA,USA-CA,,', 2, 0)
 
-    self.TestFeedLine('55.66.77.0/24,US,,,', 0, 0)
-    self.TestFeedLine('55.66.77.88/24,US,,,', 1, 0)
-    self.TestFeedLine('55.66.77.88/32,US,,,', 0, 0)
-    self.TestFeedLine('55.66.77/24,US,,,', 1, 0)
-    self.TestFeedLine('55.66.77.0/35,US,,,', 1, 0)
+       self.TestFeedLine('55.66.77.88,US,US-CA,Mountain View,', 0, 0)
+       self.TestFeedLine('55.66.77.88,US,US-CA,Mountain View,94043',
+                         0, 0)
+       self.TestFeedLine('55.66.77.88,US,US-CA,Mountain View,94043,'
+                         '1600 Ampthitheatre Parkway', 0, 1)
 
-    self.TestFeedLine('172.15.30.1,US,,,', 0, 0)
-    self.TestFeedLine('172.28.30.1,US,,,', 1, 0)
-    self.TestFeedLine('192.167.100.1,US,,,', 0, 0)
-    self.TestFeedLine('192.168.100.1,US,,,', 1, 0)
-    self.TestFeedLine('10.0.5.9,US,,,', 1, 0)
-    self.TestFeedLine('10.0.5.0/24,US,,,', 1, 0)
-    self.TestFeedLine('fc00::/48,PL,,,', 1, 0)
-    self.TestFeedLine('fe00::/48,PL,,,', 0, 0)
+       self.TestFeedLine('55.66.77.0/24,US,,,', 0, 0)
+       self.TestFeedLine('55.66.77.88/24,US,,,', 1, 0)
+       self.TestFeedLine('55.66.77.88/32,US,,,', 0, 0)
+       self.TestFeedLine('55.66.77/24,US,,,', 1, 0)
+       self.TestFeedLine('55.66.77.0/35,US,,,', 1, 0)
 
-    print ('%d tests passed, %d failed'
-      % (self.successes, self.failures))
+       self.TestFeedLine('172.15.30.1,US,,,', 0, 0)
+       self.TestFeedLine('172.28.30.1,US,,,', 1, 0)
+       self.TestFeedLine('192.167.100.1,US,,,', 0, 0)
+       self.TestFeedLine('192.168.100.1,US,,,', 1, 0)
+       self.TestFeedLine('10.0.5.9,US,,,', 1, 0)
+       self.TestFeedLine('10.0.5.0/24,US,,,', 1, 0)
+       self.TestFeedLine('fc00::/48,PL,,,', 1, 0)
+       self.TestFeedLine('fe00::/48,PL,,,', 0, 0)
 
-  def IsOutputLogCorrectAtSeverity(self, severity, expected_msg_count):
-    msg_count = self.validator.CountErrors(severity)
+       print ('%d tests passed, %d failed'
+         % (self.successes, self.failures))
 
-    if msg_count != expected_msg_count:
-      print ('TEST FAILED: %s\nexpected %d %s[s], observed %d\n%s\n' % (
-          self.validator.line, expected_msg_count, severity, msg_count,
-          str(self.validator.output_log[severity])))
-      return False
-    return True
+     def IsOutputLogCorrectAtSeverity(self, severity,
+       expected_msg_count):
+       msg_count = self.validator.CountErrors(severity)
 
-  def IsOutputLogCorrect(self, new_errors, new_warnings):
-    retval = True
+       if msg_count != expected_msg_count:
+         print ('TEST FAILED: %s\nexpected %d %s[s], observed %d\n%s\n'
+            % (self.validator.line, expected_msg_count, severity,
+              msg_count,
+             str(self.validator.output_log[severity])))
+         return False
+       return True
 
-    if not self.IsOutputLogCorrectAtSeverity('ERROR', new_errors):
-      retval = False
-    if not self.IsOutputLogCorrectAtSeverity('WARNING', new_warnings):
-      retval = False
+     def IsOutputLogCorrect(self, new_errors, new_warnings):
+       retval = True
 
-    return retval
-
-  def TestFeedLine(self, line, warning_count, error_count):
+       if not self.IsOutputLogCorrectAtSeverity('ERROR', new_errors):
+         retval = False
+       if not self.IsOutputLogCorrectAtSeverity('WARNING',
 
 
 
-Kline, et al.            Expires August 10, 2020               [Page 21]
+Kline, et al.           Expires January 23, 2021               [Page 21]
 
-Internet-Draft         Self-published IP Geofeeds          February 2020
+Internet-Draft         Self-published IP Geofeeds              July 2020
 
 
-    self.validator.output_log['WARNING'] = []
-    self.validator.output_log['ERROR'] = []
-    self.validator._ValidateLine(line)
+                                                new_warnings):
+         retval = False
 
-    if not self.IsOutputLogCorrect(warning_count, error_count):
-      self.failures += 1
-      return False
+       return retval
 
-    self.successes += 1
-    return True
+     def TestFeedLine(self, line, warning_count, error_count):
+       self.validator.output_log['WARNING'] = []
+       self.validator.output_log['ERROR'] = []
+       self.validator._ValidateLine(line)
+
+       if not self.IsOutputLogCorrect(warning_count, error_count):
+         self.failures += 1
+         return False
+
+       self.successes += 1
+       return True
 
 
-if __name__ == '__main__':
-  IPGeoFeedValidatorTest().Run()
-<CODE ENDS>
+   if __name__ == '__main__':
+     IPGeoFeedValidatorTest().Run()
+   <CODE ENDS>
 
 Authors' Addresses
 
@@ -1214,6 +1220,20 @@ Authors' Addresses
    Email: kduleba@google.com
 
 
+
+
+
+
+
+
+
+
+
+Kline, et al.           Expires January 23, 2021               [Page 22]
+
+Internet-Draft         Self-published IP Geofeeds              July 2020
+
+
    Zoltan Szamonek
    Google Switzerland GmbH
    Brandschenkestrasse 110
@@ -1221,17 +1241,6 @@ Authors' Addresses
    Switzerland
 
    Email: zszami@google.com
-
-
-
-
-
-
-
-
-Kline, et al.            Expires August 10, 2020               [Page 22]
-
-Internet-Draft         Self-published IP Geofeeds          February 2020
 
 
    Stefan Moser
@@ -1276,13 +1285,4 @@ Internet-Draft         Self-published IP Geofeeds          February 2020
 
 
 
-
-
-
-
-
-
-
-
-
-Kline, et al.            Expires August 10, 2020               [Page 23]
+Kline, et al.           Expires January 23, 2021               [Page 23]
